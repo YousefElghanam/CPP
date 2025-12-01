@@ -22,10 +22,9 @@ void	PhoneBook::add(Contact contact) {
 	else
 	{
 		contacts[oldest] = contact;
-		if (oldest + 1 == CAP)
+		oldest++;
+		if (oldest == CAP)
 			oldest = 0;
-		else
-			oldest++;
 	}
 };
 
@@ -51,13 +50,13 @@ static void	display_contact(Contact contact, size_t i) {
 
 void	PhoneBook::display_all_contacts(void) {
 	cyan("============ Available Contacts ===========", 1);
-	std::cout.width(10); std::cout << std::internal << "Index";
+	std::cout.width(10); std::cout << std::right << "Index";
 	cyan("|", 0);
-	std::cout.width(10); std::cout << std::internal << "First name";
+	std::cout.width(10); std::cout << std::right << "First name";
 	cyan("|", 0);
-	std::cout.width(10); std::cout << std::internal << "Last name";
+	std::cout.width(10); std::cout << std::right << "Last name";
 	cyan("|", 0);
-	std::cout.width(10); std::cout << std::internal << "Nickname";
+	std::cout.width(10); std::cout << std::right << "Nickname";
 	std::cout << std::endl;
 	cyan("-------------------------------------------", 1);
 
@@ -73,12 +72,14 @@ void	PhoneBook::display_all_contacts(void) {
 
 void	PhoneBook::display_contact_info(size_t id) {
 	if (id >= size) {
-		std::cout << "A contact with this id doesn't exist" << std::endl;
+		cyan("A contact with id ", 0);
+		std::cout << id;
+		cyan(" doesn't exist", 1);
 		return ;
 	}
-	std::cout << "First name: " << contacts[id].first_name << std::endl;
-	std::cout << "Last name: " << contacts[id].last_name << std::endl;
-	std::cout << "Nickname: " << contacts[id].nick_name << std::endl;
-	std::cout << "Phone number: " << contacts[id].phone << std::endl;
-	std::cout << "Darkest secret: " << contacts[id].secret << std::endl;
+	cyan("First name: ", 0); std::cout << contacts[id].first_name << std::endl;
+	cyan("Last name: ", 0); std::cout << contacts[id].last_name << std::endl;
+	cyan("Nickname: ", 0); std::cout << contacts[id].nick_name << std::endl;
+	cyan("Phone number: ", 0); std::cout << contacts[id].phone << std::endl;
+	cyan("Darkest secret: ", 0); std::cout << contacts[id].secret << std::endl;
 }

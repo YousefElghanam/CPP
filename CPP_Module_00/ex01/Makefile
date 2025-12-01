@@ -2,7 +2,7 @@ NAME = phonebook
 
 CC = c++
 
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SOURCES = main.cpp colorize.cpp
 CLASS_SOURCES = PhoneBook.class.cpp
