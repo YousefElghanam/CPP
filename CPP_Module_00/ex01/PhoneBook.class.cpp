@@ -1,6 +1,7 @@
+#include "phonebook.hpp"
 #include "PhoneBook.class.hpp"
+#include <ios>
 #include <iostream>
-#include <sstream>
 
 PhoneBook::PhoneBook(void) {
 	PhoneBook::size = 0;
@@ -28,42 +29,46 @@ void	PhoneBook::add(Contact contact) {
 	}
 };
 
-// Contact	PhoneBook::get(size_t id) {
-// 	return (contacts[id]);
-// };
-
-static std::string	fix_string(std::string s) {
+static std::string	fix_string(std::string &s) {
 	if (s.length() > 10)
 	{
 		s[9] = '.';
 		s = s.substr(0, 10);
 	}
-	else if (s.length() < 10)
-	{
-		for (size_t i = s.length(); i < 10; i++)
-			s[i] = ' ';
-	}
 	return (s);
 };
 
 static void	display_contact(Contact contact, size_t i) {
-	std::string s;
-	std::stringstream ss;
-
-	ss << i;
-	s = fix_string(ss.str());
-	std::cout << s << "|";
-	s = fix_string(contact.first_name);
-	std::cout << s << "|";
-	s = fix_string(contact.last_name);
-	std::cout << s << "|";
-	s = fix_string(contact.nick_name);
-	std::cout << s << std::endl;
+	std::cout.width(10); std::cout << std::right << i;
+	cyan("|", 0);
+	std::cout.width(10); std::cout << std::right << fix_string(contact.first_name);
+	cyan("|", 0);
+	std::cout.width(10); std::cout << std::right << fix_string(contact.last_name);
+	cyan("|", 0);
+	std::cout.width(10); std::cout << std::right << fix_string(contact.nick_name);
+	std::cout << std::endl;
 };
 
 void	PhoneBook::display_all_contacts(void) {
-	for (size_t i = 0; i < size; i++)
+	cyan("============ Available Contacts ===========", 1);
+	std::cout.width(10); std::cout << std::internal << "Index";
+	cyan("|", 0);
+	std::cout.width(10); std::cout << std::internal << "First name";
+	cyan("|", 0);
+	std::cout.width(10); std::cout << std::internal << "Last name";
+	cyan("|", 0);
+	std::cout.width(10); std::cout << std::internal << "Nickname";
+	std::cout << std::endl;
+	cyan("-------------------------------------------", 1);
+
+	for (size_t i = 0; i < size; i++) {
 		display_contact(contacts[i], i);
+		if (i + 1 < size)
+			cyan("-------------------------------------------", 1);
+		else
+			cyan("===========================================", 1);
+	}
+	std::cout << std::endl;
 };
 
 void	PhoneBook::display_contact_info(size_t id) {

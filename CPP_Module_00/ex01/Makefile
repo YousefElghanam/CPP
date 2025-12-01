@@ -4,12 +4,14 @@ CC = c++
 
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
-SOURCES = main.cpp PhoneBook.class.cpp
+SOURCES = main.cpp colorize.cpp
+CLASS_SOURCES = PhoneBook.class.cpp
+ALL_SOURCES = $(SOURCES) $(CLASS_SOURCES)
 
 HEADERS = PhoneBook.class.hpp Contact.class.hpp
 
 OBJ_DIR = objects/
-OBJS = $(SOURCES:%.cpp=$(OBJ_DIR)%.o)
+OBJS = $(ALL_SOURCES:%.cpp=$(OBJ_DIR)%.o)
 
 all: $(NAME)
 
