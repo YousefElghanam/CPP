@@ -2,7 +2,7 @@ NAME = log
 
 CC = c++
 
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SOURCES = tests.cpp
 CLASS_SOURCES = Account.cpp
