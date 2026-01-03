@@ -73,12 +73,12 @@ void	PhoneBook::display_all_contacts(void) {
 
 void	PhoneBook::display_contact_info(size_t id) {
 	if (id >= size) {
-		std::cout << "A contact with this id doesn't exist" << std::endl;
+		yellow("A contact with this id doesn't exist", 1);
 		return ;
 	}
-	std::cout << "First name: " << contacts[id].first_name << std::endl;
-	std::cout << "Last name: " << contacts[id].last_name << std::endl;
-	std::cout << "Nickname: " << contacts[id].nick_name << std::endl;
-	std::cout << "Phone number: " << contacts[id].phone << std::endl;
-	std::cout << "Darkest secret: " << contacts[id].secret << std::endl;
+	cyan("First name: ", 0); std::cout << contacts[id].first_name << std::endl;
+	cyan("Last name: ", 0); std::cout << contacts[id].last_name << std::endl;
+	cyan("Nickname: " , 0); std::cout << contacts[id].nick_name << std::endl;
+	cyan("Phone number: ", 0); std::cout << contacts[id].phone << std::endl;
+	cyan("Darkest secret: ", 0); std::cout << contacts[id].secret << std::endl;
 }

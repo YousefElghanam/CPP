@@ -1,8 +1,8 @@
 NAME = phonebook
 
-CC = c++
+CXX = c++
 
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 #-g -fsanitize=address,undefined
 
 SOURCES = main.cpp colorize.cpp
 CLASS_SOURCES = PhoneBook.class.cpp
@@ -16,11 +16,11 @@ OBJS = $(ALL_SOURCES:%.cpp=$(OBJ_DIR)%.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $@
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $@
 
 $(OBJ_DIR)%.o: %.cpp
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)

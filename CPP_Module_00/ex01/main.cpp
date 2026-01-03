@@ -47,12 +47,12 @@ static int	prompt_new_contact(Contact *contact)
 
 static int	prompt_contact_id(size_t *id)
 {
-	std::string			s;
-	std::stringstream	ss(s);
+	std::string			line;
+	std::stringstream	ss;
 
 	cyan("Enter contact id: ", 1);
-	std::getline(std::cin, s);
-	if (std::cin.eof() || s.empty() || is_only_spaces(s)) {
+	std::getline(std::cin, line);
+	if (std::cin.eof() || line.empty() || is_only_spaces(line)) {
 		if (std::cin.eof())
 			std::cout << std::endl;
 		red("Search failed. Empty input", 1);
@@ -62,9 +62,11 @@ static int	prompt_contact_id(size_t *id)
 	if (std::cin.fail()) {
 		exit(1);
 	}
+	ss.clear();
+	ss.str(line);
 	ss >> *id;
-	if (ss.fail()) {
-		red("Invalid id. Enter a number", 1);
+	if (ss.fail() || !ss.eof()) {
+		red("Invalid input. Not digits or too big", 1);
 		return (1);
 	}
 	return (0);
