@@ -2,7 +2,7 @@ NAME = log
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 #-g -fsanitize=address,undefined
 
 SOURCES = tests.cpp
 CLASS_SOURCES = Account.cpp
