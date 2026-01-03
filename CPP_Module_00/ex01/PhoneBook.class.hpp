@@ -1,5 +1,5 @@
-#ifndef PHONEBOOK_CLASS_HPP
-# define PHONEBOOK_CLASS_HPP
+#ifndef __PHONEBOOK_CLASS_H__
+# define __PHONEBOOK_CLASS_H__
 
 # include "Contact.class.hpp"
 
@@ -7,9 +7,8 @@
 
 class PhoneBook {
 	private:
-		static const size_t	cap = CAP;
-		size_t				oldest;
-		Contact				contacts[CAP];
+		size_t	oldest;
+		Contact	contacts[CAP];
 
 	public:
 		size_t	size;
@@ -18,7 +17,6 @@ class PhoneBook {
 		~PhoneBook(void);
 
 		void	add(Contact contact);
-		// Contact	get(size_t id);
 		void	display_all_contacts();
 		void	display_contact_info(size_t id);
 };

@@ -1,15 +1,11 @@
-NAME = phonebook
+NAME = log
 
 CXX = c++
 
-<<<<<<< HEAD
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 #-g -fsanitize=address,undefined
-=======
-CFLAGS = -Wall -Wextra -Werror -std=c++98
->>>>>>> 149cc6d1c15b2dda847deb41e88bc753c2e9a9e0
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SOURCES = main.cpp colorize.cpp
-CLASS_SOURCES = PhoneBook.class.cpp
+SOURCES = tests.cpp
+CLASS_SOURCES = Account.cpp
 ALL_SOURCES = $(SOURCES) $(CLASS_SOURCES)
 
 HEADERS = PhoneBook.class.hpp Contact.class.hpp

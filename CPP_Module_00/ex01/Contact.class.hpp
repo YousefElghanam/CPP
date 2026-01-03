@@ -1,5 +1,5 @@
-#ifndef CONTACT_CLASS_HPP
-# define CONTACT_CLASS_HPP
+#ifndef __CONTACT_CLASS_H__
+# define __CONTACT_CLASS_H__
 
 # include <string>
 
