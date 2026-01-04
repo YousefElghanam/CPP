@@ -1,14 +1,14 @@
-NAME = log
+NAME = zombie
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 #-g -fsanitize=address,undefined
+CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -g #-fsanitize=address,undefined
 
-SOURCES = tests.cpp
-CLASS_SOURCES = Account.cpp
+SOURCES = main.cpp newZombie.cpp randomChump.cpp
+CLASS_SOURCES = Zombie.cpp
 ALL_SOURCES = $(SOURCES) $(CLASS_SOURCES)
 
-HEADERS = PhoneBook.class.hpp Contact.class.hpp
+HEADERS = Zombie.hpp
 
 OBJ_DIR = objects/
 OBJS = $(ALL_SOURCES:%.cpp=$(OBJ_DIR)%.o)

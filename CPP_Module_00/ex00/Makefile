@@ -2,12 +2,13 @@ NAME = megaphone
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 #-g -fsanitize=address,undefined
+CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 #-g -fsanitize=address,undefined
 
 SOURCES = megaphone.cpp
 
 OBJ_DIR = objects/
 OBJS = $(SOURCES:%.cpp=$(OBJ_DIR)%.o)
+DEPS = $(OBJS:.o=.d)
 
 all: $(NAME)
 
@@ -25,3 +26,5 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
+
+-include $(DEPS)
