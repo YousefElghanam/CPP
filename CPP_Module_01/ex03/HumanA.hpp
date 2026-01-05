@@ -9,8 +9,8 @@ class HumanA {
 		can not change during the HumanA's lifetime.
 		In HumanB, we use a poitner, because a HumanB can have no Weapon */
 	private:
-		std::string	name;
-		Weapon		&weaponREF;
+		std::string		name;
+		const Weapon	&weaponREF;
 		/* It doesn't make sense to add setWeapon(Weapon &Weapon), because
 			weaponREF is initializer to one object at the start, and can't
 			be changed, if we do weaponREF = weapon, we are actually 
@@ -18,6 +18,7 @@ class HumanA {
 	public:
 		HumanA(std::string name, Weapon& weapon);
 		~HumanA(void);
+		// void				setWeapon(Weapon& weapon); // read Weapon::getType()
 		void				attack(void);
 };
 

@@ -11,7 +11,11 @@ class Weapon {
 		Weapon(std::string name);
 		~Weapon(void);
 
-		const std::string&	getType(void);
+		/* The first const belongs to the return type.
+			The secondt const means that this method will not
+			modifiy the object, so we can use it with a objects
+			that are const (HumanA's WeaponREF) */
+		const std::string&	getType(void) const;
 		void				setType(std::string name);
 };
 

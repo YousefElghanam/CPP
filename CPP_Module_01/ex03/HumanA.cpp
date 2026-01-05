@@ -11,6 +11,11 @@ HumanA::~HumanA(void) {
 	;
 }
 
+// void				HumanA::setWeapon(Weapon& weapon) {
+// 	std::cout << "HumanA " << this->name << " is taking " << weapon.getType() << std::endl;
+// 	this->weaponREF = weapon;
+// }
+
 void				HumanA::attack(void) {
 	std::cout << this->name << " attacks with their " << this->weaponREF.getType() << std::endl;
 }
