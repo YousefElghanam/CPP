@@ -1,14 +1,14 @@
-NAME = violence
+NAME = ft_sed
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 #-g -fsanitize=address,undefined
+CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -g -fsanitize=address,undefined
 
 SOURCES = main.cpp
-CLASS_SOURCES = Weapon.cpp HumanA.cpp HumanB.cpp
+CLASS_SOURCES = 
 ALL_SOURCES = $(SOURCES) $(CLASS_SOURCES)
 
-HEADERS = main.hpp Weapon.hpp HumanA.hpp HumanB.hpp
+HEADERS = main.hpp
 
 OBJ_DIR = objects/
 OBJS = $(ALL_SOURCES:%.cpp=$(OBJ_DIR)%.o)
