@@ -26,6 +26,7 @@ int main(void)
 {
 	std::cout << "================================" << std::endl;
 	Weapon		A_weapon("club");
+	Weapon		A_alt_weapon("small club");
 	Weapon		B_weapon("axe");
 	HumanA		A("A", A_weapon);
 	HumanB		B("B");
@@ -33,7 +34,6 @@ int main(void)
 	A.attack();
 	B.attack();
 	std::cout << "================================" << std::endl;
-	A.setWeapon(A_weapon);
 	B.setWeapon(B_weapon);
 	std::cout << "================================" << std::endl;
 	A.attack();
