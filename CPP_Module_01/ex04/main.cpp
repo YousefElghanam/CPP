@@ -2,29 +2,55 @@
 #include <iostream>
 #include <fstream>
 
-void	open_file(const char *fileName) {
-	std::ifstream	file(fileName, std::ifstream::in);
-	char	line[5];
-	file.getline(file, 5);
-	std::cout << line << std::endl;
+// bool	open_file(cosnt char* fileName, std::ifstream *filePtr) {
+// 	std::string		line;
+// 	std::ifstream	file;
+
+// 	file.open(fileName);
+// 	if (file.fail()) {
+// 		std::cerr << "Couldn't open file." << std::endl;
+// 		return 1;
+// 	}
+// 	filePtr = &file;
+// 	return 0;
+// }
+
+bool	sed(std::ifstream& inputFile, std::ofstream& outputFile, char* s1, char* s2) {
+	std::string		line;
+	size_t			lineLen = line.length();
+
+	while (1) {
+		std::getline(inputFile, line);
+		if (line.empty())
+			break ;
+		while (line.find(s1) + 1 < lineLen) {
+			
+		}
+		line.find(s1);
+
+	}
+	return 0;
 }
 
 int	main(int argc, char **argv) {
 	if (argc != 4) {
-		std::cerr << "Needs 3 arguments" << std::endl;
+		std::cerr << "Needs 3 arguments." << std::endl;
 		return 1;
 	}
-	std::string		fileName(argv[1]);
-	std::string		s1(argv[2]);
-	std::string		s2(argv[3]);
-	if (fileName.empty()) {
-		std::cerr << "Filename can not be empty" << std::endl;
+
+	std::ifstream	inputFile(argv[1]);	
+	std::ofstream	outputFile((std::string(argv[1]) + ".replace").c_str());
+
+	if (inputFile.fail()) {
+		std::cerr << "Couldn't open input file." << std::endl;
 		return 1;
 	}
-	if (s1.empty()) {
-		std::cerr << "This argument can not be empty" << std::endl;
+	if (outputFile.fail()) {
+		std::cerr << "Couldn't open output file." << std::endl;
 		return 1;
 	}
-	open_file(argv[1]);
+	if (sed(inputFile, outputFile, argv[2], argv[3])) {
+		std::cerr << "Something went wrong." << std::endl;
+	}
 	return 0;
 }
