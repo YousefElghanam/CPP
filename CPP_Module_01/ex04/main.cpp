@@ -1,19 +1,4 @@
 #include "main.hpp"
-#include <iostream>
-#include <fstream>
-
-// bool	open_file(cosnt char* fileName, std::ifstream *filePtr) {
-// 	std::string		line;
-// 	std::ifstream	file;
-
-// 	file.open(fileName);
-// 	if (file.fail()) {
-// 		std::cerr << "Couldn't open file." << std::endl;
-// 		return 1;
-// 	}
-// 	filePtr = &file;
-// 	return 0;
-// }
 
 bool	read_file(std::ifstream& inputFile, std::string& chunk) {
 	char	c;
@@ -22,12 +7,14 @@ bool	read_file(std::ifstream& inputFile, std::string& chunk) {
 	std::streampos	fileSize = inputFile.tellg();
 	inputFile.seekg(0, std::ios::beg);
 	chunk.clear();
+	if (fileSize > 100000000)
+		return 1;
 	while (chunk.size() < (size_t)fileSize && inputFile.get(c)) {
 		chunk.push_back(c);
 	}
 	if (inputFile.fail())
 		return 1;
-	return (chunk.empty() || chunk.size() > 100000000);
+	return (chunk.empty());
 }
 
 bool	sed(std::ifstream& inputFile, std::ofstream& outputFile, char* s1, char* s2) {
@@ -37,7 +24,6 @@ bool	sed(std::ifstream& inputFile, std::ofstream& outputFile, char* s1, char* s2
 	char					c;
 
 	if (!inputFile.get(c) && s1Len == 0) {
-		// std::cout << "empty input file" << std::endl;
 		outputFile << s2;
 		return outputFile.fail();
 	}
