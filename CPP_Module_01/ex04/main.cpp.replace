@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 
-// bool	open_file(cosnt char* fileName, std::ifstream *filePtr) {
+// int	open_file(cosnt char* fileName, std::ifstream *filePtr) {
 // 	std::string		line;
 // 	std::ifstream	file;
 
@@ -15,7 +15,7 @@
 // 	return 0;
 // }
 
-bool	read_file(std::ifstream& inputFile, std::string& chunk) {
+int	read_file(std::ifstream& inputFile, std::string& chunk) {
 	char	c;
 
 	inputFile.seekg(0, std::ios::end);
@@ -30,7 +30,7 @@ bool	read_file(std::ifstream& inputFile, std::string& chunk) {
 	return (chunk.empty() || chunk.size() > 100000000);
 }
 
-bool	sed(std::ifstream& inputFile, std::ofstream& outputFile, char* s1, char* s2) {
+int	sed(std::ifstream& inputFile, std::ofstream& outputFile, char* s1, char* s2) {
 	std::string				fileContent;
 	std::string::iterator	it;
 	size_t					s1Len = std::string(s1).length();
@@ -66,7 +66,7 @@ bool	sed(std::ifstream& inputFile, std::ofstream& outputFile, char* s1, char* s2
 	return 0;
 }
 
-bool	open_files(std::ifstream* inputFile, std::ofstream* outputFile, char *inputFileName) {
+int	open_files(std::ifstream* inputFile, std::ofstream* outputFile, char *inputFileName) {
 	inputFile->open(inputFileName);
 	if (inputFile->fail()) {
 		std::cerr << "Couldn't open input file." << std::endl;
