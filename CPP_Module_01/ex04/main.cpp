@@ -5,7 +5,7 @@
 void	open_file(const char *fileName) {
 	std::ifstream	file(fileName, std::ifstream::in);
 	char	line[5];
-	file.getline(line, 5);
+	file.getline(file, 5);
 	std::cout << line << std::endl;
 }
 
