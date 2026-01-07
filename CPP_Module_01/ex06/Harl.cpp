@@ -48,5 +48,19 @@ void		Harl::complain(std::string level) {
 	int	levelIdx = -1;
 	while (++levelIdx < 4 && this->levels[levelIdx] != level)
 		;
-	(this->*fnArr[levelIdx])();
+	switch (levelIdx) {
+		case 0:
+			(this->*fnArr[0])(); /* fall through */
+		case 1:
+			(this->*fnArr[1])(); /* fall through */
+		case 2:
+			(this->*fnArr[2])(); /* fall through */
+		case 3:
+			(this->*fnArr[3])(); break ;
+		case 4:
+			(this->*fnArr[4])();
+	}
+	/* Same solution but with a while loop */
+	// while (levelIdx++  < 4)
+	// 	(this->*fnArr[levelIdx - 1])();
 }

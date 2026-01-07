@@ -8,7 +8,7 @@ SOURCES = main.cpp newZombie.cpp randomChump.cpp
 CLASS_SOURCES = Zombie.cpp
 ALL_SOURCES = $(SOURCES) $(CLASS_SOURCES)
 
-HEADERS = Zombie.hpp
+HEADERS = main.hpp Zombie.hpp
 
 OBJ_DIR = objects/
 OBJS = $(ALL_SOURCES:%.cpp=$(OBJ_DIR)%.o)
