@@ -6,12 +6,11 @@
 class Harl {
 	private:
 		std::string		levels[4];
-		void		(Harl::* fnArr[4])();
-		void		debug(void);
-		void		info(void);
-		void		warning(void);
-		void		error(void);
-		// const size_t	getIdx(std::string level);
+		void			(Harl::* fnArr[4])();
+		void			debug(void);
+		void			info(void);
+		void			warning(void);
+		void			error(void);
 	public:
 		Harl(void);
 		~Harl(void);
