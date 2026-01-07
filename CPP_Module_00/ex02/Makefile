@@ -8,7 +8,7 @@ SOURCES = tests.cpp
 CLASS_SOURCES = Account.cpp
 ALL_SOURCES = $(SOURCES) $(CLASS_SOURCES)
 
-HEADERS = PhoneBook.class.hpp Contact.class.hpp
+HEADERS = Account.hpp
 
 OBJ_DIR = objects/
 OBJS = $(ALL_SOURCES:%.cpp=$(OBJ_DIR)%.o)

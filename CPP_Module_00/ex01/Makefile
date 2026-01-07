@@ -5,10 +5,10 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 #-g -fsanitize=address,undefined
 
 SOURCES = main.cpp colorize.cpp
-CLASS_SOURCES = PhoneBook.class.cpp
+CLASS_SOURCES = PhoneBook.cpp
 ALL_SOURCES = $(SOURCES) $(CLASS_SOURCES)
 
-HEADERS = PhoneBook.class.hpp Contact.class.hpp
+HEADERS = main.hpp PhoneBook.hpp Contact.hpp
 
 OBJS_DIR = ./objects/
 OBJS = $(ALL_SOURCES:%.cpp=$(OBJS_DIR)%.o)
