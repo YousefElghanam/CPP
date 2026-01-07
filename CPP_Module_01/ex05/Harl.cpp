@@ -34,11 +34,12 @@ void		Harl::unknown(void) {
 	std::cout << "UNKOWN LEVEL" << std::endl;
 }
 
+/**
+ * Requires a valid std::string, NULL is undefined behaviour
+ */
 void		Harl::complain(std::string level) {
 	int	levelIdx = -1;
-	while (++levelIdx < 4) {
-		if (this->levels[levelIdx] == level)
-			break ;
-	}
+	while (++levelIdx < 4 && this->levels[levelIdx] != level)
+		;
 	(this->*fnArr[levelIdx])();
 }
