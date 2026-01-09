@@ -36,9 +36,10 @@ void		Harl::error(void) {
 
 /* HEHE >:) */
 void		Harl::unknown(void) {
-	std::cout << "terminate called after throwing an instance of 'std::logic_error'" << std::endl;
-	std::cout << "  what():  basic_string: construction from null is not valid" << std::endl;
-	std::cout << "Aborted (core dumped)" << std::endl;
+	std::cout << "unknown" << std::endl;
+	// std::cout << "terminate called after throwing an instance of 'std::logic_error'" << std::endl;
+	// std::cout << "  what():  basic_string: construction from null is not valid" << std::endl;
+	// std::cout << "Aborted (core dumped)" << std::endl;
 }
 
 /**
@@ -56,8 +57,8 @@ void		Harl::complain(std::string level) {
 		case 2:
 			(this->*fnArr[2])(); /* fall through */
 		case 3:
-			(this->*fnArr[3])(); break ;
-		case 4:
+			(this->*fnArr[3])(); break;
+		default: // could use (case 4) here, I implemented it, but eval says i need default idk.
 			(this->*fnArr[4])();
 	}
 	/* Same solution but with a while loop */

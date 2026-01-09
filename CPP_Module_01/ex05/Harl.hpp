@@ -1,5 +1,5 @@
-#ifndef __HARL_CLASS__
-# define __HARL_CLASS__
+#ifndef HARL_CLASS_HPP
+# define HARL_CLASS_HPP
 
 # include <iostream>
 
@@ -18,4 +18,4 @@ class Harl {
 		void		complain(std::string level);
 };
 
-#endif /* __HARL_CLASS__ */
+#endif /* HARL_CLASS_HPP */

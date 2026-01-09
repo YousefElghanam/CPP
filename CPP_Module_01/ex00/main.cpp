@@ -5,7 +5,7 @@
 int main(void)
 {
 	Zombie		y("zombieY");
-	std::cout << "tring to get name (" << y.get_name() << ")" << std::endl;
+	std::cout << "trying to get name (" << y.get_name() << ")" << std::endl;
 	y.announce();
 	std::cout << "================================" << std::endl;
 

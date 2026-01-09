@@ -8,17 +8,18 @@ int	main(int argc, char **argv) {
 	std::cout << "=============================" << std::endl;
 	Harl	obj;
 	obj.complain("ERROR");
-	std::cout << "=============================" << std::endl;
-	obj.complain("xx");
-	std::cout << "=============================" << std::endl;
-	obj.complain("WARNING");
-	std::cout << "=============================" << std::endl;
-	obj.complain("DEBUG");
-	std::cout << "=============================" << std::endl;
-	obj.complain("INFO");
-	std::cout << "=============================" << std::endl;
-	if (argc == 1)
-		return 0;
-	obj.complain(argv[1]);
+	// std::cout << "=============================" << std::endl;
+	// obj.complain("xx");
+	// std::cout << "=============================" << std::endl;
+	// obj.complain("WARNING");
+	// std::cout << "=============================" << std::endl;
+	// obj.complain("DEBUG");
+	// std::cout << "=============================" << std::endl;
+	// obj.complain("INFO");
+	// std::cout << "=============================" << std::endl;
+	// if (argc == 1)
+	// 	return 0;
+	// obj.complain(argv[1]);
+	(void)argv;
 	return 0;
 }

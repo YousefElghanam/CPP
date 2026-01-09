@@ -1,6 +1,6 @@
-#ifndef __MAIN_H__
-# define __MAIN_H__
+#ifndef MAIN_HPP
+# define MAIN_HPP
 
 #include "Harl.hpp"
 
-#endif /* __MAIN_H__ */
+#endif /* MAIN_HPP */

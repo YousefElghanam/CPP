@@ -1,9 +1,9 @@
-#ifndef __ZOMBIE_H__
-# define __ZOMBIE_H__
+#ifndef MAIN_HPP
+# define MAIN_HPP
 
 # include <string>
 # include "Zombie.hpp"
 
 Zombie	*zombieHorde(int N, std::string name);
 
-#endif /* __ZOMBIE_H__ */
+#endif /* MAIN_HPP */

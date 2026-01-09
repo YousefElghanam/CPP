@@ -17,7 +17,7 @@ Zombie::~Zombie(void) {
 }
 
 void		Zombie::set_name(std::string name) {
-	std::cout << ">>Changing (" << this->name << ")'s name to (" << name << ")" << std::endl;
+	std::cout << ">>Setting (" << this->name << ")'s name to (" << name << ")" << std::endl;
 	this->name = name;
 }
 

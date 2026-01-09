@@ -1,8 +1,9 @@
-#ifndef __VIOLENCE_H__
-# define __VIOLENCE_H__
+#ifndef VIOLENCE_HPP
+# define VIOLENCE_HPP
 
 # include "Weapon.hpp"
 # include "HumanA.hpp"
 # include "HumanB.hpp"
+# include <iostream>
 
-#endif /* __VIOLENCE_H__ */
+#endif /* VIOLENCE_HPP */

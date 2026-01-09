@@ -1,7 +1,7 @@
-#ifndef __FTSED_H__
-# define __FTSED_H__
+#ifndef MAIN_HPP
+# define MAIN_HPP
 
 #include <iostream>
 #include <fstream>
 
-#endif
+#endif /* MAIN_HPP */

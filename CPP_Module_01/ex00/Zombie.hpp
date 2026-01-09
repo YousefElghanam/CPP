@@ -1,5 +1,5 @@
-#ifndef __ZOMBIE_CLASS_H__
-# define __ZOMBIE_CLASS_H__
+#ifndef ZOMBIE_CLASS_HPP
+# define ZOMBIE_CLASS_HPP
 
 # include <string>
 
@@ -8,7 +8,6 @@ class Zombie {
 		std::string	name;
 
 	public:
-
 		Zombie(std::string name);
 		~Zombie(void);
 
@@ -17,4 +16,4 @@ class Zombie {
 		void		announce(void);
 };
 
-#endif /* __ZOMBIE_CLASS__ */
+#endif /* ZOMBIE_CLASS_HPP */

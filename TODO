@@ -1,3 +1,4 @@
 #1 Add __CLASSNAME_CLASS_H__ missing H to header guards
 #2 Add main.hpp to Makefiles if needed
 #3 Add prints to constructors and destructors all over
+#4 Check if you need to use new in orthodox canonical form copy and assignment member functions
