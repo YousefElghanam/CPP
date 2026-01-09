@@ -1,6 +1,6 @@
 #include "Fixed.hpp"
-#include <iostream>
-#include <climits>
+// #include <iostream>
+// #include <climits>
 
 Fixed::Fixed(void):
 	raw(0), fractions(8) {
@@ -11,7 +11,7 @@ Fixed::Fixed(const int num) {
 	// start at the rightmost bit of raw, and make sure from here to
 	// the leftmost bit won't be broken if we shift num this->fractions times
 	int	lastEightBits =  num >> (sizeof(int) * 8) - this->fractions;
-	lastEightBits = lastEightBits & INT32_MAX;
+	// lastEightBits = lastEightBits & INT32_MAX;
 	// we ignore the sign bit (leftmost bit)
 	// for example: lastEightBits:	1010 1011
 	//				INT32_MAX:	  & 0111 1111
