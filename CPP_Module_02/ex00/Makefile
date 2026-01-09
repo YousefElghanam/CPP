@@ -2,7 +2,7 @@ NAME = fixed
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 # -g# -fsanitize=address,undefined
+CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -pedantic -std=c++98 # -g# -fsanitize=address,undefined
 
 SOURCES = main.cpp
 CLASS_SOURCES = Fixed.cpp

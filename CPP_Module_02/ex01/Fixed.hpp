@@ -1,5 +1,5 @@
-#ifndef __FIXED_CLASS_H__
-# define __FIXED_CLASS_H__
+#ifndef FIXED_CLASS_HPP
+# define FIXED_CLASS_HPP
 
 class Fixed {
 	private:
@@ -20,4 +20,6 @@ class Fixed {
 		int		toInt(void) const;
 };
 
-#endif /* __FIXED_CLASS_H__ */
+std::ostream& operator<<(std::ostream &os, Fixed fixed);
+
+#endif /* FIXED_CLASS_HPP */

@@ -1,5 +1,5 @@
-#ifndef __FIXED_CLASS_H__
-# define __FIXED_CLASS_H__
+#ifndef FIXED_CLASS_HPP
+# define FIXED_CLASS_HPP
 
 class Fixed {
 	private:
@@ -16,4 +16,4 @@ class Fixed {
 		void	setRawBits(int const raw);
 };
 
-#endif /* __FIXED_CLASS_H__ */
+#endif /* FIXED_CLASS_HPP */
