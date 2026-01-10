@@ -1,5 +1,5 @@
-#ifndef __CONTACT_CLASS_H__
-# define __CONTACT_CLASS_H__
+#ifndef CONTACT_CLASS_H
+# define CONTACT_CLASS_H
 
 # include <string>
 # include <sstream>
@@ -8,7 +8,7 @@
 # include <cstdio>
 
 class Contact {
-	public:
+	public: // SHOULD BE PRIVATE AND MAKE SETTERS AND GETTER FUNCTIONS
 		std::string	first_name;
 		std::string	last_name;
 		std::string	nick_name;
@@ -16,4 +16,4 @@ class Contact {
 		std::string	secret;
 };
 
-#endif
+#endif /* CONTACT_CLASS_H */

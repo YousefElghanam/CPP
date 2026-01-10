@@ -1,7 +1,9 @@
 #ifndef PHONEBOOK_H
 # define PHONEBOOK_H
 
-#include <string>
+# include <string>
+# include "PhoneBook.hpp"
+# include "Contact.hpp"
 
 # define RESET   "\033[0m"
 # define BLACK   "\033[30m"      /* Black */

@@ -1,6 +1,4 @@
 #include "main.hpp"
-#include "PhoneBook.hpp"
-#include "Contact.hpp"
 
 static int	is_only_spaces(std::string str) {
 	for (std::string::iterator it = str.begin(); it != str.end(); it++) {
