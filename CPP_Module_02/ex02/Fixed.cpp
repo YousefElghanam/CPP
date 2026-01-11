@@ -1,10 +1,10 @@
 #include "Fixed.hpp"
 #include <iostream>
 
-const int Fixed::fractions = 8;
+// const int Fixed::fractions = 8;
 
 Fixed::Fixed(void):
-	raw(0) {
+	raw(0), fractions(8) {
 	std::cout << "Default constructor called" << std::endl;
 }
 
@@ -64,4 +64,48 @@ int		Fixed::toInt(void) const {
 std::ostream& operator<<(std::ostream &os, const Fixed& obj) {
 	os << obj.toFloat();
 	return os;
+}
+
+bool	Fixed::operator>(const Fixed& obj) const {
+	return this->toFloat() > obj.toFloat();
+}
+
+bool	Fixed::operator<(const Fixed& obj) const {
+	return this->toFloat() < obj.toFloat();
+}
+
+bool	Fixed::operator>=(const Fixed& obj) const {
+	return this->toFloat() >= obj.toFloat();
+}
+
+bool	Fixed::operator<=(const Fixed& obj) const {
+	return this->toFloat() <= obj.toFloat();
+}
+
+bool	Fixed::operator==(const Fixed& obj) const {
+	return this->toFloat() == obj.toFloat();
+}
+
+bool	Fixed::operator!=(const Fixed& obj) const {
+	return this->toFloat() != obj.toFloat();
+}
+
+Fixed	Fixed::operator+(const Fixed& obj) const {
+	Fixed	ret(this->toFloat() + obj.toFloat());
+	return ret.toFloat();
+}
+
+Fixed	Fixed::operator-(const Fixed& obj) const {
+	Fixed	ret(this->toFloat() - obj.toFloat());
+	return ret.toFloat();
+}
+
+Fixed	Fixed::operator*(const Fixed& obj) const {
+	Fixed	ret(this->toFloat() * obj.toFloat());
+	return ret.toFloat();
+}
+
+Fixed	Fixed::operator/(const Fixed& obj) const {
+	Fixed	ret(this->toFloat() / obj.toFloat());
+	return ret.toFloat();
 }
