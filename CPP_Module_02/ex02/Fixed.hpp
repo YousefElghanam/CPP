@@ -6,7 +6,7 @@
 class Fixed {
 	private:
 		int					raw;
-		int	fractions;
+		static const int	fractions;
 
 	public:
 		Fixed(void);
