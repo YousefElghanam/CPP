@@ -26,6 +26,10 @@ $(OBJ_DIR)%.o: %.cpp
 run: re
 	./fixed
 
+runf: CXXFLAGS:= -g -fsanitize=address,leak,undefined
+runf: re
+	./fixed
+
 clean:
 	rm -rf $(OBJ_DIR)
 

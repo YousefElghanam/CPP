@@ -67,7 +67,7 @@ std::ostream&	operator<<(std::ostream &os, const Fixed& obj) {
 }
 
 bool	Fixed::operator>(const Fixed& obj) const {
-	return (this->getRawBits() > obj.getRawBits());
+	return this->getRawBits() > obj.getRawBits();
 }
 
 bool	Fixed::operator<(const Fixed& obj) const {
@@ -102,33 +102,92 @@ Fixed	Fixed::operator-(const Fixed& obj) const {
 	return ret;
 }
 
-void	print_binary(int num) {
-	std::cout << "num: " << num << std::endl;
-	for (int i = 31; i >= 0; i--) {
-		std::cout << (((num >> i) & 1) > 0 ? 1 : 0);
-		if (!(i % 8))
-			std::cout << " ";
-	}
-	std::cout << std::endl;
-}
-
 Fixed	Fixed::operator*(const Fixed& obj) const {
 	Fixed	ret;
-	int		fractionExtractor = 0;
+	// int		fractionExtractor = 0;
 
-	// for fractions of 12, Extractor will be 0000 0011 1111 1111 (12 zeros).
-	for (int i = 0; i < this->fractions; i++)
-		fractionExtractor |= (1 << i);
-	int		whole = this->raw >> this->fractions;
-	int		fractions = this->raw & fractionExtractor;
-	ret.setRawBits(whole * obj.getRawBits()
-			+ ((fractions * obj.getRawBits()) >> this->fractions));
+	// // for fractions of 12, Extractor will be 0000 0011 1111 1111 (12 zeros).
+	// for (int i = 0; i < this->fractions; i++)
+	// 	fractionExtractor |= (1 << i);
+	// int		whole = this->raw >> this->fractions;
+	// int		fractions = this->raw & fractionExtractor;
+	// ret.setRawBits(whole * obj.getRawBits()
+	// 		+ ((fractions * obj.getRawBits()) >> this->fractions));
+
+	/* This multiplication will move the point 8 more bits to the left, so
+		we scale it back by shifting 8 right. */
+	long	mul = static_cast<long>(this->raw) * static_cast<long>(obj.raw);
+	ret.setRawBits(mul >> this->fractions);
 	return ret;
 }
 
-// TODO
 Fixed	Fixed::operator/(const Fixed& obj) const {
 	Fixed	ret;
-	ret.setRawBits(this->raw / obj.getRawBits());
+
+	/* NOTE: I don't want to handle division by 0 */
+
+	/* We only scale the first operand to make the division more precise. Scaling both doesn't make sense,
+		because in a division operation if both sides are multiplied by the same amount, that amount is ignored
+		anyway. (100*x / 200*x == 100 / 200), but (100*x / 200) will give use more info */
+	long	div = ((static_cast<long>(this->raw)) << this->fractions) / ((static_cast<long>(obj.raw)));
+	/* the result (div) doesn't need to be shifted after this, because it's already scaled
+		(the whole and fraction parts of the bits are in their correct position) */
+	ret.setRawBits(static_cast<int>(div));
 	return ret;
+}
+
+/* post increment/decrement */
+
+Fixed	Fixed::operator++(int) {
+	Fixed	ret(*this);
+	this->setRawBits(this->raw + 1);
+	return ret;
+}
+
+Fixed	Fixed::operator--(int) {
+	Fixed	ret(*this);
+	this->setRawBits(this->raw - 1);
+	return ret;
+}
+
+/* pre increment/decrement */
+
+Fixed	Fixed::operator++(void) {
+	this->setRawBits(this->raw + 1);
+	Fixed	ret(*this);
+	return ret;
+}
+
+Fixed	Fixed::operator--(void) {
+	this->setRawBits(this->raw + 1);
+	Fixed	ret(*this);
+	return ret;
+}
+
+/* Returns first paremeter if they're equal */
+Fixed&	Fixed::min(Fixed& fp1, Fixed& fp2) {
+	if (fp2 < fp1)
+		return fp2;
+	return fp1;
+}
+
+/* Returns first paremeter if they're equal */
+Fixed&	Fixed::max(Fixed& fp1, Fixed& fp2) {
+	if (fp2 > fp1)
+		return fp2;
+	return fp1;
+}
+
+/* Returns first paremeter if they're equal */
+const Fixed&	Fixed::min(const Fixed& fp1, const Fixed& fp2) {
+	if (fp2 < fp1)
+		return fp2;
+	return fp1;
+}
+
+/* Returns first paremeter if they're equal */
+const Fixed&	Fixed::max(const Fixed& fp1, const Fixed& fp2) {
+	if (fp2 > fp1)
+		return fp2;
+	return fp1;
 }
