@@ -1,7 +1,7 @@
-#ifndef __MAIN_H__
-# define __MAIN_H__
+#ifndef MAIN_H
+# define MAIN_H
 
 # include "ClapTrap.hpp"
 # include <iostream>
 
-#endif /* __MAIN_H__ */
+#endif /* MAIN_H */

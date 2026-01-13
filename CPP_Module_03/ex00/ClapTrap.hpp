@@ -1,5 +1,5 @@
-#ifndef __CLAPTRAP_CLASS_H__
-# define __CLAPTRAP_CLASS_H__
+#ifndef CLAPTRAP_CLASS_H
+# define CLAPTRAP_CLASS_H
 
 #include <string>
 
@@ -22,4 +22,4 @@ class ClapTrap {
 		void			beRepaired(unsigned int amount);
 };
 
-#endif /* __CLAPTRAP_CLASS_H__ */
+#endif /* CLAPTRAP_CLASS_H */

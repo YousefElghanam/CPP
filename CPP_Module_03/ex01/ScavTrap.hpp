@@ -1,5 +1,5 @@
-#ifndef __SCAVTRAP_CLASS_H__
-# define __SCAVTRAP_CLASS_H__
+#ifndef SCAVTRAP_CLASS_H
+# define SCAVTRAP_CLASS_H
 
 # include "ClapTrap.hpp"
 # include <string>
@@ -16,4 +16,4 @@ class ScavTrap: public ClapTrap {
 		void	guardGate(void);
 };
 
-#endif /* __SCAVTRAP_CLASS_H__ */
+#endif /* SCAVTRAP_CLASS_H */

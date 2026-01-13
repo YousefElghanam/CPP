@@ -1,5 +1,5 @@
-#ifndef __FRAGTRAP_CLASS_H__
-# define __FRAGTRAP_CLASS_H__
+#ifndef FRAGTRAP_CLASS_H
+# define FRAGTRAP_CLASS_H
 
 # include "ClapTrap.hpp"
 # include <string>
@@ -16,4 +16,4 @@ class FragTrap: public ClapTrap {
 		void	highFivesGuys(void);
 };
 
-#endif /* __FRAGTRAP_CLASS_H__ */
+#endif /* FRAGTRAP_CLASS_H */
