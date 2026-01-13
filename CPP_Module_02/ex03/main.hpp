@@ -6,4 +6,6 @@
 # include <iostream>
 # include <limits>
 
+bool	bsp(Point const a, Point const b, Point const c, Point const point);
+
 #endif /* MAIN_HPP */

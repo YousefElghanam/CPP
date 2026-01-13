@@ -40,10 +40,12 @@ class Fixed {
 
 		static Fixed&		min(Fixed& fp1, Fixed& fp2);
 		static Fixed&		max(Fixed& fp1, Fixed& fp2);
+		static Fixed		abs(Fixed& fp1);
 		const static Fixed&	min(const Fixed& fp1, const Fixed& fp2);
 		const static Fixed&	max(const Fixed& fp1, const Fixed& fp2);
+		static Fixed		abs(const Fixed& fp1);
 };
 
-std::ostream& operator<<(std::ostream &os, const Fixed& fixed);
+std::ostream&	operator<<(std::ostream &os, const Fixed& fixed);
 
 #endif /* FIXED_CLASS_HPP */

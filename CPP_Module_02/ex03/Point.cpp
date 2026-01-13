@@ -5,10 +5,13 @@ Point::Point(void):
 
 Point::Point(const float x, const float y):
 	x(x), y(y) {}
-	
-Point::Point(Point& obj):
-	x(obj.x), y(obj.y) {}
 
+Point::Point(const Fixed x, const Fixed y):
+	x(x), y(y) {}
+
+Point::Point(const Point& obj):
+	x(obj.x), y(obj.y) {}
+	
 Point&	Point::operator=(Point& obj) {
 	if (this != &obj) {
 		(Fixed)this->x = obj.x;
@@ -19,20 +22,15 @@ Point&	Point::operator=(Point& obj) {
 
 Point::~Point(void) {}
 
-Fixed	Point::getX(void) {
+vec	Point::operator-(const Point& obj) const {
+	Point	ret(this->getX() - obj.getX(), this->getY() - obj.getY());
+	return ret;
+}
+
+Fixed	Point::getX(void) const {
 	return this->x;
 }
 
-Fixed	Point::getY(void) {
+Fixed	Point::getY(void) const {
 	return this->y;
-}
-
-Fixed	cross_product(Point v1, Point v2) {
-	v1
-}
-
-bool	bsp( Point const a, Point const b, Point const c, Point const point) {
-	Point	vec[3];
-	vec[0] = Point(float(a.getX() - b.getX()), )
-	cross_product()
 }

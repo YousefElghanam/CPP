@@ -173,6 +173,12 @@ Fixed&	Fixed::max(Fixed& fp1, Fixed& fp2) {
 	return fp1;
 }
 
+Fixed			Fixed::abs(Fixed& fp1) {
+	if (fp1 < 0)
+		return Fixed(-1) * fp1;
+	return Fixed(fp1);
+}
+
 /* Returns first paremeter if they're equal */
 const Fixed&	Fixed::min(const Fixed& fp1, const Fixed& fp2) {
 	if (fp2 < fp1)
@@ -185,4 +191,10 @@ const Fixed&	Fixed::max(const Fixed& fp1, const Fixed& fp2) {
 	if (fp2 > fp1)
 		return fp2;
 	return fp1;
+}
+
+Fixed			Fixed::abs(const Fixed& fp1) {
+	if (fp1 < 0)
+		return Fixed(-1) * fp1;
+	return Fixed(fp1);
 }

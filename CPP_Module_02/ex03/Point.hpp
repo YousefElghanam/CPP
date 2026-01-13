@@ -12,12 +12,17 @@ class Point {
 	public:
 		Point(void);
 		Point(const float x, const float y);
-		Point(Point& obj);
+		Point(const Fixed x, const Fixed y);
+		Point(const Point& obj);
 		Point&	operator=(Point& obj);
 		~Point(void);
 	
-		Fixed	getX(void);
-		Fixed	getY(void);
-}	vec ;
+		Fixed	getX(void) const;
+		Fixed	getY(void) const;
+
+		Point	operator-(const Point& obj) const;
+};
+
+typedef Point vec;
 
 #endif /* POINT_CLASS_HPP */
