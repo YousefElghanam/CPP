@@ -2,7 +2,7 @@ NAME = bsp
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -pedantic -std=c++98 # -g# -fsanitize=address,undefined
+CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic  -g -fsanitize=address,undefined
 
 SOURCES = main.cpp
 CLASS_SOURCES = Fixed.cpp Point.cpp bsp.cpp
@@ -17,11 +17,11 @@ DEPS = $(OBJS:.o=.d)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $@
+	@$(CXX) $(CXXFLAGS) $(OBJS) -o $@
 
 $(OBJ_DIR)%.o: %.cpp
-	mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	@mkdir -p $(dir $@)
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 run: re
 	./$(NAME)
@@ -31,10 +31,10 @@ runf: re
 	./$(NAME)
 
 clean:
-	rm -rf $(OBJ_DIR)
+	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
 
 re: fclean all
 

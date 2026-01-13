@@ -1,10 +1,5 @@
 #include "main.hpp"
 
-#define MY_INT_MIN std::numeric_limits<int>::min()
-#define MY_INT_MAX std::numeric_limits<int>::max()
-#define MY_FLOAT_MIN std::numeric_limits<float>::min()
-#define MY_FLOAT_MAX std::numeric_limits<float>::max()
-
 // void	print_binary(int num) {
 // 	std::cout << "num: " << num << std::endl;
 // 	for (int i = 31; i >= 0; i--) {
@@ -28,7 +23,7 @@ int main(void) {
 	std::cout << "d is " << d << std::endl;
 	std::cout << "a is " << a.toInt() << " as integer" << std::endl;
 	std::cout << "b is " << b.toInt() << " as integer" << std::endl;
-	std::cout << "c is " << c.toInt() << " as integer" << std::endl;
-	std::cout << "d is " << d.toInt() << " as integer" << std::endl;
+	std::cout << "c is " << c.toFloat() << " as float" << std::endl;
+	std::cout << "d is " << d.toFloat() << " as float" << std::endl;
 	return 0;
 }

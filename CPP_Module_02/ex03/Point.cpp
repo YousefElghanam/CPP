@@ -23,7 +23,7 @@ Point&	Point::operator=(Point& obj) {
 Point::~Point(void) {}
 
 vec	Point::operator-(const Point& obj) const {
-	Point	ret(this->getX() - obj.getX(), this->getY() - obj.getY());
+	vec	ret(this->getX() - obj.getX(), this->getY() - obj.getY());
 	return ret;
 }
 

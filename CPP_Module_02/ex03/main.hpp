@@ -4,7 +4,6 @@
 # include "Point.hpp"
 # include "Fixed.hpp"
 # include <iostream>
-# include <limits>
 
 bool	bsp(Point const a, Point const b, Point const c, Point const point);
 

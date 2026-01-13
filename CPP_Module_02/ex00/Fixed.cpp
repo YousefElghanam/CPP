@@ -3,13 +3,11 @@
 
 const int Fixed::fractions = 8;
 
+/* OCF (OCD haha) */
+
 Fixed::Fixed(void):
 	raw(0) {
 		std::cout << "Default constructor called" << std::endl;
-}
-
-Fixed::~Fixed(void) {
-	std::cout << "Destructor called" << std::endl;
 }
 
 Fixed::Fixed(const Fixed& obj) {
@@ -22,6 +20,10 @@ Fixed&	Fixed::operator=(const Fixed& obj) {
 	if (&obj != this)
 		this->setRawBits(obj.getRawBits());
 	return *this;
+}
+
+Fixed::~Fixed(void) {
+	std::cout << "Destructor called" << std::endl;
 }
 
 /* MEMBER FUNCTIONS */

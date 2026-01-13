@@ -3,21 +3,26 @@
 
 const int Fixed::fractions = 8;
 
+/* constructors + OCF */
+
 Fixed::Fixed(void):
 	raw(0) {
 	std::cout << "Default constructor called" << std::endl;
 }
 
-/* Numbers above () or below () is UB */
 Fixed::Fixed(const int num):
 	raw(0) {
 	std::cout << "Int constructor called" << std::endl;
-	this->raw = num << this->fractions;
+	this->raw = static_cast<int>(static_cast<unsigned int>(num) << this->fractions);
 }
 
 Fixed::Fixed(const float num):
 	raw(0) {
 	std::cout << "Float constructor called" << std::endl;
+	// We scale the float num, then because casting from float to int removes the
+	//	fraction completely, we add 0.5 if it's positive so if it's closer to the
+	//	next whole number it gets truncated to that one. (3.7 + 0.5 == 3.2; gets
+	//	truncated to 3.0, then safely stored in an int).
 	this->raw = (num * (1 << this->fractions) + (num > 0 ? 0.5 : -0.5));
 }
 
@@ -38,6 +43,8 @@ Fixed&	Fixed::operator=(const Fixed& obj) {
 	return *this;
 }
 
+/* MEMBER FUNCTIONS */
+
 int		Fixed::getRawBits(void) const {
 	std::cout << "getRawBits member function called" << std::endl;
 	return this->raw;
@@ -48,11 +55,6 @@ void	Fixed::setRawBits(const int raw) {
 	this->raw = raw;
 }
 
-// int		Fixed::getFractions(void) const {
-// 	std::cout << "getFractions member function called" << std::endl;
-// 	return this->fractions;
-// }
-
 float	Fixed::toFloat(void) const {
 	return ((float)this->raw / (1 << this->fractions));
 }
@@ -61,7 +63,7 @@ int		Fixed::toInt(void) const {
 	return ((int)this->raw / (1 << this->fractions));
 }
 
-std::ostream& operator<<(std::ostream &os, const Fixed& obj) {
+std::ostream&	operator<<(std::ostream &os, const Fixed& obj) {
 	os << obj.toFloat();
 	return os;
 }

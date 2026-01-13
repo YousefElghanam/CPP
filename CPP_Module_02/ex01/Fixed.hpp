@@ -14,15 +14,14 @@ class Fixed {
 		Fixed(const float num);
 		Fixed(const Fixed& obj);
 		~Fixed(void);
-		Fixed&  operator=(const Fixed& obj);
+		Fixed&	operator=(const Fixed& obj);
 
 		int		getRawBits(void) const;
 		void	setRawBits(int const raw);
 		float	toFloat(void) const;
 		int		toInt(void) const;
-		// int		getFractions(void) const;
 };
 
-std::ostream& operator<<(std::ostream &os, const Fixed& fixed);
+std::ostream&	operator<<(std::ostream &os, const Fixed& fixed);
 
 #endif /* FIXED_CLASS_HPP */

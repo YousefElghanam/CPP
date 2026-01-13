@@ -3,6 +3,5 @@
 
 # include "Fixed.hpp"
 # include <iostream>
-# include <limits>
 
 #endif /* MAIN_HPP */

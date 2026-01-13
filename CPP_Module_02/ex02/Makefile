@@ -2,7 +2,7 @@ NAME = fixed
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -pedantic -std=c++98 # -g# -fsanitize=address,undefined
+CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic #-g# -fsanitize=address,undefined
 
 SOURCES = main.cpp
 CLASS_SOURCES = Fixed.cpp
@@ -24,11 +24,11 @@ $(OBJ_DIR)%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 run: re
-	./fixed
+	./$(NAME)
 
 runf: CXXFLAGS:= -g -fsanitize=address,leak,undefined
 runf: re
-	./fixed
+	./$(NAME)
 
 clean:
 	rm -rf $(OBJ_DIR)

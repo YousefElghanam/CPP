@@ -44,6 +44,6 @@ class Fixed {
 		const static Fixed&	max(const Fixed& fp1, const Fixed& fp2);
 };
 
-std::ostream& operator<<(std::ostream &os, const Fixed& fixed);
+std::ostream&	operator<<(std::ostream &os, const Fixed& fixed);
 
 #endif /* FIXED_CLASS_HPP */
