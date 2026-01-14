@@ -4,8 +4,9 @@
 # include "ClapTrap.hpp"
 # include <string>
 
-class ScavTrap: public ClapTrap {
+class ScavTrap: virtual public ClapTrap {
 	public:
+		// using ClapTrap::name;
 		ScavTrap(void);
 		ScavTrap(const std::string& name);
 		ScavTrap(const ScavTrap& obj);

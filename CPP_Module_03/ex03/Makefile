@@ -2,7 +2,7 @@ NAME = diamondtrap
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -Wshadow -MMD -MP -pedantic -std=c++98 # -g# -fsanitize=address,undefined
+CXXFLAGS = -Wall -Wextra -Werror -Wshadow -MMD -MP -pedantic -std=c++98 #-g #-fsanitize=address,leak,undefined
 
 SOURCES = main.cpp
 CLASS_SOURCES = ClapTrap.cpp ScavTrap.cpp FragTrap.cpp DiamondTrap.cpp
