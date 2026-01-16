@@ -1,0 +1,22 @@
+#ifndef ANIMAL_CLASS_HPP
+# define ANIMAL_CLASS_HPP
+
+# include <string>
+
+class Animal {
+	private:
+		std::string	type;
+
+	public:
+		Animal(void);
+		virtual ~Animal(void);
+		explicit Animal(const std::string& type);
+		Animal(const Animal& obj);
+		Animal&				operator=(const Animal& obj);
+
+		virtual void		makeSound(void) const;
+		void				setType(const std::string& newType);
+		const std::string&	getType(void) const;
+};
+
+#endif /* ANIMAL_CLASS_HPP */
