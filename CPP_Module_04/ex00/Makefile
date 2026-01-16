@@ -2,13 +2,13 @@ NAME = i_dont_want_to_set_the_world_on_fire_i_just_want_to_start_a_flame_in_your
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic #-g# -fsanitize=address,undefined
+CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic #-g #-fsanitize=address,undefined
 
 SOURCES = main.cpp
-CLASS_SOURCES = Animal.cpp Cat.cpp Dog.cpp
+CLASS_SOURCES = Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp WrongCat.cpp
 ALL_SOURCES = $(SOURCES) $(CLASS_SOURCES)
 
-HEADERS = main.hpp Cat.hpp Dog.hpp
+HEADERS = main.hpp Animal.hpp Cat.hpp Dog.hpp WrongAnimal.hpp WrongCat.hpp
 
 OBJ_DIR = objects/
 OBJS = $(ALL_SOURCES:%.cpp=$(OBJ_DIR)%.o)

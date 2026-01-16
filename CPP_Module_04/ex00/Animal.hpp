@@ -4,16 +4,19 @@
 # include <string>
 
 class Animal {
-	protected:
-		std::string type;
+	private:
+		std::string	type;
+
 	public:
 		Animal(void);
-		Animal(const std::string& name);
+		virtual ~Animal(void);
+		explicit Animal(const std::string& type);
 		Animal(const Animal& obj);
-		Animal&	operator=(const Animal& obj);
-		~Animal(void);
+		Animal&				operator=(const Animal& obj);
 
-		void	makeSound(void);
+		virtual void		makeSound(void) const;
+		void				setType(const std::string& newType);
+		const std::string&	getType(void) const;
 };
 
 #endif /* ANIMAL_CLASS_HPP */

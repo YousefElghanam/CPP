@@ -7,6 +7,7 @@
 class Dog: public Animal {
 	public:
 		Dog(void);
+		~Dog(void);
 		/* explicit (works only for single argument constructors) makes it
 			invalid to use this constructor like this: Dog inst = "hello";
 			I have to use it explicitly like this: Dog inst("hello"); which
@@ -14,9 +15,8 @@ class Dog: public Animal {
 		explicit Dog(const std::string& type);
 		Dog(const Dog& obj);
 		Dog&	operator=(const Dog& obj);
-		~Dog(void);
 
-		void	makeSound(void);
+		void	makeSound(void) const;
 };
 
 #endif /* DOG_CLASS_HPP */
