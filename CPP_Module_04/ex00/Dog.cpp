@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include "Animal.hpp"
 #include "Dog.hpp"
 
 Dog::Dog(void) {
@@ -11,9 +13,8 @@ Dog::Dog(const std::string& type){
 	this->type = "Dog " + type;
 }
 
-Dog::Dog(const Dog& obj) {
+Dog::Dog(const Dog& obj): Animal(obj) {
 	std::cout << "Dog Copy Constructor called" << std::endl;
-	*this = obj;
 }
 
 Dog&	Dog::operator=(const Dog& obj) {

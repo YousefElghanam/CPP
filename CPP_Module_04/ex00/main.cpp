@@ -1,4 +1,7 @@
 #include "main.hpp"
+#include "Animal.hpp"
+#include "Dog.hpp"
+#include <iostream>
 
 int main(void) {
 	Animal	generic;
