@@ -41,5 +41,5 @@ void	Dog::makeSound(void) const {
 }
 
 void	Dog::think(void) const {
-	std::cout << 
+	std::cout << this->brain->getRandomIdea() << std::endl;
 }

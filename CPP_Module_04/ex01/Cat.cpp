@@ -38,3 +38,7 @@ Cat::~Cat(void) {
 void	Cat::makeSound(void) const {
 	std::cout << "MEOW MEOW!!" << std::endl;
 }
+
+void	Cat::think(void) const {
+	std::cout << this->brain->getRandomIdea() << std::endl;
+}

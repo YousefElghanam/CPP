@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 #include "Brain.hpp"
 
 Brain::Brain(void) {
@@ -33,4 +35,9 @@ Brain&				Brain::operator=(const Brain& obj) {
 
 Brain::~Brain(void) {
 	std::cout << "Brain Destructor called" << std::endl;
+}
+
+const std::string&	Brain::getRandomIdea(void) const {
+	std::srand(std::time(0));
+	return this->ideas[std::rand() % Brain::ideasCount];
 }

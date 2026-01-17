@@ -21,6 +21,7 @@ class Cat: public Animal {
 		Cat&	operator=(const Cat& obj);
 
 		void	makeSound(void) const;
+		void	think(void) const;
 };
 
 #endif /* CAT_CLASS_HPP */

@@ -28,14 +28,18 @@ Animal::~Animal(void) {
 	std::cout << "Animal Destructor called" << std::endl;
 }
 
-void				Animal::makeSound(void) const {
-	std::cout << "AAAAA...." << std::endl;
-}
-
 void				Animal::setType(const std::string& newType) {
 	this->type = newType;
 }
 
 const std::string&	Animal::getType(void) const {
 	return this->type;
+}
+
+void				Animal::makeSound(void) const {
+	std::cout << "AAAAA...." << std::endl;
+}
+
+void	Animal::think(void) const {
+	std::cout << "* Hakuna Matata *" << std::endl;
 }

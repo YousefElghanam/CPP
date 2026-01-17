@@ -6,19 +6,29 @@
 #include "WrongCat.hpp"
 #include <iostream>
 
+
+
+
+
+#include <unistd.h>
+
 int main()
 {
-	Animal	animals[100];
-	for (int i = 0; i < 50; i++) {
-		animals[i] = Dog();
+	usleep(4000000);
+	Animal*	animals[4];
+	for (int i = 0; i < 2; i++) {
+		animals[i] = new Dog();
 	}
-	for (int i = 50; i < 100; i++) {
-		animals[i] = Cat();
+	for (int i = 2; i < 4; i++) {
+		animals[i] = new Cat();
 	}
-	for (int i = 0; i < 100; i++) {
-		animals[i].getType();
-		animals[i].makeSound();
-		
+	for (int i = 0; i < 4; i++) {
+		std::cout << animals[i]->getType() << std::endl;
+		animals[i]->makeSound();
+		animals[i]->think();
+	}
+	for (int i = 0; i < 4; i++) {
+		delete animals[i];
 	}
 	return 0;
 }

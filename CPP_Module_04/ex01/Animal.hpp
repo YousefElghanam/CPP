@@ -14,9 +14,10 @@ class Animal {
 		Animal(const Animal& obj);
 		Animal&				operator=(const Animal& obj);
 
-		virtual void		makeSound(void) const;
 		void				setType(const std::string& newType);
 		const std::string&	getType(void) const;
+		virtual void		makeSound(void) const;
+		virtual void		think(void) const;
 };
 
 #endif /* ANIMAL_CLASS_HPP */
