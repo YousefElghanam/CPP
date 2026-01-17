@@ -1,5 +1,5 @@
-#ifndef PHONE_BOOK_CLASS_H
-# define PHONE_BOOK_CLASS_H
+#ifndef __PHONEBOOK_CLASS_H__
+# define __PHONEBOOK_CLASS_H__
 
 # include "Contact.hpp"
 
@@ -21,4 +21,4 @@ class PhoneBook {
 		void	display_contact_info(size_t id);
 };
 
-#endif /* PHONE_BOOK_CLASS_H */
+#endif
