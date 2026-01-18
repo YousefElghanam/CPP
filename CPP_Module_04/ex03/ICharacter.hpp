@@ -2,7 +2,8 @@
 # define I_CHARACTER_CLASS_HPP
 
 # include <string>
-# include "AMateria.hpp"
+
+class AMateria;
 
 class ICharacter {
 	public:

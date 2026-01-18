@@ -2,7 +2,8 @@
 # define A_MATERIA_CLASS_HPP
 
 # include <string>
-# include "ICharacter.hpp"
+
+class ICharacter;
 
 class AMateria {
 	protected:
@@ -16,7 +17,7 @@ class AMateria {
 
 		const std::string&	getType(void) const; //Returns the materia type
 		virtual AMateria*	clone(void) const = 0;
-		virtual void		use(ICharacter& target);
+		virtual void		use(ICharacter& target) = 0;
 };
 
 #endif /* A_MATERIA_CLASS_HPP */
