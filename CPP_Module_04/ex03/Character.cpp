@@ -41,7 +41,8 @@ const std::string&	Character::getName(void) const {
 }
 
 void				Character::equip(AMateria* m) {
-	if (this->inventorySize == Character::inventoryCap - 1) {
+	// std::cout << this->inventorySize << "===" << Character::inventoryCap << std::endl;
+	if (this->inventorySize == Character::inventoryCap) {
 		return ;
 	}
 	// std::cout << "equiping Materia " << m->getType() << std::endl;

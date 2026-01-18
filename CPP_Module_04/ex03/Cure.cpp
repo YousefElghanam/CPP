@@ -2,17 +2,23 @@
 #include "Cure.hpp"
 #include "AMateria.hpp"
 
-Cure::Cure(void): AMateria("Cure") {}
+Cure::Cure(void): AMateria("cure") {
+	std::cout <<"Cure Constructor Called" << std::endl;
+}
 
-Cure::~Cure(void) {}
+Cure::~Cure(void) {
+	std::cout <<"Cure Destructor Called" << std::endl;
+}
 
 Cure::Cure(const Cure& obj): AMateria("Cure"){
+	std::cout <<"Cure Copy Constructor Called" << std::endl;
 	*this = obj;
 }
 
 Cure&		Cure::operator=(const Cure& obj) {
+	std::cout <<"Cure Copy Assignment Called" << std::endl;
 	if (this != &obj) {
-		this->type = "Cure";
+		this->type = "cure";
 	}
 	return *this;
 }

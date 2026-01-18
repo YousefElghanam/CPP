@@ -6,9 +6,9 @@
 
 class MateriaSource: public IMateriaSource {
 	private:
-		AMateria*					materiaList[4];
 		const static unsigned int	materiaListCap;
 		unsigned int				materiaListSize;
+		AMateria*					materiaList[4];
 
 	public:
 		MateriaSource(void);
@@ -17,6 +17,8 @@ class MateriaSource: public IMateriaSource {
 		MateriaSource&		operator=(const MateriaSource& obj);
 		void				learnMateria(AMateria* m);
 		AMateria*			createMateria(const std::string& type);
+
+		const AMateria*		getMateria(unsigned int n) const;
 };
 
 #endif /* MATERIA_SOURCE_CLASS_HPP */
