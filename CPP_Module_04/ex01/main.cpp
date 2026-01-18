@@ -1,20 +1,13 @@
+#include <iostream>
 #include "main.hpp"
 #include "Animal.hpp"
 #include "WrongAnimal.hpp"
 #include "Dog.hpp"
 #include "Cat.hpp"
 #include "WrongCat.hpp"
-#include <iostream>
-
-
-
-
-
-#include <unistd.h>
 
 int main()
 {
-	usleep(4000000);
 	Animal*	animals[4];
 	for (int i = 0; i < 2; i++) {
 		animals[i] = new Dog();
