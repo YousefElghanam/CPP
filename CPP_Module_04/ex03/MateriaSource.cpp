@@ -16,20 +16,21 @@ MateriaSource::~MateriaSource(void) {
 	}
 }
 
-MateriaSource::MateriaSource(const MateriaSource& obj):
-	materiaListSize(0) {
+MateriaSource::MateriaSource(const MateriaSource& obj) {
 	*this = obj;
 }
 
 MateriaSource&	MateriaSource::operator=(const MateriaSource& obj) {
+	std::cout << "assigning ==== MateriaSource" << std::endl;
 	if (this != &obj) {
-		this->materiaListSize = obj.materiaListSize;
-		for (unsigned int i = 0; i < MateriaSource::materiaListCap; i++) {
-			if (this->materiaListSize > 0) {
-				this->materiaListSize--;
-			}
+		for (unsigned int i = 0; i < MateriaSource::materiaListCap && i < obj.materiaListSize; i++) {
+			// if (this->materiaListSize > 0) {
+			// 	this->materiaListSize--;
+			// }
+			std::cout << "assigning " << obj.materiaList[i]->getType() << " in idx " << i << std::endl;
 			this->materiaList[i] = obj.materiaList[i];
 		}
+		this->materiaListSize = obj.materiaListSize;
 	}
 	return *this;
 }
@@ -47,6 +48,7 @@ AMateria*		MateriaSource::createMateria(const std::string& type) {
 	// 	return 0;
 	// }
 	for (unsigned int i = 0; i < this->materiaListSize; i++) {
+		std::cout << "IDX: " << i << "\n";
 		if (type == this->materiaList[i]->getType()) {
 			return this->materiaList[i]->clone();
 		}

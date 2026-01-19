@@ -23,15 +23,16 @@ Character::Character(const Character& obj) {
 
 Character&			Character::operator=(const Character& obj) {
 	if (this != &obj) {
-		this->name = obj.name;
-		this->inventorySize = obj.inventorySize;
 		for (unsigned int i = 0; i < Character::inventoryCap; i++) {
-			if (this->inventorySize > 0) {
+			if (this->inventory[i]) {
 				delete this->inventory[i];
-				this->inventorySize--;
+				this->inventory[i] = 0;
+				// this->inventorySize--;
 			}
+			this->name = obj.name;
 			this->inventory[i] = obj.inventory[i]->clone();
 		}
+		this->inventorySize = obj.inventorySize;
 	}
 	return *this;
 }
