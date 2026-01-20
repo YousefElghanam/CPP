@@ -2,7 +2,7 @@ NAME = i_dont_want_to_set_the_world_on_fire_i_just_want_to_start_a_flame_in_your
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic -g -fsanitize=address,undefined
+CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic #-g #-fsanitize=address,undefined
 
 SOURCES = main.cpp fillCatThoughts.cpp fillDogThoughts.cpp
 CLASS_SOURCES = Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp WrongCat.cpp Brain.cpp

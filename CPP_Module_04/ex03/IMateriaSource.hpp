@@ -5,17 +5,11 @@
 
 class AMateria;
 
-class IMateriaSource
-{
+class IMateriaSource {
 	public:
-		IMateriaSource(void);
-		virtual ~IMateriaSource(void);
-		IMateriaSource(const IMateriaSource& obj);
-		IMateriaSource&		operator=(const IMateriaSource& obj);
-		virtual void		learnMateria(AMateria*) = 0;
-		virtual AMateria*	createMateria(std::string const & type) = 0;
-
-		virtual const AMateria*	getMateria(unsigned int n) const = 0;
+		virtual ~IMateriaSource(void) {};
+		virtual void			learnMateria(AMateria*) = 0;
+		virtual AMateria*		createMateria(std::string const & type) = 0;
 };
 
 #endif /* I_MATERIA_SOURCE_HPPCLASS_ */

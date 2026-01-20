@@ -2,15 +2,13 @@ NAME = i_dont_want_to_set_the_world_on_fire_i_just_want_to_start_a_flame_in_your
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic -g -fsanitize=address,undefined
+CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic #-g #-fsanitize=address,leak,undefined
 
-SOURCES = main.cpp fillCatThoughts.cpp fillDogThoughts.cpp
-CLASS_SOURCES = Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp WrongCat.cpp Brain.cpp \
-			AMateria.cpp Cure.cpp Ice.cpp ICharacter.cpp Character.cpp IMateriaSource.cpp MateriaSource.cpp
+SOURCES = main.cpp
+CLASS_SOURCES = AMateria.cpp Cure.cpp Ice.cpp Character.cpp MateriaSource.cpp
 ALL_SOURCES = $(SOURCES) $(CLASS_SOURCES)
 
-HEADERS = main.hpp Animal.hpp Cat.hpp Dog.hpp WrongAnimal.hpp WrongCat.hpp Brain.hpp \
-			AMateria.hpp Cure.hpp Ice.hpp ICharacter.hpp Character.hpp IMateriaSource.hpp MateriaSource.hpp
+HEADERS = AMateria.hpp Cure.hpp Ice.hpp ICharacter.hpp Character.hpp IMateriaSource.hpp MateriaSource.hpp
 
 OBJ_DIR = objects/
 OBJS = $(ALL_SOURCES:%.cpp=$(OBJ_DIR)%.o)

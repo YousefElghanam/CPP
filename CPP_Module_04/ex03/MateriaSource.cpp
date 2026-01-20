@@ -2,6 +2,7 @@
 #include <string>
 #include "MateriaSource.hpp"
 #include "AMateria.hpp"
+#include "IMateriaSource.hpp"
 #include "Ice.hpp"
 #include "Cure.hpp"
 
@@ -16,19 +17,19 @@ MateriaSource::~MateriaSource(void) {
 	}
 }
 
-MateriaSource::MateriaSource(const MateriaSource& obj) {
+MateriaSource::MateriaSource(const MateriaSource& obj):
+	IMateriaSource() {
 	*this = obj;
 }
 
 MateriaSource&	MateriaSource::operator=(const MateriaSource& obj) {
-	std::cout << "assigning ==== MateriaSource" << std::endl;
 	if (this != &obj) {
-		for (unsigned int i = 0; i < MateriaSource::materiaListCap && i < obj.materiaListSize; i++) {
-			// if (this->materiaListSize > 0) {
-			// 	this->materiaListSize--;
-			// }
-			std::cout << "assigning " << obj.materiaList[i]->getType() << " in idx " << i << std::endl;
-			this->materiaList[i] = obj.materiaList[i];
+		// std::cout << "listSize is: " << this->materiaListSize << std::endl;
+		// for (unsigned int i = 0; i < this->materiaListSize; i++) {
+		// 	delete this->materiaList[i];
+		// }
+		for (unsigned int i = 0; i < obj.materiaListSize; i++) {
+			this->materiaList[i] = obj.materiaList[i]->clone();
 		}
 		this->materiaListSize = obj.materiaListSize;
 	}
@@ -37,26 +38,19 @@ MateriaSource&	MateriaSource::operator=(const MateriaSource& obj) {
 
 void			MateriaSource::learnMateria(AMateria* m) {
 	if (this->materiaListSize == MateriaSource::materiaListCap) {
+		delete m;
 		return ;
 	}
-	this->materiaList[this->materiaListSize] = m;
+	this->materiaList[this->materiaListSize] = m->clone();
 	this->materiaListSize++;
+	delete m;
 }
 
 AMateria*		MateriaSource::createMateria(const std::string& type) {
-	// if (type != "ice" && type != "cure") {
-	// 	return 0;
-	// }
 	for (unsigned int i = 0; i < this->materiaListSize; i++) {
-		std::cout << "IDX: " << i << "\n";
 		if (type == this->materiaList[i]->getType()) {
 			return this->materiaList[i]->clone();
 		}
 	}
-	std::cout << "unkown type from createMaterial()" << std::endl;
 	return 0;
-}
-
-const AMateria*	MateriaSource::getMateria(unsigned int n) const {
-	return this->materiaList[n];
 }

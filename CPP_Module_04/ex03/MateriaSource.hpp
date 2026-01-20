@@ -15,10 +15,9 @@ class MateriaSource: public IMateriaSource {
 		~MateriaSource(void);
 		MateriaSource(const MateriaSource& obj);
 		MateriaSource&		operator=(const MateriaSource& obj);
+		/** will take ownership of `m` */
 		void				learnMateria(AMateria* m);
 		AMateria*			createMateria(const std::string& type);
-
-		const AMateria*		getMateria(unsigned int n) const;
 };
 
 #endif /* MATERIA_SOURCE_CLASS_HPP */

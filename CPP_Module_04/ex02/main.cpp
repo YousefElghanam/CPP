@@ -1,9 +1,7 @@
 #include <iostream>
-// #include "main.hpp"
 #include "Animal.hpp"
 #include "Dog.hpp"
 #include "Cat.hpp"
-
 #include <cstdlib>
 #include <ctime>
 
