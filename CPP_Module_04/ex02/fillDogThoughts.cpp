@@ -1,4 +1,3 @@
-#include <iostream>
 #include <cstdlib>
 #include <ctime>
 #include <string>
@@ -53,7 +52,4 @@ void	fillDogThoughts(Brain* brain)
 			emotions[std::rand() % emoCount];
 	}
 	brain->setIdeas(dogThoughts);
-	// for (int i = 0; i < 100; i++) {
-	// 	std::cout << brain->getRandomIdea() << std::endl;
-	// }
 }

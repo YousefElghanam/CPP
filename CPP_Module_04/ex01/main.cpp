@@ -1,5 +1,4 @@
 #include <iostream>
-#include "main.hpp"
 #include "Animal.hpp"
 #include "WrongAnimal.hpp"
 #include "Dog.hpp"
