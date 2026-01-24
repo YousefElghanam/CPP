@@ -7,21 +7,29 @@
 
 int main()
 {
-	Animal*	animals[4];
-	for (int i = 0; i < 2; i++) {
-		animals[i] = new Dog();
-	}
-	for (int i = 2; i < 4; i++) {
-		animals[i] = new Cat();
-	}
-	for (int i = 0; i < 4; i++) {
-		std::cout << animals[i]->getType() << std::endl;
-		animals[i]->makeSound();
-		animals[i]->think();
-	}
-	for (int i = 0; i < 4; i++) {
-		delete animals[i];
-	}
+	Cat		aniCat("hello kitty");
+	std::cout << "===================================" << std::endl;
+	Cat		copyAniCat(aniCat);
+	std::cout << "===================================" << std::endl;
+	Cat		assignAniCat;
+	std::cout << "===================================" << std::endl;
+	assignAniCat = aniCat;
+	std::cout << "===> type is now: " << assignAniCat.getType() << std::endl;
+	// Animal*	animals[4];
+	// for (int i = 0; i < 2; i++) {
+	// 	animals[i] = new Dog();
+	// }
+	// for (int i = 2; i < 4; i++) {
+	// 	animals[i] = new Cat();
+	// }
+	// for (int i = 0; i < 4; i++) {
+	// 	std::cout << animals[i]->getType() << std::endl;
+	// 	animals[i]->makeSound();
+	// 	animals[i]->think();
+	// }
+	// for (int i = 0; i < 4; i++) {
+	// 	delete animals[i];
+	// }
 	return 0;
 }
 

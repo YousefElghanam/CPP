@@ -11,13 +11,13 @@ Cat::Cat(void):
 }
 
 Cat::Cat(const std::string& type):
-	brain(new Brain("Cat " + type + "' Thoughts")) {
+	brain(new Brain("Cat " + type + "'s Thoughts")) {
 	std::cout << "Cat Constructor(string) called" << std::endl;
 	this->setType("Cat " + type);
 }
 
 Cat::Cat(const Cat& obj):
-	Animal(obj), brain(obj.brain) {
+	Animal(obj), brain(new Brain(*obj.brain)) {
 	std::cout << "Cat Copy Constructor called" << std::endl;
 }
 
@@ -25,7 +25,8 @@ Cat&	Cat::operator=(const Cat& obj) {
 	std::cout << "Cat Copy Assignment called" << std::endl;
 	if (this != &obj) {
 		this->setType(obj.getType());
-		this->brain = obj.brain;
+		delete this->brain;
+		this->brain = new Brain(*obj.brain);
 	}
 	return *this;
 }

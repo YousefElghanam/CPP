@@ -1,4 +1,3 @@
-#include <cstdlib>
 #include <iostream>
 #include <string>
 #include "Animal.hpp"
@@ -12,13 +11,13 @@ Dog::Dog(void):
 }
 
 Dog::Dog(const std::string& type):
-	brain(new Brain("Dog " + type + "' Thoughts")) {
+	brain(new Brain("Dog " + type + "'s Thoughts")) {
 	std::cout << "Dog Constructor(string) called" << std::endl;
 	this->setType("Dog " + type);
 }
 
 Dog::Dog(const Dog& obj):
-	Animal(obj), brain(obj.brain) {
+	Animal(obj), brain(new Brain(*obj.brain)) {
 	std::cout << "Dog Copy Constructor called" << std::endl;
 }
 
@@ -26,7 +25,8 @@ Dog&	Dog::operator=(const Dog& obj) {
 	std::cout << "Dog Copy Assignment called" << std::endl;
 	if (this != &obj) {
 		this->setType(obj.getType());
-		this->brain = obj.brain;
+		delete this->brain;
+		this->brain = new Brain(*obj.brain);
 	}
 	return *this;
 }
