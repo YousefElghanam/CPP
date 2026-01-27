@@ -5,10 +5,10 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic -g #-fsanitize=address,leak,undefined
 
 SOURCES = main.cpp
-CLASS_SOURCES = Bureaucrat.cpp
+CLASS_SOURCES = Bureaucrat.cpp Form.cpp
 ALL_SOURCES = $(SOURCES) $(CLASS_SOURCES)
 
-HEADERS = Bureaucrat.hpp
+HEADERS = Bureaucrat.hpp Form.hpp
 
 OBJ_DIR = objects/
 OBJS = $(ALL_SOURCES:%.cpp=$(OBJ_DIR)%.o)
