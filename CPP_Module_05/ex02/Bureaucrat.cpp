@@ -2,7 +2,7 @@
 #include <iostream>
 #include <exception>
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
 const long	Bureaucrat::minGrade = 150;
 const long	Bureaucrat::maxGrade = 1;
@@ -66,7 +66,7 @@ void				Bureaucrat::operator--(int) {
 	this->grade++;
 }
 
-void				Bureaucrat::signForm(Form& form) const {
+void				Bureaucrat::signForm(AForm& form) const {
 	bool	success = true;
 
 	try {
@@ -78,6 +78,15 @@ void				Bureaucrat::signForm(Form& form) const {
 	}
 	if (success) {
 		std::cout << this->name << " signed " << form.getName() << std::endl;
+	}
+}
+
+void				Bureaucrat::executeForm(const AForm& form) const {
+	if (form.execute(*this)) {
+		std::cout << this->name << " executed " << form.getName() << std::endl;
+	}
+	else {
+		std::cout << this->name << " couldn't execute " << form.getName() << std::endl;
 	}
 }
 

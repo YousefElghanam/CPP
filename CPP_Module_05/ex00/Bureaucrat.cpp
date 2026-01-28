@@ -22,14 +22,12 @@ Bureaucrat::~Bureaucrat(void) {}
 Bureaucrat::Bureaucrat(const std::string& name, long grade):
 	name(name) {
 		if (grade > Bureaucrat::minGrade) {
-			this->grade = 0;
+			this->grade = 150;
 			throw Bureaucrat::GradeTooLowException();
-			return ;
 		}
 		if (grade < Bureaucrat::maxGrade) {
-			this->grade = 0;
+			this->grade = 150;
 			throw Bureaucrat::GradeTooHighException();
-			return ;
 		}
 		this->grade = grade;
 }
@@ -56,7 +54,6 @@ long				Bureaucrat::getGrade(void) const {
 void				Bureaucrat::operator++(int) {
 	if (this->grade == Bureaucrat::maxGrade) {
 		throw Bureaucrat::GradeTooHighException();
-		return ;
 	}
 	this->grade--;
 }
@@ -64,7 +61,6 @@ void				Bureaucrat::operator++(int) {
 void				Bureaucrat::operator--(int) {
 	if (this->grade == Bureaucrat::minGrade) {
 		throw Bureaucrat::GradeTooLowException();
-		return ;
 	}
 	this->grade++;
 }
