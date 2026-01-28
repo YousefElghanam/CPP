@@ -5,6 +5,8 @@
 # include <string>
 # include <exception>
 
+class Form;
+
 class Bureaucrat {
 	private:
 		const static long	minGrade;
@@ -32,6 +34,7 @@ class Bureaucrat {
 		// void				operator++(void);
 		void				operator--(int);
 		// void				operator--(void);
+		void				signForm(Form& form) const;
 };
 
 std::ostream&	operator<<(std::ostream &os, const Bureaucrat& obj);

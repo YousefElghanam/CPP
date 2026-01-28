@@ -1,6 +1,8 @@
 #include <string>
 #include <iostream>
+#include <exception>
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 const long	Bureaucrat::minGrade = 150;
 const long	Bureaucrat::maxGrade = 1;
@@ -66,6 +68,21 @@ void				Bureaucrat::operator--(int) {
 		return ;
 	}
 	this->grade++;
+}
+
+void				Bureaucrat::signForm(Form& form) const {
+	bool	success = true;
+
+	try {
+		form.beSigned(*this);
+	}
+	catch (std::exception& e) {
+		std::cout << this->name << " couldn't sign " << form.getName() << " because " << e.what() << std::endl;
+		success = false;
+	}
+	if (success) {
+		std::cout << this->name << " signed " << form.getName() << std::endl;
+	}
 }
 
 std::ostream&	operator<<(std::ostream &os, const Bureaucrat& obj) {

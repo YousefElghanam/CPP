@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "Form.hpp"
+#include "Bureaucrat.hpp"
 
 const long	Form::minGrade = 150;
 const long	Form::maxGrade = 1;
@@ -13,6 +14,10 @@ const char*	Form::GradeTooLowException::what(void) const throw() {
 	return "ERROR: Grade too Low";
 }
 
+const char*	Form::AlreadySigned::what(void) const throw() {
+	return "ERROR: Form is already signed";
+}
+
 Form::Form(void):
 	name("default_form"), signGrade(150), execGrade(150), sign(false) {}
 
@@ -22,11 +27,9 @@ Form::Form(const std::string& name, long signGrade, long execGrade):
 	name(name), signGrade(signGrade), execGrade(execGrade), sign(false) {
 		if (this->signGrade > Form::minGrade || this->execGrade > Form::minGrade) {
 			throw Form::GradeTooLowException();
-			return ;
 		}
 		if (this->signGrade < Form::maxGrade || this->execGrade < Form::maxGrade) {
 			throw Form::GradeTooHighException();
-			return ;
 		}
 }
 
@@ -54,6 +57,18 @@ long				Form::getExecGrade(void) const {
 
 bool				Form::getSign(void) const {
 	return this->sign;
+}
+
+void				Form::beSigned(const Bureaucrat& bureaucrat) {
+	if (bureaucrat.getGrade() <= this->signGrade) {
+		if (this->sign) {
+			throw Form::AlreadySigned();
+		}
+		this->sign = true;
+	}
+	else {
+		throw Form::GradeTooLowException();
+	}
 }
 
 std::ostream&	operator<<(std::ostream &os, const Form& obj) {

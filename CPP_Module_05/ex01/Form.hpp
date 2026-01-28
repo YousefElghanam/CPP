@@ -4,6 +4,7 @@
 # include <iostream>
 # include <string>
 # include <exception>
+# include "Bureaucrat.hpp"
 
 class Form {
 	private:
@@ -21,6 +22,9 @@ class Form {
 		class	GradeTooLowException: public std::exception {
 			public: const char* what(void) const throw();
 		};
+		class	AlreadySigned: public std::exception {
+			public: const char* what(void) const throw();
+		};
 
 		Form(void);
 		~Form(void);
@@ -32,6 +36,7 @@ class Form {
 		long				getSignGrade(void) const;
 		long				getExecGrade(void) const;
 		bool				getSign(void) const;
+		void				beSigned(const Bureaucrat& bureaucrat);
 };
 
 std::ostream&	operator<<(std::ostream &os, const Form& obj);
