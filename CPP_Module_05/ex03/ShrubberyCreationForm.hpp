@@ -9,7 +9,6 @@ class ShrubberyCreationForm: public AForm {
 	private:
 		const static long	formSignGrade;
 		const static long	formExecGrade;
-		std::string			target;
 
 	public:
 		ShrubberyCreationForm(void);
@@ -19,6 +18,7 @@ class ShrubberyCreationForm: public AForm {
 		ShrubberyCreationForm&	operator=(const ShrubberyCreationForm& obj);
 
 		bool				execute(const Bureaucrat& executor) const;
+		virtual AForm*		clone(void) const;
 };
 
 #endif /* SHRUBBERY_CREATION_FORM_CLASS_HPP */

@@ -3,51 +3,62 @@
 #include <iostream>
 #include "Intern.hpp"
 #include "AForm.hpp"
+#include "Bureaucrat.hpp"
 #include "PresidentialPardonForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
 
-Intern::Intern(void) {
+const unsigned int	Intern::formCount = 3;
 
+Intern::Intern(void) {
+	this->forms[0] = "shrubbery creation";
+	this->forms[1] = "robotomy request";
+	this->forms[2] = "presidential pardon";
+	this->formArr[0] = new ShrubberyCreationForm();
+	this->formArr[1] = new RobotomyRequestForm();
+	this->formArr[2] = new PresidentialPardonForm();
+	this->formArr[3] = NULL;
 }
 
-Intern::~Intern(void) {}
+Intern::~Intern(void) {
+	for (unsigned int i = 0; i < Intern::formCount; i++) {
+		delete this->formArr[i];
+	}
+}
 
 Intern::Intern(const Intern& obj) {
-	(void)obj;
+	for (unsigned int i = 0; i < Intern::formCount; i++ ) {
+		delete this->formArr[i];
+		this->formArr[i] = obj.formArr[i];
+	}
 }
 
 Intern&	Intern::operator=(const Intern& obj) {
-	(void)obj;
+	if (this != &obj) {
+		for (unsigned int i = 0; i < Intern::formCount; i++ ) {
+			delete this->formArr[i];
+			this->formArr[i] = obj.formArr[i];
+		}
+	}
 	return *this;
 }
 
-AForm*	Intern::makeForm(const std::string& formName, const std::string& target) const {
-	AForm*	shrub = new ShrubberyCreationForm(target);
-	AForm*	robot = new RobotomyRequestForm(target);
-	AForm*	pres = new PresidentialPardonForm(target);
+unsigned int	Intern::getFormIdx(const std::string& formName) const {
+	for (unsigned int i = 0; i < Intern::formCount; i++) {
+		if (formName == this->forms[i]) {
+			return i;
+		}
+	}
+	return Intern::formCount;
+}
 
-	if (formName == "shrubbery creation") {
-		delete robot;
-		delete pres;
-		std::cout << "intern creates " << shrub->getName() << std::endl;
-		return shrub;
+AForm*	Intern::makeForm(const std::string& formName, const std::string& target) const {
+	AForm*	ret = this->formArr[getFormIdx(formName)];
+	if (!ret) {
+		std::cerr << "Intern doesn't have information about the form " << formName << ". Form making failed" << std::endl;
+		return NULL;
 	}
-	if (formName == "robotomy request") {
-		delete shrub;
-		delete pres;
-		std::cout << "intern creates " << robot->getName() << std::endl;
-		return robot;
-	}
-	if (formName == "presidential pardon") {
-		delete shrub;
-		delete robot;
-		std::cout << "intern creates " << pres->getName() << std::endl;
-		return pres;
-	}
-	delete shrub;
-	delete robot;
-	delete pres;
-	std::cerr << "form " << formName << " not found" << std::endl;
-	return NULL;
+	ret = ret->clone();
+	ret->setTarget(target);
+	return ret;
 }

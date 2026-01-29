@@ -11,6 +11,7 @@ class AForm {
 		const static long	minGrade;
 		const static long	maxGrade;
 		const std::string	name;
+		std::string			target;
 		const long			signGrade;
 		const long			execGrade;
 		bool				sign;
@@ -40,9 +41,12 @@ class AForm {
 		long				getSignGrade(void) const;
 		long				getExecGrade(void) const;
 		bool				getSign(void) const;
-		void				beSigned(const Bureaucrat& bureaucrat);
 		bool				canExecuteForm(const Bureaucrat& executor) const;
+		void				beSigned(const Bureaucrat& bureaucrat);
+		virtual AForm*		clone(void) const = 0;
 		virtual bool		execute(const Bureaucrat& executor) const = 0;
+		void				setTarget(const std::string& newTarget);
+		const std::string&	getTarget(void) const;
 };
 
 std::ostream&	operator<<(std::ostream &os, const AForm& obj);

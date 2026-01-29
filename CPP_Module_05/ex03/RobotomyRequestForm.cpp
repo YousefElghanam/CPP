@@ -9,23 +9,26 @@ const long		RobotomyRequestForm::formExecGrade = 45;
 unsigned int	RobotomyRequestForm::state = 0;
 
 RobotomyRequestForm::RobotomyRequestForm(void):
-	AForm("default_robotomy_form", RobotomyRequestForm::formSignGrade, RobotomyRequestForm::formExecGrade), target("default_target") {}
+	AForm("default_robotomy_form", RobotomyRequestForm::formSignGrade, RobotomyRequestForm::formExecGrade) {}
 
 RobotomyRequestForm::~RobotomyRequestForm(void) {}
 
 RobotomyRequestForm::RobotomyRequestForm(const std::string& target):
-	AForm("default_robotomy_form", RobotomyRequestForm::formSignGrade, RobotomyRequestForm::formExecGrade), target(target) {
+	AForm("default_robotomy_form", RobotomyRequestForm::formSignGrade, RobotomyRequestForm::formExecGrade) {
+	this->setTarget(target);
 }
 
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& obj):
-	AForm(obj.getName(), obj.getSignGrade(), obj.getExecGrade()), target(obj.target) {}
+	AForm(obj.getName(), obj.getSignGrade(), obj.getExecGrade()) {
+	this->setTarget(obj.getTarget());
+}
 
 RobotomyRequestForm&	RobotomyRequestForm::operator=(const RobotomyRequestForm& obj) {
 	if (this != &obj) {
 		if (obj.getSign()) {
 			this->beSigned(Bureaucrat("tmp", 1));
 		}
-		this->target = obj.target;
+		this->setTarget(obj.getTarget());
 	}
 	return *this;
 }
@@ -39,11 +42,15 @@ bool		RobotomyRequestForm::execute(const Bureaucrat& executor) const {
 	if (this->canExecuteForm(executor)) {
 		std::cout << "* DRILLING NOISES *" << std::endl;
 		if (this->rand() % 2 == 0) {
-			std::cout << this->target << " has been successfully robotomized" << std::endl;
+			std::cout << this->getTarget() << " has been successfully robotomized" << std::endl;
 			return true;
 		}
-		std::cout << this->target << " could not be robotomized" << std::endl;
+		std::cout << this->getTarget() << " could not be robotomized" << std::endl;
 		return false;
 	}
 	return false;
+}
+
+AForm*			RobotomyRequestForm::clone(void) const {
+	return new RobotomyRequestForm();
 }

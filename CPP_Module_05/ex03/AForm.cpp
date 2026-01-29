@@ -24,12 +24,12 @@ const char*	AForm::NotSignedException::what(void) const throw() {
 }
 
 AForm::AForm(void):
-	name("default_form"), signGrade(150), execGrade(150), sign(false) {}
+	name("default_form"), target("default_target"), signGrade(150), execGrade(150), sign(false) {}
 
 AForm::~AForm(void) {}
 
 AForm::AForm(const std::string& name, long signGrade, long execGrade):
-	name(name), signGrade(signGrade), execGrade(execGrade), sign(false) {
+	name(name), target("default_target"), signGrade(signGrade), execGrade(execGrade), sign(false) {
 		if (this->signGrade > AForm::minGrade || this->execGrade > AForm::minGrade) {
 			throw AForm::GradeTooLowException();
 		}
@@ -39,11 +39,12 @@ AForm::AForm(const std::string& name, long signGrade, long execGrade):
 }
 
 AForm::AForm(const AForm& obj):
-	name(obj.name), signGrade(obj.signGrade), execGrade(obj.execGrade), sign(obj.sign) {}
+	name(obj.name), target(obj.target), signGrade(obj.signGrade), execGrade(obj.execGrade), sign(obj.sign) {}
 
 AForm&			AForm::operator=(const AForm& obj) {
 	if (this != &obj) {
-		this->sign = obj.getSign();
+		this->target = obj.target;
+		this->sign = obj.sign;
 	}
 	return *this;
 }
@@ -90,6 +91,14 @@ void				AForm::beSigned(const Bureaucrat& bureaucrat) {
 	else {
 		throw AForm::GradeTooLowException();
 	}
+}
+
+void				AForm::setTarget(const std::string& newTarget) {
+	this->target = newTarget;
+}
+
+const std::string&	AForm::getTarget(void) const {
+	return this->target;
 }
 
 std::ostream&	operator<<(std::ostream &os, const AForm& obj) {

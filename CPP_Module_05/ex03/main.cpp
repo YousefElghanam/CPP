@@ -153,9 +153,43 @@
 // }
 
 static void test_intern(void) {
-	Intern	newIntern;
-	AForm*	newForm = newIntern.makeForm("robotomy request", "THE_TARGET");;
-	newForm->getName();
+	Bureaucrat	president("MR. President", 1);
+	Intern		newIntern;
+
+	AForm*	newForm_0 = newIntern.makeForm("robotomy request", "THE_TARGET");
+	if (newForm_0) {
+		std::cout << newForm_0->getName() << std::endl;
+		newForm_0->beSigned(president);
+		newForm_0->execute(president);
+	}
+	delete newForm_0;
+	std::cout << "========================================================" << std::endl;
+
+	AForm*	newForm_1 = newIntern.makeForm("shrubbery creation", "THE_TARGET");
+	if (newForm_1) {
+		std::cout << newForm_1->getName() << std::endl;
+		newForm_1->beSigned(president);
+		newForm_1->execute(president);
+	}
+	delete newForm_1;
+	std::cout << "========================================================" << std::endl;
+
+	AForm*	newForm_2 = newIntern.makeForm("presidential pardon", "THE_TARGET");
+	if (newForm_2) {
+		std::cout << newForm_2->getName() << std::endl;
+		newForm_2->beSigned(president);
+		newForm_2->execute(president);
+	}
+	delete newForm_2;
+	std::cout << "========================================================" << std::endl;
+
+	AForm*	newForm_3 = newIntern.makeForm("xxx", "THE_TARGET");
+	if (newForm_3) {
+		std::cout << newForm_3->getName() << std::endl;
+		newForm_3->beSigned(president);
+		newForm_3->execute(president);
+	}
+	delete newForm_3;
 }
 
 int	main(void) {

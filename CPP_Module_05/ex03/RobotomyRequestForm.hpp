@@ -9,7 +9,6 @@ class RobotomyRequestForm: public AForm {
 	private:
 		const static long	formSignGrade;
 		const static long	formExecGrade;
-		std::string			target;
 		static unsigned int	state;
 
 	public:
@@ -21,6 +20,7 @@ class RobotomyRequestForm: public AForm {
 
 		static int			rand(void);
 		bool				execute(const Bureaucrat& executor) const;
+		virtual AForm*		clone(void) const;
 };
 
 #endif /* ROBOTOMY_REQUEST_FORM_CLASS_HPP */

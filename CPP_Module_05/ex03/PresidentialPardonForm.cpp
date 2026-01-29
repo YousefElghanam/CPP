@@ -8,31 +8,38 @@ const long	PresidentialPardonForm::formSignGrade = 25;
 const long	PresidentialPardonForm::formExecGrade = 5;
 
 PresidentialPardonForm::PresidentialPardonForm(void):
-	AForm("default_presidential_form", PresidentialPardonForm::formSignGrade, PresidentialPardonForm::formExecGrade), target("default_target") {}
+	AForm("default_presidential_form", PresidentialPardonForm::formSignGrade, PresidentialPardonForm::formExecGrade) {}
 
 PresidentialPardonForm::~PresidentialPardonForm(void) {}
 
 PresidentialPardonForm::PresidentialPardonForm(const std::string& target):
-	AForm("default_presidential_form", PresidentialPardonForm::formSignGrade, PresidentialPardonForm::formExecGrade), target(target) {
+	AForm("default_presidential_form", PresidentialPardonForm::formSignGrade, PresidentialPardonForm::formExecGrade) {
+	this->setTarget(target);
 }
 
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm& obj):
-	AForm(obj.getName(), obj.getSignGrade(), obj.getExecGrade()), target(obj.target) {}
+	AForm(obj.getName(), obj.getSignGrade(), obj.getExecGrade()) {
+	this->setTarget(obj.getTarget());
+}
 
 PresidentialPardonForm&	PresidentialPardonForm::operator=(const PresidentialPardonForm& obj) {
 	if (this != &obj) {
 		if (obj.getSign()) {
 			this->beSigned(Bureaucrat("tmp", 1));
 		}
-		this->target = obj.target;
+		this->setTarget(obj.getTarget());
 	}
 	return *this;
 }
 
 bool			PresidentialPardonForm::execute(const Bureaucrat& executor) const {
 	if (this->canExecuteForm(executor)) {
-		std::cout << this->target << " has been pardoned by Zaphod Beeblebrox" << std::endl;
+		std::cout << this->getTarget() << " has been pardoned by Zaphod Beeblebrox" << std::endl;
 		return true;
 	}
 	return false;
+}
+
+AForm*			PresidentialPardonForm::clone(void) const {
+	return new PresidentialPardonForm();
 }

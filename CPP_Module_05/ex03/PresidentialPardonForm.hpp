@@ -9,7 +9,6 @@ class PresidentialPardonForm: public AForm {
 	private:
 		const static long	formSignGrade;
 		const static long	formExecGrade;
-		std::string			target;
 
 	public:
 		PresidentialPardonForm(void);
@@ -19,6 +18,7 @@ class PresidentialPardonForm: public AForm {
 		PresidentialPardonForm&	operator=(const PresidentialPardonForm& obj);
 
 		bool				execute(const Bureaucrat& executor) const;
+		virtual AForm*		clone(void) const;
 };
 
 #endif /* PRESIDENTIAL_PARDON_FORM_CLASS_HPP */
