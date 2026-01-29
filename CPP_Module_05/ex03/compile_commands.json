@@ -1,0 +1,56 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-std=c++98",
+      "-pedantic",
+      "-g",
+      "-c",
+      "-o",
+      "objects/main.o",
+      "main.cpp"
+    ],
+    "directory": "/home/josefelghnam/code/CPP/CPP_Module_05/ex01",
+    "file": "/home/josefelghnam/code/CPP/CPP_Module_05/ex01/main.cpp",
+    "output": "/home/josefelghnam/code/CPP/CPP_Module_05/ex01/objects/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-std=c++98",
+      "-pedantic",
+      "-g",
+      "-c",
+      "-o",
+      "objects/Bureaucrat.o",
+      "Bureaucrat.cpp"
+    ],
+    "directory": "/home/josefelghnam/code/CPP/CPP_Module_05/ex01",
+    "file": "/home/josefelghnam/code/CPP/CPP_Module_05/ex01/Bureaucrat.cpp",
+    "output": "/home/josefelghnam/code/CPP/CPP_Module_05/ex01/objects/Bureaucrat.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/c++",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-std=c++98",
+      "-pedantic",
+      "-g",
+      "-c",
+      "-o",
+      "objects/Form.o",
+      "Form.cpp"
+    ],
+    "directory": "/home/josefelghnam/code/CPP/CPP_Module_05/ex01",
+    "file": "/home/josefelghnam/code/CPP/CPP_Module_05/ex01/Form.cpp",
+    "output": "/home/josefelghnam/code/CPP/CPP_Module_05/ex01/objects/Form.o"
+  }
+]
