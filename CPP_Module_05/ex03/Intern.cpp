@@ -29,7 +29,7 @@ Intern::~Intern(void) {
 Intern::Intern(const Intern& obj) {
 	for (unsigned int i = 0; i < Intern::formCount; i++ ) {
 		delete this->formArr[i];
-		this->formArr[i] = obj.formArr[i];
+		this->formArr[i] = obj.formArr[i]; // clone and set inner attributes here and in assignment operator
 	}
 }
 
