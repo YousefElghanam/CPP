@@ -1,4 +1,7 @@
+#include <climits>
+#include <cerrno>
 #include <cctype>
+#include <cstdlib>
 #include <string>
 #include <iostream>
 #include <cstddef>
@@ -137,8 +140,69 @@ static void	convertChar(const std::string& input) {
 }
 
 static void	convertInt(const std::string& input) {
+	errno = 0;
+	const long	num = std::strtol(input.c_str(), NULL, 10);
+	if (errno == ERANGE) {
+		std::cout << "char: Conversion value is out of range" << std::endl;
+		std::cout << "int: Conversion value is out of range" << std::endl;
+		std::cout << "float: Conversion value is out of range" << std::endl;
+		std::cout << "double: Conversion value is out of range" << std::endl;
+		return ;
+	}
+
 	std::cout << "char: ";
-	if (input.)
+	if (num > 127 || num < 0) {
+		std::cout << "Impossible" << std::endl;
+	}
+	else {
+		if (std::isprint(num) != 0) {
+			std::cout << num << std::endl;
+		}
+		else {
+			std::cout <<  "Non displayable" << std::endl;
+		}
+	}
+
+	std::cout << "int: " << num << std::endl;
+
+	std::cout.setf(std::ios::fixed);
+	std::cout << "float: " << static_cast<float>(num) << "f" << std::endl;
+	std::cout.unsetf(std::ios::fixed);
+
+	std::cout.setf(std::ios::showpoint);
+	std::cout << "int: " << static_cast<double>(num) << std::endl;
+	std::cout.unsetf(std::ios::showpoint);
+}
+
+static void	convertFloat(const std::string& input) {
+	errno = 0;
+	const double	num = std::strtof(input.c_str(), NULL);
+	if (errno == ERANGE) {
+		std::cout << "char: Conversion value is out of range" << std::endl;
+		std::cout << "int: Conversion value is out of range" << std::endl;
+		std::cout << "float: Conversion value is out of range" << std::endl;
+		std::cout << "double: Conversion value is out of range" << std::endl;
+		return ;
+	}
+
+	std::cout << "char: ";
+	if (num > 127 || num < 0) {
+		std::cout << "Impossible" << std::endl;
+	}
+	else {
+		if (std::isprint(num) != 0) {
+			std::cout << num << std::endl;
+		}
+		else {
+			std::cout << "Non displayable" << std::endl;
+		}
+	}
+
+	std::cout << "int: " << static_cast<int>(num) << std::endl;
+
+	std::cout << "float: " << static_cast<float>(num) << std::endl;
+
+	std::cout << "int: " << static_cast<int>(num) << std::endl;
 }
 
 void	ScalarConverter::convert(const std::string& input) {
