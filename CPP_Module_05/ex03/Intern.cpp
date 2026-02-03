@@ -10,6 +10,10 @@
 
 const unsigned int	Intern::formCount = 3;
 
+const char*	Intern::FormDoesNotExistException::what(void) const throw() {
+	return "ERROR: Intern doesn't have information about this form.";
+}
+
 Intern::Intern(void) {
 	this->forms[0] = "shrubbery creation";
 	this->forms[1] = "robotomy request";
@@ -54,8 +58,8 @@ unsigned int	Intern::getFormIdx(const std::string& formName) const {
 AForm*	Intern::makeForm(const std::string& formName, const std::string& target) const {
 	AForm*	ret = this->formArr[getFormIdx(formName)];
 	if (!ret) {
-		std::cerr << "Intern doesn't have information about the form " << formName << ". Form making failed" << std::endl;
-		return NULL;
+		std::cerr << "Form making failed. ";
+		throw FormDoesNotExistException();
 	}
 	ret = ret->clone();
 	ret->setTarget(target);

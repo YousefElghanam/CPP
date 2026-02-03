@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <string>
 #include <iostream>
 #include <exception>
@@ -156,38 +157,54 @@ static void test_intern(void) {
 	Bureaucrat	president("MR. President", 1);
 	Intern		newIntern;
 
-	AForm*	newForm_0 = newIntern.makeForm("robotomy request", "THE_TARGET");
-	if (newForm_0) {
+	AForm*	newForm_0 = NULL;
+	try {
+		newForm_0 = newIntern.makeForm("robotomy request", "THE_TARGET");
 		std::cout << newForm_0->getName() << std::endl;
 		newForm_0->beSigned(president);
 		newForm_0->execute(president);
 	}
+	catch (std::exception& e) {
+		std::cerr << e.what() << std::endl;	
+	}
 	delete newForm_0;
 	std::cout << "========================================================" << std::endl;
 
-	AForm*	newForm_1 = newIntern.makeForm("shrubbery creation", "THE_TARGET");
-	if (newForm_1) {
+	AForm*	newForm_1 = NULL;
+	try {
+		newForm_1 = newIntern.makeForm("shrubbery creation", "THE_TARGET");
 		std::cout << newForm_1->getName() << std::endl;
 		newForm_1->beSigned(president);
 		newForm_1->execute(president);
 	}
+	catch (std::exception& e) {
+		std::cerr << e.what() << std::endl;	
+	}
 	delete newForm_1;
 	std::cout << "========================================================" << std::endl;
 
-	AForm*	newForm_2 = newIntern.makeForm("presidential pardon", "THE_TARGET");
-	if (newForm_2) {
+	AForm*	newForm_2 = NULL;
+	try {
+		newForm_2 = newIntern.makeForm("presidential pardon", "THE_TARGET");
 		std::cout << newForm_2->getName() << std::endl;
 		newForm_2->beSigned(president);
 		newForm_2->execute(president);
 	}
+	catch (std::exception& e) {
+		std::cerr << e.what() << std::endl;	
+	}
 	delete newForm_2;
 	std::cout << "========================================================" << std::endl;
 
-	AForm*	newForm_3 = newIntern.makeForm("xxx", "THE_TARGET");
-	if (newForm_3) {
+	AForm*	newForm_3 = NULL;
+	try {
+		newForm_3 = newIntern.makeForm("xxx", "THE_TARGET");
 		std::cout << newForm_3->getName() << std::endl;
 		newForm_3->beSigned(president);
 		newForm_3->execute(president);
+	}
+	catch (std::exception& e) {
+		std::cerr << e.what() << std::endl;	
 	}
 	delete newForm_3;
 }
@@ -205,8 +222,11 @@ int	main(void) {
 	// std::cout << "====================================================================================================================" << std::endl;
 	// test_robotomy();
 	// std::cout << "====================================================================================================================" << std::endl;
+	std::cout << "testing Deep Copy" << std::endl;
 	Intern	a;
 	Intern	b(a);
+	Intern	c = a;
+	std::cout << "finished testing Deep Copy" << std::endl;
 	std::cout << "====================================================================================================================" << std::endl;
 	test_intern();
 	return 0;

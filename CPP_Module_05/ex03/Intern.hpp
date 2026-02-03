@@ -2,6 +2,7 @@
 # define INTERN_CLASS_HPP
 
 # include <string>
+# include <exception>
 
 class AForm;
 
@@ -12,6 +13,10 @@ class Intern {
 		AForm*						formArr[4];
 
 	public:
+		class	FormDoesNotExistException: public std::exception {
+			public: const char*	what(void) const throw();
+		};
+	
 		Intern(void);
 		~Intern(void);
 		Intern(const Intern& obj);
