@@ -23,6 +23,7 @@ static bool	isInt(const std::string& input) {
 	std::string::iterator	it = copy.begin();
 	size_t					count = 0;
 
+	std::cout << "IS IN INT\n";
 	if (*it == '-' || *it == '+') {
 		it++;
 	}
@@ -156,7 +157,7 @@ static void	convertInt(const std::string& input) {
 	}
 	else {
 		if (std::isprint(num) != 0) {
-			std::cout << num << std::endl;
+			std::cout << static_cast<char>(num) << std::endl;
 		}
 		else {
 			std::cout <<  "Non displayable" << std::endl;
@@ -165,13 +166,15 @@ static void	convertInt(const std::string& input) {
 
 	std::cout << "int: " << num << std::endl;
 
-	std::cout.setf(std::ios::fixed);
+	// std::cout.setf(std::ios::fixed);
 	std::cout << "float: " << static_cast<float>(num) << "f" << std::endl;
-	std::cout.unsetf(std::ios::fixed);
+	// std::cout.unsetf(std::ios::fixed);
 
-	std::cout.setf(std::ios::showpoint);
-	std::cout << "int: " << static_cast<double>(num) << std::endl;
-	std::cout.unsetf(std::ios::showpoint);
+	// std::cout.setf(std::ios::fixed);
+	// std::cout.setf(std::ios::showpoint);
+	std::cout << "double: " << static_cast<double>(num) << std::endl;
+	// std::cout.unsetf(std::ios::fixed);
+	// std::cout.unsetf(std::ios::showpoint);
 }
 
 static void	convertFloat(const std::string& input) {
@@ -202,7 +205,7 @@ static void	convertFloat(const std::string& input) {
 
 	std::cout << "float: " << static_cast<float>(num) << std::endl;
 
-	std::cout << "int: " << static_cast<int>(num) << std::endl;
+	std::cout << "double: " << static_cast<int>(num) << std::endl;
 }
 
 void	ScalarConverter::convert(const std::string& input) {
@@ -230,10 +233,10 @@ void	ScalarConverter::convert(const std::string& input) {
 		convertInt(input);
 		return ;
 	}
-	// if (type == FLOAT) {
-	// 	convertFloat(input);
-	// 	return ;
-	// }
+	if (type == FLOAT) {
+		convertFloat(input);
+		return ;
+	}
 	// if (type == DOUBLE) {
 	// 	convertDouble(input);
 	// 	return ;

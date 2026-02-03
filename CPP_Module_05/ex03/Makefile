@@ -30,7 +30,7 @@ runval: CXXFLAGS:= -Wall -Wextra -Werror -std=c++98 -pedantic -g
 runval: re
 	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
 	
-runsan: CXXFLAGS:= -std=c++98 -g -fsanitize=address,undefined
+runsan: CXXFLAGS:= -std=c++98 -g -fsanitize=address,undefined,leak
 runsan: re
 	./$(NAME)
 

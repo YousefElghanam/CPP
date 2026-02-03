@@ -52,5 +52,7 @@ bool		RobotomyRequestForm::execute(const Bureaucrat& executor) const {
 }
 
 AForm*			RobotomyRequestForm::clone(void) const {
-	return new RobotomyRequestForm();
+	AForm*	ret = new RobotomyRequestForm();
+	ret->setTarget(this->getTarget());
+	return ret;
 }

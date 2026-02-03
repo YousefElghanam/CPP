@@ -41,5 +41,7 @@ bool			PresidentialPardonForm::execute(const Bureaucrat& executor) const {
 }
 
 AForm*			PresidentialPardonForm::clone(void) const {
-	return new PresidentialPardonForm();
+	AForm*	ret = new PresidentialPardonForm();
+	ret->setTarget(this->getTarget());
+	return ret;
 }

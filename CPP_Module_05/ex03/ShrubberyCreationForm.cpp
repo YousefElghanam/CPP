@@ -49,5 +49,7 @@ bool		ShrubberyCreationForm::execute(const Bureaucrat& executor) const {
 }
 
 AForm*			ShrubberyCreationForm::clone(void) const {
-	return new ShrubberyCreationForm();
+	AForm*	ret = new ShrubberyCreationForm();
+	ret->setTarget(this->getTarget());
+	return ret;
 }
