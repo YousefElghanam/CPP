@@ -23,6 +23,4 @@ class ScalarConverter {
 		static void	convert(const std::string& input);
 };
 
-std::ostream&	operator<<(std::ostream &os, const ScalarConverter& obj);
-
 #endif /* SCALAR_CONVERTER_HPP */
