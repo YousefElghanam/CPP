@@ -16,7 +16,7 @@ const char*	Bureaucrat::GradeTooLowException::what(void) const throw() {
 }
 
 Bureaucrat::Bureaucrat(void):
-	name("defualt_name"), grade(0) {}
+	name("defualt_name"), grade(1) {}
 
 Bureaucrat::~Bureaucrat(void) {}
 
@@ -33,9 +33,8 @@ Bureaucrat::Bureaucrat(const std::string& name, long grade):
 		this->grade = grade;
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat& obj) {
-	*this = obj;
-}
+Bureaucrat::Bureaucrat(const Bureaucrat& obj):
+	name(obj.name), grade(obj.grade) {}
 
 Bureaucrat&			Bureaucrat::operator=(const Bureaucrat& obj) {
 	if (this != &obj) {
