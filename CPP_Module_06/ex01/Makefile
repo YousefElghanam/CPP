@@ -1,16 +1,14 @@
-NAME = convert
+NAME = serialize
 
 CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic #-g -fsanitize=address,leak,undefined
 
 SOURCES = main.cpp
-CLASS_SOURCES = ScalarConverterClass/ScalarConverter.cpp ScalarConverterClass/getType.cpp \
-				ScalarConverterClass/convertChar.cpp ScalarConverterClass/convertInt.cpp \
-				ScalarConverterClass/convertFloat.cpp ScalarConverterClass/convertDouble.cpp
+CLASS_SOURCES = SerializerClass/SerializerClass.cpp
 ALL_SOURCES = $(SOURCES) $(CLASS_SOURCES)
 
-HEADERS = ScalarConverterClass/ScalarConverter.hpp
+HEADERS = SerializerClass/SerializerClass.hpp
 
 OBJ_DIR = objects/
 OBJS = $(ALL_SOURCES:%.cpp=$(OBJ_DIR)%.o)

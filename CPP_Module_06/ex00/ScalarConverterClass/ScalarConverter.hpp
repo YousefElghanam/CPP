@@ -1,17 +1,7 @@
 #ifndef SCALAR_CONVERTER_HPP
 # define SCALAR_CONVERTER_HPP
 
-# include <iostream>
 # include <string>
-
-enum e_type {
-	EMPTY,
-	UNKOWN,
-	CHAR,
-	INT,
-	FLOAT,
-	DOUBLE
-};
 
 class ScalarConverter {
 	public:

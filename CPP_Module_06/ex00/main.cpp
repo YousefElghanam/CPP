@@ -1,5 +1,5 @@
 #include <iostream>
-#include "ScalarConverter.hpp"
+#include "ScalarConverterClass/ScalarConverter.hpp"
 
 int	main(int argc, char** argv) {
 	if (argc != 2) {
