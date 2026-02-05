@@ -2,5 +2,5 @@
 #include "BaseClass.hpp"
 
 Base::~Base(void) {
-	std::cout << "calling destructor" << std::endl;
+	// std::cout << "calling destructor" << std::endl;
 }
