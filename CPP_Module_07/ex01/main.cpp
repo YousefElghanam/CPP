@@ -2,13 +2,6 @@
 #include <iostream>
 #include "iter.hpp"
 
-template <typename T, typename F>
-	void iter(T* arr, unsigned int len, void (*func)(const F)) {
-		for (unsigned int i = 0; i < len; i++) {
-			func(arr[i]);
-		}
-	}
-
 void	printDouble(int num) {
 	std::cout << num << " is now: " << num * 2 << std::endl;
 }

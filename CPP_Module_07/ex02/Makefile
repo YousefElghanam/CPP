@@ -1,14 +1,14 @@
-NAME = iter
+NAME = array
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic #-g -fsanitize=address,leak,undefined
+CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic -g -fsanitize=address,undefined#leak,undefined
 
 SOURCES = main.cpp
-CLASS_SOURCES =
+CLASS_SOURCES = Array.cpp
 ALL_SOURCES = $(SOURCES) $(CLASS_SOURCES)
 
-HEADERS = iter.hpp
+HEADERS = Array.hpp
 
 OBJ_DIR = objects/
 OBJS = $(ALL_SOURCES:%.cpp=$(OBJ_DIR)%.o)
