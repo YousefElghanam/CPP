@@ -2,10 +2,10 @@ NAME = array
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic -g -fsanitize=address,undefined#leak,undefined
+CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic #-g -fsanitize=address,leak,undefined
 
 SOURCES = main.cpp
-CLASS_SOURCES = Array.cpp
+CLASS_SOURCES =
 ALL_SOURCES = $(SOURCES) $(CLASS_SOURCES)
 
 HEADERS = Array.hpp

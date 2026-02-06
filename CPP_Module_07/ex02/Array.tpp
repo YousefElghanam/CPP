@@ -1,22 +1,5 @@
-#include <cstdlib>
+#include "Array.hpp"
 #include <exception>
-// #include "Array.hpp"
-
-template <class T>
-class Array {
-	private:
-		T				*arr;
-		unsigned int	arrLen;
-	public:
-		Array(void);
-		~Array(void);
-		explicit Array(unsigned int n);
-		Array(const Array& obj);
-		Array&			operator=(const Array& obj);
-
-		T&				operator[](unsigned int i) const;
-		unsigned int	size(void) const;
-};
 
 template <class T>
 Array<T>::Array(void): arr(new T[0]), arrLen(0) {}
@@ -36,7 +19,7 @@ Array<T>::Array(unsigned int n): arr(new T[n]), arrLen(n) {
 template <class T>
 Array<T>::Array(const Array<T>& obj): arr(new T[obj.arrLen]), arrLen(obj.arrLen) {
 	for (unsigned int i = 0; i < obj.arrLen; i++) {
-		this->arr[i] = T(obj.arr[i]); // maybe new T() here <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		this->arr[i] = T(obj.arr[i]);
 	}
 }
 

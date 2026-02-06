@@ -17,4 +17,6 @@ class Array {
 		unsigned int	size(void) const;
 };
 
+# include "Array.tpp"
+
 #endif /* ARRAY_TEMPLATE_CLASS_HPP */
