@@ -8,7 +8,7 @@ SOURCES = main.cpp
 CLASS_SOURCES =
 ALL_SOURCES = $(SOURCES) $(CLASS_SOURCES)
 
-HEADERS = whatever.hpp
+HEADERS = easyfind.hpp
 TEMPLATE = easyfind.tpp
 
 OBJ_DIR = objects/
