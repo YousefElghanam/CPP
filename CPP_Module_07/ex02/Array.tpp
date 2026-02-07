@@ -37,7 +37,15 @@ Array<T>&	Array<T>::operator=(const Array& obj) {
 }
 
 template <class T>
-T&				Array<T>::operator[](unsigned int i) const {
+T&				Array<T>::operator[](unsigned int i) {
+	if (i >= this->arrLen) {
+		throw std::exception();
+	}
+	return this->arr[i];
+}
+
+template <class T>
+const T&				Array<T>::operator[](unsigned int i) const {
 	if (i >= this->arrLen) {
 		throw std::exception();
 	}
