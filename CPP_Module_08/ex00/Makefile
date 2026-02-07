@@ -1,4 +1,4 @@
-NAME = easy
+NAME = easyfind
 
 CXX = c++
 
@@ -9,6 +9,7 @@ CLASS_SOURCES =
 ALL_SOURCES = $(SOURCES) $(CLASS_SOURCES)
 
 HEADERS = whatever.hpp
+TEMPLATE = easyfind.tpp
 
 OBJ_DIR = objects/
 OBJS = $(ALL_SOURCES:%.cpp=$(OBJ_DIR)%.o)
