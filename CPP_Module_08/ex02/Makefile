@@ -1,15 +1,15 @@
-NAME = span
+NAME = mutated_abomination
 
 CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic #-g -fsanitize=address,leak,undefined
 
 SOURCES = main.cpp
-CLASS_SOURCES = Span.cpp
+CLASS_SOURCES =
 ALL_SOURCES = $(SOURCES) $(CLASS_SOURCES)
 
-HEADERS = Span.hpp
-TEMPLATE =
+HEADERS = MutantStack.hpp
+TEMPLATE = MutantStack.tpp
 
 OBJ_DIR = objects/
 OBJS = $(ALL_SOURCES:%.cpp=$(OBJ_DIR)%.o)
