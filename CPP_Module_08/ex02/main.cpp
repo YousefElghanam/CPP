@@ -13,7 +13,7 @@ static void	print_it(int num) {
 int	main() {
 	std::srand(std::time(0));
 	// std::stack<int, std::vector<int> > stack;
-	std::stack<int> st;
+	const std::stack<int> st;
 	MutantStack<int>	mstack;
 	for (size_t i = 0; i < 5; i++) {
 		mstack.push(std::rand() % 100);

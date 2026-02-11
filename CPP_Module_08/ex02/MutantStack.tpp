@@ -1,5 +1,4 @@
 #include "MutantStack.hpp"
-#include <stack>
 
 template<class T>
 typename MutantStack<T>::iterator	MutantStack<T>::begin(void) {
