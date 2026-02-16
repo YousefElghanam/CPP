@@ -3,6 +3,7 @@
 
 # include <fstream>
 # include <map>
+# include <exception>
 
 typedef struct s_date {
 	int	year;
@@ -11,7 +12,7 @@ typedef struct s_date {
 }	t_date;
 
 struct f_less_date {
-	bool	operator()(t_date& d1, t_date& d2) const;
+	bool	operator()(const t_date& d1, const t_date& d2) const;
 };
 
 class BitcoinExchange {
@@ -25,6 +26,17 @@ class BitcoinExchange {
 	public:
 		virtual ~BitcoinExchange(void) = 0;
 		static int	exchange(std::ifstream& data, std::ifstream& input);
+
+		class InvalidDataFileException: public std::exception {
+			const char*	what(void) const throw();
+		};
+		class InvalidInputFileException: public std::exception {
+			const char*	what(void) const throw();
+		};
+		class InvalidInputFormatException: public std::exception {
+			const char*	what(void) const throw();
+		};
+		
 };
 
 #endif /* BITCOIN_EXCHANGE_CLASS_HPP */
