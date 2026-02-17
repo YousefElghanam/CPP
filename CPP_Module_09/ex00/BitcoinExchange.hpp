@@ -6,9 +6,9 @@
 # include <exception>
 
 typedef struct s_date {
-	int	year;
-	int	month;
-	int	day;
+	long	year;
+	long	month;
+	long	day;
 }	t_date;
 
 struct f_less_date {

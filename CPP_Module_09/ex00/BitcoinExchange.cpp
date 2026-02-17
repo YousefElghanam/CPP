@@ -144,43 +144,100 @@ static bool	validDateFormat(std::string dateStr) {
 }
 
 static void	validateInputLine(std::string buf) {
-	// t_date		curDate;
-	long		year;
-	long		month;
-	long		day;
-	std::string	dateStr;
-	size_t		found;
+	size_t		i;
+	size_t		numStart;
+	t_date		date;
+	double		value;
 
-	found = buf.find('|');
-	if (found == std::string::npos) {
-		throw BitcoinExchange::InvalidInputFormatException();
+	i = 0;
+	numStart = 0;
+	while (i < buf.length()) {
+		if (std::isdigit(buf.at(i)) == 0) {
+			if (buf.at(i) != '-' || i == numStart || i > 3) {
+				std::cerr << "year checked out" << std::endl;
+				throw BitcoinExchange::InvalidInputFormatException();
+			}
+			date.year = std::strtol(buf.substr(numStart, i).c_str(), NULL, 10);
+			i++;
+			break ;
+		}
+		i++;
 	}
-	if (!validDateFormat(buf.substr(0, found))) {
-		throw BitcoinExchange::InvalidInputFormatException();
+	numStart = i;
+	while (i < buf.length()) {
+		if (std::isdigit(buf.at(i)) == 0) {
+			if (buf.at(i) != '-' || i == numStart || i > 1 + numStart) {
+				std::cerr << "month checked out" << std::endl;
+				throw BitcoinExchange::InvalidInputFormatException();
+			}
+			date.month = std::strtol(buf.substr(numStart, i).c_str(), NULL, 10);
+			i++;
+			break ;
+		}
+		i++;
 	}
-	year = std::strtol(buf.c_str(), NULL, 10);
-	month = std::strtol(buf.c_str() + buf.find('-') + 1, NULL, 10);
-	day = std::strtol(buf.c_str() + buf.rfind('-') + 1, NULL, 10);
+	numStart = i;
+	while (i < buf.length()) {
+		if (std::isdigit(buf.at(i)) == 0) {
+			if (std::isspace(buf.at(i)) == 0 || i == numStart || i > 1 + numStart) {
+				std::cerr << "month checked out" << std::endl;
+				throw BitcoinExchange::InvalidInputFormatException();
+			}
+			date.day = std::strtol(buf.substr(numStart, i).c_str(), NULL, 10);
+			i++;
+			break ;
+		}
+		i++;
+	}
+	if (buf.at(i) != '|') {
+		throw BitcoinExchange::InvalidInputFileException();
+	}
+	i++;
+	if (std::isspace(buf.at(i)) == 0) {
+		throw BitcoinExchange::InvalidInputFileException();
+	}
+	i++;
+	while (i < buf.length()) {
+		if (std::isdigit(buf.at(i)) == 0) {
+			if (std::isdigit(buf.at(i)) == 0) {
+				std::cerr << "" << std::endl;
+			}
+			std::cerr << "value checked out" << std::endl;
+			throw BitcoinExchange::InvalidInputFileException();
+		}
+	}
+	value = std::strtod(buf.substr(i).c_str(), NULL);
+	// found = buf.find('|');
+	// if (found == std::string::npos) {
+	// 	throw BitcoinExchange::InvalidInputFormatException();
+	// }
+	// if (!validDateFormat(buf.substr(0, found))) {
+	// 	throw BitcoinExchange::InvalidInputFormatException();
+	// }
+	// year = std::strtol(buf.c_str(), NULL, 10);
+	// month = std::strtol(buf.c_str() + buf.find('-') + 1, NULL, 10);
+	// day = std::strtol(buf.c_str() + buf.rfind('-') + 1, NULL, 10);
 	// std::string	year = buf.substr(0, )
 }
 
 static void	parseInput(std::ifstream& input, std::map<t_date, double, f_less_date>& dataMap) {
-	std::string	buf;
-	// t_date		curDate;
+	std::string	lineBuf;
+	std::string	numBuf;
+	// t_date	curDate;
 
 	(void)dataMap;
-	std::getline(input, buf);
+	std::getline(input, lineBuf);
 	if (input.fail()) {
 		throw BitcoinExchange::InvalidInputFileException();
 	}
 	if (input.eof()) {
 		return ;
 	}
-	if (buf != "date | value") {
+	if (lineBuf != "date | value") {
 		std::cerr << "Invalid header in input file" << std::endl;
 		throw BitcoinExchange::InvalidInputFileException();
 	}
-	while (std::getline(input, buf)) {
+	while (std::getline(input, lineBuf)) {
 		if (input.fail()) {
 			throw BitcoinExchange::InvalidInputFileException();
 		}
@@ -188,7 +245,7 @@ static void	parseInput(std::ifstream& input, std::map<t_date, double, f_less_dat
 			return ;
 		}
 		try {
-			validateInputLine(buf);
+			validateInputLine(lineBuf);
 			// parseInputLine(buf, dataMap);
 		}
 		catch (std::exception& e) {
