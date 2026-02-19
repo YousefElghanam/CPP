@@ -50,7 +50,7 @@ const char*			BitcoinExchange::ValueTooBigException::what(void) const throw() {
 }
 
 bool	f_less_date::operator()(const t_date& d1, const t_date& d2) const {
-	if (d1.year > d2.year) {
+	if (d1.year > d2.year) { // TODO Run scan-build static analyzer
 		return false;
 	}
 	if (d1.year < d2.year) {
@@ -114,9 +114,8 @@ static void	parseYear(size_t* i, size_t* numStart, t_date* date, std::string& bu
 		(*i)++;
 		break ;
 		}
+		*numStart = *i;
 	}
-	*numStart = *i;
-}
 
 static void	parseMonth(size_t* i, size_t* numStart, t_date* date, std::string& buf) {
 	while (*i < buf.length()) {
