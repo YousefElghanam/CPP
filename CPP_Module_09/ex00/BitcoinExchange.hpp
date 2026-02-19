@@ -4,6 +4,14 @@
 # include <fstream>
 # include <map>
 # include <exception>
+# include <string>
+
+typedef enum e_error {
+	VALID,
+	INVALID_DATE,
+	NEGATIVE_VALUE,
+	TOO_LATE_VALUE
+}	e_error;
 
 typedef struct s_date {
 	long	year;
@@ -27,16 +35,12 @@ class BitcoinExchange {
 		virtual ~BitcoinExchange(void) = 0;
 		static int	exchange(std::ifstream& data, std::ifstream& input);
 
-		class InvalidDataFileException: public std::exception {
-			const char*	what(void) const throw();
-		};
-		class InvalidInputFileException: public std::exception {
-			const char*	what(void) const throw();
-		};
-		class InvalidInputFormatException: public std::exception {
-			const char*	what(void) const throw();
-		};
-		
+		class InvalidDataFileException: public std::exception {public: const char*	what(void) const throw();};
+		class InvalidInputFileException: public std::exception {public: const char* what(void) const throw();};
+
+		class BadInputException: public std::exception {public: const char* what(void) const throw();};
+		class NegativeValueException: public std::exception {public: const char* what(void) const throw();};
+		class ValueTooBigException: public std::exception {public: const char* what(void) const throw();};
 };
 
 #endif /* BITCOIN_EXCHANGE_CLASS_HPP */

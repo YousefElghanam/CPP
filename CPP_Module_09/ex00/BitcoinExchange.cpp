@@ -4,6 +4,7 @@
 #include <cerrno>
 #include <cstdlib>
 
+#include <stdexcept>
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -33,49 +34,20 @@ const char*			BitcoinExchange::InvalidDataFileException::what(void) const throw(
 }
 
 const char*			BitcoinExchange::InvalidInputFileException::what(void) const throw() {
-	return "Input data.csv";
+	return "Invalid input file";
 }
 
-const char*			BitcoinExchange::InvalidInputFormatException::what(void) const throw() {
-	return "Input data.csv";
+const char*			BitcoinExchange::BadInputException::what(void) const throw() {
+	return "Error: bad input => ";
 }
 
-// static bool	insertDateValuePair(const std::stringbuf* date, const std::stringbuf* value, std::map<t_date, long, t_less_date> dataMap) {
-// 	// std::cout << "date is: " << date->str() << std::endl;
-// 	char	*str_end = NULL;
-// 	errno = 0;
-// 	const long year = std::strtol(date->str().c_str(), &str_end, 10);
-// 	if (errno == ERANGE) {
-// 		std::cerr << "Year " << date->str() << " overflowed, come back from the future, old man!" << std::endl;
-// 		return false;
-// 	}
-// 	if (str_end == date->str().c_str()) {
-// 		std::cerr << "Empty year or unexpected form" << std::endl;
-// 		return false;
-// 	}
-// 	if (year < 0) {
-// 		std::cerr << "Negative year? No, sir!" << std::endl;
-// 		return false;
-// 	}
+const char*			BitcoinExchange::NegativeValueException::what(void) const throw() {
+	return "Error: not a positive number.";
+}
 
-// 	str_end = NULL;
-// 	errno = 0;
-// 	const long value = std::strtol(date->str().c_str(), &str_end, 10);
-// 	if (errno == ERANGE) {
-// 		std::cerr << "Year " << date->str() << " overflowed, come back from the future, old man!" << std::endl;
-// 		return false;
-// 	}
-// 	if (str_end == date->str().c_str()) {
-// 		std::cerr << "Empty value or unexpected form" << std::endl;
-// 		return false;
-// 	}
-// 	if (value < 0) {
-// 		std::cerr << "Negative value? No, sir!" << std::endl;
-// 		return false;
-// 	}
-// 	// data_map.insert(std::pair<long, long>(year))
-// 	// return true;
-// }
+const char*			BitcoinExchange::ValueTooBigException::what(void) const throw() {
+	return "Error: too large a number.";
+}
 
 bool	f_less_date::operator()(const t_date& d1, const t_date& d2) const {
 	if (d1.year > d2.year) {
@@ -118,114 +90,220 @@ static void	parseData(std::ifstream& data, std::map<t_date, double, f_less_date>
 		std::getline(data, buf, '\n');
 		dataMap.insert(std::pair<t_date, double>(curDate, std::strtod(buf.c_str(), NULL)));
 	}
+	if (curDate.year == 0 || curDate.month == 0 || curDate.day == 0) {
+		throw BitcoinExchange::InvalidDataFileException();
+	}
 	// for (std::map<t_date, double, f_less_date>::iterator it = dataMap.begin(); it != dataMap.end(); it++) {
 	// 	std::cout << it->first.year << "-" << it->first.month << "-" << it->first.day << ": " << it->second << std::endl;
 	// }
+	// std::cout << "PARSED data.csv SUCCESSFULLY" << std::endl;
 }
 
-static bool	validDateFormat(std::string dateStr) {
-	char	c;
-	size_t	found;
-	std::string	yearStr;
-	long	year;
-
-	found = dateStr.find('-');
-	if (found == std::string::npos || found > 4) {
-		throw BitcoinExchange::InvalidInputFormatException();
+static void	parseYear(size_t* i, size_t* numStart, t_date* date, std::string& buf) {
+	while (*i < buf.length()) {
+		if (std::isdigit(buf.at(*i)) != 0) {
+			(*i)++;
+			continue;
+		}
+		if (buf.at(*i) != '-' || *i == *numStart || *i > 4) {
+			// std::cerr << "Error " << buf.at(*i) << " AND *i == " << *i << " AND numStart == " << *numStart << std::endl;
+			// std::cout << "checked 1\n";
+			throw BitcoinExchange::BadInputException();
+		}
+		date->year = std::strtol(buf.substr(*numStart, *i).c_str(), NULL, 10);
+		(*i)++;
+		break ;
+		}
 	}
-	yearStr = dateStr.substr(0, found);
-	std::cout << "yearStr is: " << yearStr << std::endl;
-	year = std::strtol(yearStr.c_str(), NULL, 10);
-	for (std::string::iterator it = dateStr.begin(); it != dateStr.end(); it++) {
-		c = *it;
-		// if (!std::isdigit(c) && c != '-')
-	}
-	return true;
+	*numStart = *i;
 }
 
-static void	validateInputLine(std::string buf) {
-	size_t		i;
-	size_t		numStart;
-	t_date		date;
-	double		value;
+static void	parseMonth(size_t* i, size_t* numStart, t_date* date, std::string& buf) {
+	while (*i < buf.length()) {
+		if (std::isdigit(buf.at(*i)) == 0) {
+			if (buf.at(*i) != '-' || *i == *numStart || *i > 2 + *numStart) {
+				// std::cerr << "month checked out at char == " << buf.at(*i) << " AND i == " << *i << " AND numStart == " << *numStart << std::endl;
+				// std::cerr << "month checked out" << std::endl;
+				// std::cout << "checked 2\n";
+
+				throw BitcoinExchange::BadInputException();
+			}
+			date->month = std::strtol(buf.substr(*numStart, *i).c_str(), NULL, 10);
+			(*i)++;
+			break ;
+		}
+		(*i)++;
+	}
+	*numStart = *i;
+}
+
+static void	parseDay(size_t* i, const size_t* numStart, t_date* date, std::string& buf) {
+	while (*i < buf.length()) {
+		if (std::isdigit(buf.at(*i)) == 0) {
+			if (std::isspace(buf.at(*i)) == 0 || *i == *numStart || *i > 2 + *numStart) {
+				// std::cerr << "day checked out" << std::endl;
+				// std::cout << "checked 3\n";
+
+				throw BitcoinExchange::BadInputException();
+			}
+			date->day = std::strtol(buf.substr(*numStart, *i).c_str(), NULL, 10);
+			break ;
+		}
+		(*i)++;
+	}
+}
+
+static void	parsePipe(size_t* i, std::string& buf) {
+	try {
+		while (true) {
+			if (std::isspace(buf.at(*i)) != 0) {
+				(*i)++;
+			}
+			else if (buf.at(*i) == '|') {
+				(*i)++;
+				break ;
+			}
+			else {
+				// std::cout << "checked 4\n";
+				throw BitcoinExchange::BadInputException();
+			}
+		}
+		if (std::isspace(buf.at(*i)) == 0) {
+			throw BitcoinExchange::BadInputException();
+		}
+		while (true) {
+			if (std::isspace(buf.at(*i)) != 0) {
+				(*i)++;
+			}
+			else {
+				break ;
+			}
+		}
+	}
+	catch (...) {
+		// std::cout << "checked 6\n";
+		throw BitcoinExchange::BadInputException();
+	}
+}
+
+static void	parseValue(size_t* i, double* value, std::string& buf) {
+	// std::cout << "trying to parse: " << buf.substr(*i).c_str() << " <<<<<<<< " << std::endl;
+	char*	str_end;
+	// while (*i < buf.length()) {
+	// 	if (std::isdigit(buf.at(*i)) == 0) {
+	// 		if (buf.at(*i) == ) {
+	// 			std::cerr << "" << std::endl;
+	// 		}
+	// 		std::cerr << "value checked out" << std::endl;
+	// 		throw BitcoinExchange::ValueException();
+	// 	}
+	// 	(*i)++;
+	// }
+	// std::cout << "trying to parse: " << buf.substr(*i).c_str() << " <<<<<<<< " << std::endl;
+	errno = 0;
+	*value = std::strtod(buf.substr(*i).c_str(), &str_end);
+	if (*value == 0 && str_end == buf.substr(*i).c_str()) { // TODO HANDLE INVALID VALUE FORMAT HERE
+				// std::cout << "checked 7\n";
+
+		throw BitcoinExchange::BadInputException();
+	}
+	if (errno == ERANGE) {
+				// std::cout << "checked 8\n";
+
+		throw BitcoinExchange::BadInputException();
+	}
+	errno = 0;
+	if (*value < 0) {
+		throw BitcoinExchange::NegativeValueException();
+	}
+	if (*value > 1000) {
+		throw BitcoinExchange::ValueTooBigException();
+
+	}
+	// std::cout << "parsed value: " << *value << std::endl;
+}
+
+static void	printDate(const t_date date, std::ostream& stream) {
+	stream << date.year << "-" << date.month << "-" << date.day;
+}
+
+// static bool	thirtyOneMonth(long month) {
+// 	return (month == 1 || month == 3 || month == 5 || month == 7
+// 		|| month == 8 || month == 10 || month == 12);
+// }
+
+static bool	thirtyMonth(long month) {
+	return (month == 4 || month == 6 || month == 9 || month == 11);
+}
+
+static bool february(long month) {
+	return (month == 2);
+}
+
+static bool	leapYear(long year) {
+	if (year % 4 == 0) {
+		return (year % 100 == 0 && year % 400 != 0);
+	}
+	return false;
+}
+
+static bool	validateDate(const t_date date) {
+	if (date.year < 1
+		|| date.month < 1 || date.month > 12
+		|| date.day < 1 || date.day > 31) {
+		return true;
+	}
+	if (thirtyMonth(date.month) && date.day > 30) {
+		return true;
+	}
+	if (february(date.month) && leapYear(date.year) && (date.day > 29 || date.day < 29)) {
+		return true;
+	}
+	return false;
+}
+
+static void	parseInputLine(std::string& buf, std::map<t_date, double, f_less_date>& dataMap) {
+	size_t											i;
+	size_t											numStart;
+	t_date											date;
+	double											value;
+	const f_less_date								compare;
+	std::map<t_date, double, f_less_date>::iterator	foundIt;
+	bool											found = false;
 
 	i = 0;
 	numStart = 0;
-	while (i < buf.length()) {
-		if (std::isdigit(buf.at(i)) == 0) {
-			if (buf.at(i) != '-' || i == numStart || i > 3) {
-				std::cerr << "year checked out" << std::endl;
-				throw BitcoinExchange::InvalidInputFormatException();
-			}
-			date.year = std::strtol(buf.substr(numStart, i).c_str(), NULL, 10);
-			i++;
-			break ;
-		}
-		i++;
+	try {
+		parseYear(&i, &numStart, &date, buf);
+		parseMonth(&i, &numStart, &date, buf);
+		parseDay(&i, &numStart, &date, buf);
+		validateDate(date);
+		parsePipe(&i, buf);
+		parseValue(&i, &value, buf);
 	}
-	numStart = i;
-	while (i < buf.length()) {
-		if (std::isdigit(buf.at(i)) == 0) {
-			if (buf.at(i) != '-' || i == numStart || i > 1 + numStart) {
-				std::cerr << "month checked out" << std::endl;
-				throw BitcoinExchange::InvalidInputFormatException();
-			}
-			date.month = std::strtol(buf.substr(numStart, i).c_str(), NULL, 10);
-			i++;
-			break ;
-		}
-		i++;
+	catch (BitcoinExchange::BadInputException& e) {
+			std::cout << e.what() << buf << std::endl;
+			return ;
 	}
-	numStart = i;
-	while (i < buf.length()) {
-		if (std::isdigit(buf.at(i)) == 0) {
-			if (std::isspace(buf.at(i)) == 0 || i == numStart || i > 1 + numStart) {
-				std::cerr << "month checked out" << std::endl;
-				throw BitcoinExchange::InvalidInputFormatException();
-			}
-			date.day = std::strtol(buf.substr(numStart, i).c_str(), NULL, 10);
-			i++;
-			break ;
-		}
-		i++;
-	}
-	if (buf.at(i) != '|') {
-		throw BitcoinExchange::InvalidInputFileException();
-	}
-	i++;
-	if (std::isspace(buf.at(i)) == 0) {
-		throw BitcoinExchange::InvalidInputFileException();
-	}
-	i++;
-	while (i < buf.length()) {
-		if (std::isdigit(buf.at(i)) == 0) {
-			if (std::isdigit(buf.at(i)) == 0) {
-				std::cerr << "" << std::endl;
-			}
-			std::cerr << "value checked out" << std::endl;
-			throw BitcoinExchange::InvalidInputFileException();
+	for (std::map<t_date, double, f_less_date>::iterator it = dataMap.begin(); it != dataMap.end(); it++) {
+		if (!compare(date, it->first)) {
+			foundIt = it;
+			found = true;
 		}
 	}
-	value = std::strtod(buf.substr(i).c_str(), NULL);
-	// found = buf.find('|');
-	// if (found == std::string::npos) {
-	// 	throw BitcoinExchange::InvalidInputFormatException();
-	// }
-	// if (!validDateFormat(buf.substr(0, found))) {
-	// 	throw BitcoinExchange::InvalidInputFormatException();
-	// }
-	// year = std::strtol(buf.c_str(), NULL, 10);
-	// month = std::strtol(buf.c_str() + buf.find('-') + 1, NULL, 10);
-	// day = std::strtol(buf.c_str() + buf.rfind('-') + 1, NULL, 10);
-	// std::string	year = buf.substr(0, )
+	if (found) {
+		printDate(date, std::cout);
+		std::cout << " => " << value << " = " << value * foundIt->second << std::endl;
+	}
+	else {
+		printDate(date, std::cout);
+		std::cout << " => No data avaliable at this date." << std::endl;
+	}
 }
 
 static void	parseInput(std::ifstream& input, std::map<t_date, double, f_less_date>& dataMap) {
 	std::string	lineBuf;
-	std::string	numBuf;
-	// t_date	curDate;
 
-	(void)dataMap;
 	std::getline(input, lineBuf);
 	if (input.fail()) {
 		throw BitcoinExchange::InvalidInputFileException();
@@ -245,8 +323,7 @@ static void	parseInput(std::ifstream& input, std::map<t_date, double, f_less_dat
 			return ;
 		}
 		try {
-			validateInputLine(lineBuf);
-			// parseInputLine(buf, dataMap);
+			parseInputLine(lineBuf, dataMap);
 		}
 		catch (std::exception& e) {
 			std::cout << e.what() << std::endl;
@@ -259,10 +336,15 @@ int	BitcoinExchange::exchange(std::ifstream& data, std::ifstream& input) {
 
 	try {
 		parseData(data, dataMap);
+	}
+	catch (std::exception& e) {
+		std::cout << "ERROR: Parsing the data.csv file failed: " << e.what() << std::endl;
+	}
+	try {
 		parseInput(input, dataMap);
 	}
 	catch (std::exception& e) {
-		std::cout << e.what() << std::endl;
+		std::cout << "ERROR: Parsing the input file failed: " << e.what() << std::endl;
 	}
 	return 0;
 }
