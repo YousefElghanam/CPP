@@ -1,8 +1,6 @@
 #ifndef RPN_CLASS_HPP
 # define RPN_CLASS_HPP
 
-# include <stack>
-
 class RPN {
 	private:
 		RPN(void);

@@ -1,15 +1,15 @@
-NAME = mutated_abomination
+NAME = PmergeMe
 
 CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic #-g -fsanitize=address,leak,undefined
 
 SOURCES = main.cpp
-CLASS_SOURCES =
+CLASS_SOURCES = PmergeMe.cpp
 ALL_SOURCES = $(SOURCES) $(CLASS_SOURCES)
 
-HEADERS = MutantStack.hpp
-TEMPLATE = MutantStack.tpp
+HEADERS = PmergeMe.hpp
+TEMPLATE = 
 
 OBJ_DIR = objects/
 OBJS = $(ALL_SOURCES:%.cpp=$(OBJ_DIR)%.o)
@@ -29,7 +29,7 @@ run: re
 
 runval: CXXFLAGS:= -Wall -Wextra -Werror -std=c++98 -pedantic -g
 runval: re
-	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) input.txt
 	
 runsan: CXXFLAGS:= -std=c++98 -g -fsanitize=address,undefined
 runsan: re
