@@ -4,14 +4,6 @@
 # include <fstream>
 # include <map>
 # include <exception>
-# include <string>
-
-typedef enum e_error {
-	VALID,
-	INVALID_DATE,
-	NEGATIVE_VALUE,
-	TOO_LATE_VALUE
-}	e_error;
 
 typedef struct s_date {
 	long	year;
