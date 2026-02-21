@@ -2,9 +2,13 @@
 #include <iostream>
 
 int	main(int argc, char** argv) {
-	if (argc != 2) {
-		std::cerr << "Takes only exactly two arguments" << std::endl;
-		return 1;
+	if (argc < 2) {
+		std::cout << "Sorted 0 numbers successfully ^_^" << std::endl;
+		return 0;
 	}
-	return PmergeMe::calculate(argv[1]);
+	if (argc == 2) {
+		std::cout << "Sorted 1 number successfully ^_^" << std::endl;
+		return 0;
+	}
+	return PmergeMe::sort(argc, argv);
 }

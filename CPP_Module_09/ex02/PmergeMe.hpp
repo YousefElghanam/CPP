@@ -12,7 +12,7 @@ class PmergeMe {
 
 	public:
 		virtual ~PmergeMe(void) = 0;
-		static int	calculate(char* input);
+		static int	sort(int argc, char** argv);
 };
 
 #endif /* PMERGE_ME_CLASS_HPP */
