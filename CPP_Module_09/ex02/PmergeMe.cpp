@@ -41,9 +41,17 @@ static void		printElmnt(long num) {
 	std::cout << num << " ";
 }
 
-static void		printVec(std::vector<long> vec) {
-	std::for_each(vec.begin(), vec.end(), printElmnt);
+static void		printVec(std::vector<long>& vec) {
+std::for_each(vec.begin(), vec.end(), printElmnt);
 	std::cout << std::endl;
+}
+
+static void		merge(std::vector<long> vec) {
+	if (vec.size() == 1) {
+		// do something ?? 
+		return ;
+	}
+	std::vector<long>	left(vec.begin(), vec.begin() + vec.size() / 2);
 }
 
 int			PmergeMe::sort(int argc, char** argv) {
