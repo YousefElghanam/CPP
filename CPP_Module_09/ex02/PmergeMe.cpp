@@ -46,12 +46,34 @@ std::for_each(vec.begin(), vec.end(), printElmnt);
 	std::cout << std::endl;
 }
 
-static void		merge(std::vector<long> vec) {
+static void		merge(std::vector<long>& vec, int level) {
 	if (vec.size() == 1) {
 		// do something ?? 
 		return ;
 	}
+	if (vec.size() == 2) {
+		if (vec.at(0) > vec.at(1)) {
+			std::cout << "swapping" << std::endl;
+			const long tmp = vec.at(0);
+			vec.at(0) = vec.at(1);
+			vec.at(1) = tmp;
+		}
+		return ;
+	}
+	std::cout << "level " << level << ":" << std::endl;
 	std::vector<long>	left(vec.begin(), vec.begin() + vec.size() / 2);
+	std::vector<long>	right(vec.begin() + vec.size() / 2, vec.end());
+	std::vector<long>	remainder;
+	if (left.size() < right.size()) {
+		remainder = std::vector<long>(vec.end() - 1, vec.end());
+		right.pop_back();
+	}
+	std::cout << "left: "; printVec(left);
+	std::cout << "right: "; printVec(right);
+	std::cout << "remainder: "; printVec(remainder);
+	std::cout << std::endl;
+	merge(left, level + 1);
+	merge(right, level + 1);
 }
 
 int			PmergeMe::sort(int argc, char** argv) {
@@ -64,6 +86,8 @@ int			PmergeMe::sort(int argc, char** argv) {
 		}
 		vec.push_back(std::atol(argv[i]));
 	}
-	printVec(vec);
+	// printVec(vec);
+	merge(vec, 1);
+	std::cout << "RES: "; printVec(vec);
 	return 0;
 }
