@@ -7,6 +7,7 @@
 #include <cstring>
 
 #include <iostream>
+#include <exception>
 
 #include <algorithm>
 #include <vector>
@@ -76,6 +77,17 @@ static void		merge(std::vector<long>& vec, int level) {
 	merge(right, level + 1);
 }
 
+static std::vector<long>	insertionSequence(int size) {
+	std::vector<long>	vec;
+	vec.reserve(size + 2);
+	vec.push_back(0);
+	vec.push_back(1);
+	for (int i = 2; i < size + 2; i++) {
+		vec.push_back(vec.at(i - 1) + (2 * vec.at(i - 2)));
+	}
+	return vec;
+}
+
 int			PmergeMe::sort(int argc, char** argv) {
 	std::vector<long>	vec;
 	vec.reserve(argc - 1);
@@ -86,7 +98,8 @@ int			PmergeMe::sort(int argc, char** argv) {
 		}
 		vec.push_back(std::atol(argv[i]));
 	}
-	// printVec(vec);
+	std::vector<long>	seq = insertionSequence(argc - 1);
+	printVec(seq);
 	merge(vec, 1);
 	std::cout << "RES: "; printVec(vec);
 	return 0;

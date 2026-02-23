@@ -2,7 +2,7 @@ NAME = PmergeMe
 
 CXX = c++
 
-CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic #-g -fsanitize=address,leak,undefined
+CXXFLAGS = -Wall -Wextra -Werror -MMD -MP -std=c++98 -pedantic -g #-fsanitize=address,leak,undefined
 
 SOURCES = main.cpp
 CLASS_SOURCES = PmergeMe.cpp
