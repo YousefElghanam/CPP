@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <exception>
+#include <utility>
 
 #include <algorithm>
 #include <vector>
@@ -89,14 +90,15 @@ static std::vector<long>	insertionSequence(int size) {
 }
 
 int			PmergeMe::sort(int argc, char** argv) {
-	std::vector<long>	vec;
+	typedef std::pair<
+	std::vector<std::pair<std::vector<long>, size_t> >	vec;
 	vec.reserve(argc - 1);
 	for (int i = 1; i < argc; i++) {
 		if (!validPosNum(argv[i])) {
 			std::cerr << "Invalid argument: " << argv[i] << std::endl;
 			return 1;
 		}
-		vec.push_back(std::atol(argv[i]));
+		vec.push_back(std::pair< std::atol(argv[i]));
 	}
 	std::vector<long>	seq = insertionSequence(argc - 1);
 	printVec(seq);
