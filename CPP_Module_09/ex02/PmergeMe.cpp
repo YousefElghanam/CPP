@@ -26,7 +26,7 @@ PmergeMe&	PmergeMe::operator=(const PmergeMe& obj) {
 	return *this;
 }
 
-static bool		validPosNum(char* num) {
+static bool		validPosNum(const char* num) {
 	const size_t	len = std::strlen(num);
 	if (len == 0 || len > 10) {
 		return false;
@@ -43,39 +43,51 @@ static void		printElmnt(long num) {
 	std::cout << num << " ";
 }
 
-static void		printVec(std::vector<long>& vec) {
-std::for_each(vec.begin(), vec.end(), printElmnt);
+static void		printPairElmnt(std::pair<std::vector<long>, size_t>& pair) {
+	std::cout << "idx " << pair.second << ": ";
+	std::for_each(pair.first.begin(), pair.first.end(), printElmnt);
 	std::cout << std::endl;
 }
 
-static void		merge(std::vector<long>& vec, int level) {
-	if (vec.size() == 1) {
-		// do something ?? 
-		return ;
-	}
-	if (vec.size() == 2) {
-		if (vec.at(0) > vec.at(1)) {
-			std::cout << "swapping" << std::endl;
-			const long tmp = vec.at(0);
-			vec.at(0) = vec.at(1);
-			vec.at(1) = tmp;
-		}
-		return ;
-	}
-	std::cout << "level " << level << ":" << std::endl;
-	std::vector<long>	left(vec.begin(), vec.begin() + vec.size() / 2);
-	std::vector<long>	right(vec.begin() + vec.size() / 2, vec.end());
-	std::vector<long>	remainder;
-	if (left.size() < right.size()) {
-		remainder = std::vector<long>(vec.end() - 1, vec.end());
-		right.pop_back();
-	}
-	std::cout << "left: "; printVec(left);
-	std::cout << "right: "; printVec(right);
-	std::cout << "remainder: "; printVec(remainder);
+void		PmergeMe::printVec(const std::vector<long>& vec) {
+	std::for_each(vec.begin(), vec.end(), printElmnt);
 	std::cout << std::endl;
-	merge(left, level + 1);
-	merge(right, level + 1);
+}
+
+void		PmergeMe::printPairVec(const std::vector<Pair>& PairVec) {
+	std::for_each(PairVec.begin(), PairVec.end(), printPairElmnt);
+	std::cout << std::endl;
+}
+
+void		PmergeMe::merge(std::vector<Pair>& PairVec, int level) {
+	(void)PairVec; (void)level;
+	// if (PairVec.size() == 1) {
+	// 	// do something ?? 
+	// 	return ;
+	// }
+	// if (PairVec.size() == 2) {
+	// 	if (PairVec.at(0) > PairVec.at(1)) {
+	// 		std::cout << "swapping" << std::endl;
+	// 		const long tmp = PairVec.at(0);
+	// 		PairVec.at(0) = PairVec.at(1);
+	// 		PairVec.at(1) = tmp;
+	// 	}
+	// 	return ;
+	// }
+	// std::cout << "level " << level << ":" << std::endl;
+	// std::vector<long>	left(vec.begin(), vec.begin() + vec.size() / 2);
+	// std::vector<long>	right(vec.begin() + vec.size() / 2, vec.end());
+	// std::vector<long>	remainder;
+	// if (left.size() < right.size()) {
+	// 	remainder = std::vector<long>(vec.end() - 1, vec.end());
+	// 	right.pop_back();
+	// }
+	// std::cout << "left: "; printVec(left);
+	// std::cout << "right: "; printVec(right);
+	// std::cout << "remainder: "; printVec(remainder);
+	// std::cout << std::endl;
+	// merge(left, level + 1);
+	// merge(right, level + 1);
 }
 
 static std::vector<long>	insertionSequence(int size) {
@@ -89,20 +101,22 @@ static std::vector<long>	insertionSequence(int size) {
 	return vec;
 }
 
-int			PmergeMe::sort(int argc, char** argv) {
-	typedef std::pair<
-	std::vector<std::pair<std::vector<long>, size_t> >	vec;
-	vec.reserve(argc - 1);
-	for (int i = 1; i < argc; i++) {
+int			PmergeMe::sort(const size_t argc, const char** argv) {
+	std::vector<Pair>	PairVec;
+	PairVec.reserve(argc - 1);
+	for (size_t i = 1; i < argc; i++) {
 		if (!validPosNum(argv[i])) {
 			std::cerr << "Invalid argument: " << argv[i] << std::endl;
 			return 1;
 		}
-		vec.push_back(std::pair< std::atol(argv[i]));
+		Vec	vec;
+		vec.push_back(std::atol(argv[i]));
+		PairVec.push_back(Pair(vec, i));
 	}
 	std::vector<long>	seq = insertionSequence(argc - 1);
 	printVec(seq);
-	merge(vec, 1);
-	std::cout << "RES: "; printVec(vec);
+	PmergeMe::merge(PairVec, 1);
+	std::cout << "RES: " << std::endl;
+	printPairVec(PairVec);
 	return 0;
 }
