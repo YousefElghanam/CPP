@@ -43,7 +43,7 @@ static void		printElmnt(long num) {
 	std::cout << num << " ";
 }
 
-static void		printPairElmnt(std::pair<std::vector<long>, size_t>& pair) {
+static void		printPairElmnt(const std::pair<std::vector<long>, size_t>& pair) {
 	std::cout << "idx " << pair.second << ": ";
 	std::for_each(pair.first.begin(), pair.first.end(), printElmnt);
 	std::cout << std::endl;
@@ -61,10 +61,18 @@ void		PmergeMe::printPairVec(const std::vector<Pair>& PairVec) {
 
 void		PmergeMe::merge(std::vector<Pair>& PairVec, int level) {
 	(void)PairVec; (void)level;
-	// if (PairVec.size() == 1) {
-	// 	// do something ?? 
-	// 	return ;
-	// }
+	if (PairVec.size() == 1) {
+		// do something ?? 
+		return ;
+	}
+	std::vector<Pair>			newPairVec;
+	
+	for (std::vector<Pair>::iterator it = PairVec.begin(); it < PairVec.end(); it++, it++) {
+		it++;
+		if (it != PairVec.end()) {
+			it++;
+		}
+	}
 	// if (PairVec.size() == 2) {
 	// 	if (PairVec.at(0) > PairVec.at(1)) {
 	// 		std::cout << "swapping" << std::endl;
