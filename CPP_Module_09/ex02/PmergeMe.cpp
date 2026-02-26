@@ -65,14 +65,29 @@ void		PmergeMe::merge(std::vector<Pair>& PairVec, int level) {
 		// do something ?? 
 		return ;
 	}
-	std::vector<Pair>			newPairVec;
-	
+	std::vector<Pair>	newPairVec;
+	std::vector<long>	vec;
 	for (std::vector<Pair>::iterator it = PairVec.begin(); it < PairVec.end(); it++, it++) {
-		it++;
-		if (it != PairVec.end()) {
-			it++;
+		vec.clear();
+		if ((it + 1) == PairVec.end()) {
+			vec.push_back(it->first.at(0));
+			newPairVec.push_back(Pair(vec, it->second));
+			break ;
+		}
+		if (it->first.at(0) >= ((it + 1)->first.at(0))) {
+			vec.insert()
+			vec.push_back(it->first.at(0));
+			vec.push_back((it + 1)->first.at(0));
+			newPairVec.push_back(Pair(vec, it->second));
+		}
+		else {
+			vec.push_back((it + 1)->first.at(0));
+			vec.push_back(it->first.at(0));
+			newPairVec.push_back(Pair(vec, (it + 1)->second));
 		}
 	}
+	PmergeMe::printPairVec(newPairVec);
+	PmergeMe::merge(newPairVec, level + 1);
 	// if (PairVec.size() == 2) {
 	// 	if (PairVec.at(0) > PairVec.at(1)) {
 	// 		std::cout << "swapping" << std::endl;
@@ -122,9 +137,9 @@ int			PmergeMe::sort(const size_t argc, const char** argv) {
 		PairVec.push_back(Pair(vec, i));
 	}
 	std::vector<long>	seq = insertionSequence(argc - 1);
-	printVec(seq);
+	// printVec(seq);
 	PmergeMe::merge(PairVec, 1);
-	std::cout << "RES: " << std::endl;
-	printPairVec(PairVec);
+	// std::cout << "RES: " << std::endl;
+	// printPairVec(PairVec);
 	return 0;
 }
