@@ -1,5 +1,6 @@
 #include "PmergeMe.hpp"
 
+#include <cmath>
 #include <cstddef>
 #include <climits>
 #include <cctype>
@@ -21,7 +22,7 @@ PmergeMe::PmergeMe(const PmergeMe& obj) {
 	(void)obj;
 }
 
-PmergeMe&	PmergeMe::operator=(const PmergeMe& obj) {
+PmergeMe&		PmergeMe::operator=(const PmergeMe& obj) {
 	(void)obj;
 	return *this;
 }
@@ -120,35 +121,77 @@ void		PmergeMe::merge(std::vector<Pair>& pairVec, int level) {
 	// merge(right, level + 1);
 }
 
-static void	mergeRaw(const std::vector<long>& vec, int level) {
-	(void)vec; (void)level;
-	if (vec.size() == 1) {
+static size_t	ye_pow(size_t x, size_t y) {
+	size_t	res = 1;
+	if (x == 0) {
+		if (y > 0) {
+			return 0;
+		}
+		return 1;
+	}
+	for (size_t i = 0; i < y; i++) {
+		res *= x;
+	}
+	return res;
+}
+
+static void	groupSwap(std::vector<long>& vec, size_t i, size_t step, size_t level) {
+	for (size_t x = 0; x < ye_pow(2, level - 1); x++) {
+		std::cout << "swapping " << vec.at(i - x) << " with " << vec.at(i - x + (step / 2)) << std::endl;;
+		std::swap(vec.at(i - x), vec.at( i - x + (step / 2)));
+	}
+}
+
+static void	mergeRaw(std::vector<long>& vec, size_t level) {
+	// if (static_cast<size_t>(std::pow(2, level)) > vec.size()) {
+	if (ye_pow(2, level) > vec.size()) {
 		return ;
 	}
+	size_t	i = ye_pow(2, level - 1) - 1;	// 0 1 3 7
+	size_t	step = ye_pow(2, level);		// 2 4 8 16
+	// long	tmp;
 	std::vector<long>	bigElmntVec;
 	std::vector<long>	smallElmntVec;
-	size_t i = 0;
-	for (;i + 1 < vec.size(); i += 2) {
-		if (vec.at(i) >= vec.at(i + 1)) {
-			bigElmntVec.push_back(vec.at(i));
-			smallElmntVec.push_back(vec.at(i + 1));
+	std::cout << "at level " << level << " sequence is: " << std::endl;
+	PmergeMe::printVec(vec);
+	while (i < vec.size()) {
+		if (i + (step / 2) >= vec.size()) {
+			break ;
 		}
-		else {
-			bigElmntVec.push_back(vec.at(i + 1));
-			smallElmntVec.push_back(vec.at(i));
+		std::cout << "pointing at " << vec.at(i) << " and next is " << vec.at(i + (step / 2)) << std::endl;
+		if (vec.at(i) > vec.at(i + (step / 2))) {
+			// tmp = vec.at(i);
+			// vec.at(i) = vec.at(i + (step / 2));
+			// vec.at(i + (step / 2)) = tmp;
+			groupSwap(vec, i, step, level);
 		}
+		i += step;
 	}
-	if (i < vec.size()) {
-		smallElmntVec.push_back(vec.at(i));
-	}
-	std::cout << "level " << level << std::endl;
-	std::cout << "biig: ";
-	PmergeMe::printVec(bigElmntVec);
-	std::cout << "smal: ";
-	PmergeMe::printVec(smallElmntVec);
+	std::cout << "end of level " << level << " sequence became: " << std::endl;
+	PmergeMe::printVec(vec);
 	std::cout << std::endl;
-	mergeRaw(bigElmntVec, level + 1);
-	mergeRaw(smallElmntVec, level + 1);
+	mergeRaw(vec, level + 1);
+	// for (;i + 1 < vec.size(); i += 2) {
+	// 	if (vec.at(i) >= vec.at(i + 1)) {
+	// 		bigElmntVec.push_back(vec.at(i));
+	// 		smallElmntVec.push_back(vec.at(i + 1));
+	// 	}
+	// 	else {
+	// 		bigElmntVec.push_back(vec.at(i + 1));
+	// 		smallElmntVec.push_back(vec.at(i));
+	// 	}
+	// }
+	// if (i < vec.size()) {
+	// 	smallElmntVec.push_back(vec.at(i));
+	// }
+	// std::cout << "level " << level << std::endl;
+	// std::cout << "biig: ";
+	// PmergeMe::printVec(bigElmntVec);
+	// std::cout << "smal: ";
+	// PmergeMe::printVec(smallElmntVec);
+	// std::cout << std::endl;
+	// mergeRaw(bigElmntVec, level + 1);
+	// mergeRaw(smallElmntVec, level + 1);
 }
 
 static std::vector<long>	insertionSequence(int size) {
@@ -179,6 +222,9 @@ int			PmergeMe::sort(const size_t argc, const char** argv) {
 	}
 	std::vector<long>	seq = insertionSequence(argc - 1);
 	// printVec(seq);
+	if (rawVec.size() == 1) {
+		return 0;
+	}
 	// PmergeMe::merge(pairVec, 1);
 	mergeRaw(rawVec, 1);
 	// std::cout << "RES: " << std::endl;
