@@ -14,6 +14,8 @@
 #include <algorithm>
 #include <vector>
 
+size_t	comparisonCount = 0;
+
 PmergeMe::PmergeMe(void) {}
 
 PmergeMe::~PmergeMe(void) {}
@@ -159,6 +161,7 @@ static void	mergeRaw(std::vector<long>& vec, size_t level) {
 			break ;
 		}
 		std::cout << "pointing at " << vec.at(i) << " and next is " << vec.at(i + (step / 2)) << std::endl;
+		comparisonCount++;
 		if (vec.at(i) > vec.at(i + (step / 2))) {
 			// tmp = vec.at(i);
 			// vec.at(i) = vec.at(i + (step / 2));
@@ -169,7 +172,7 @@ static void	mergeRaw(std::vector<long>& vec, size_t level) {
 	}
 	std::cout << "end of level " << level << " sequence became: " << std::endl;
 	PmergeMe::printVec(vec);
-	std::cout << std::endl;
+	std::cout << "comparisons done: " << comparisonCount << std::endl << std::endl;
 	mergeRaw(vec, level + 1);
 	// for (;i + 1 < vec.size(); i += 2) {
 	// 	if (vec.at(i) >= vec.at(i + 1)) {
