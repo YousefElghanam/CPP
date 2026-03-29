@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <exception>
+#include <stdexcept>
 #include <utility>
 
 #include <algorithm>
@@ -52,8 +53,32 @@ static void		printPairElmnt(const std::pair<std::vector<long>, size_t>& pair) {
 	std::cout << std::endl;
 }
 
-void		PmergeMe::printVec(const std::vector<long>& vec) {
-	std::for_each(vec.begin(), vec.end(), printElmnt);
+static size_t	ye_pow(size_t x, size_t y) {
+	size_t	res = 1;
+	if (x == 0) {
+		if (y > 0) {
+			return 0;
+		}
+		return 1;
+	}
+	for (size_t i = 0; i < y; i++) {
+		res *= x;
+	}
+	return res;
+}
+
+void		PmergeMe::printVec(std::vector<long> vec, size_t level) {
+	const size_t comma = ye_pow(2, level - 1);
+	for (size_t i = 0; i < vec.size(); i++) {
+		std::cout << vec.at(i);
+		if ((i + 1) % comma == 0) {
+			std::cout << " | ";
+		}
+		else {
+			std::cout << " ";
+		}
+	}
+	// std::for_each(vec.begin(), vec.end(), printElmnt);
 	std::cout << std::endl;
 }
 
@@ -123,25 +148,53 @@ void		PmergeMe::merge(std::vector<Pair>& pairVec, int level) {
 	// merge(right, level + 1);
 }
 
-static size_t	ye_pow(size_t x, size_t y) {
-	size_t	res = 1;
-	if (x == 0) {
-		if (y > 0) {
-			return 0;
-		}
-		return 1;
+static void	groupSwap(std::vector<long>& vec, size_t elmntSize) {
+	const size_t	i = elmntSize - 1;
+
+	for (size_t x = 0; x < elmntSize; x++) {
+		std::cout << "swapping " << vec.at(i - x) << " with " << vec.at(i - x + elmntSize) << std::endl;;
+		std::swap(vec.at(i - x), vec.at( i - x + elmntSize));
 	}
-	for (size_t i = 0; i < y; i++) {
-		res *= x;
-	}
-	return res;
 }
 
-static void	groupSwap(std::vector<long>& vec, size_t i, size_t step, size_t level) {
-	for (size_t x = 0; x < ye_pow(2, level - 1); x++) {
-		std::cout << "swapping " << vec.at(i - x) << " with " << vec.at(i - x + (step / 2)) << std::endl;;
-		std::swap(vec.at(i - x), vec.at( i - x + (step / 2)));
+static void	step2(std::vector<long>& vec,
+std::vector<long>& main,
+std::vector<long>& pend,
+std::vector<long>& remainder,
+size_t elmntSize) {
+	(void)vec, (void)main, (void)pend, (void)remainder, (void)elmntSize;
+
+	bool	isB = true;
+	for (size_t i = 0; i < elmntSize && i < vec.size(); i++) { // This inserts b1
+		main.push_back(vec.at(i));
 	}
+	for (size_t i = elmntSize - 1; i < elmntSize * 2 && i < vec.size(); i++) { // This inserts a1
+		main.push_back(vec.at(i));
+	}
+	for (size_t i = (elmntSize * 2) - 1; i < vec.size(); i += elmntSize) { // This inserts remaining a's into main and remaining b's into pend
+		if (isRemaining(i, elmntSize)) { // TODO implement
+			for (;;) {
+				remainder.push_back();
+			}
+			break ;
+		}
+		if (isB) {
+			for (size_t x = 0;  x < elmntSize && i + x < vec.size(); x++) {
+				pend.push_back(vec.at(i + x));
+			}
+			isB = false;
+		}
+		else {
+			for (size_t x = 0;  x < elmntSize && i + x < vec.size(); x++) {
+				main.push_back(vec.at(i + x));
+			}
+			isB = true;
+		}
+	}
+}
+
+static void	step3(std::vector<long>& vec) {
+	(void)vec;
 }
 
 static void	mergeRaw(std::vector<long>& vec, size_t level) {
@@ -149,31 +202,36 @@ static void	mergeRaw(std::vector<long>& vec, size_t level) {
 	if (ye_pow(2, level) > vec.size()) {
 		return ;
 	}
-	size_t	i = ye_pow(2, level - 1) - 1;	// 0 1 3 7
-	size_t	step = ye_pow(2, level);		// 2 4 8 16
-	// long	tmp;
-	std::vector<long>	bigElmntVec;
-	std::vector<long>	smallElmntVec;
-	std::cout << "at level " << level << " sequence is: " << std::endl;
-	PmergeMe::printVec(vec);
+	const size_t	elmntSize = ye_pow(2, level - 1);
+	size_t			i = elmntSize - 1;		// 0 1 3 7
+	const size_t	step = elmntSize * 2;	// 2 4 8 16
+	std::cout << "start of rec level " << level << " sequence is: " << std::endl; PmergeMe::printVec(vec, level);
 	while (i < vec.size()) {
 		if (i + (step / 2) >= vec.size()) {
 			break ;
 		}
-		std::cout << "pointing at " << vec.at(i) << " and next is " << vec.at(i + (step / 2)) << std::endl;
+		// std::cout << "pointing at " << vec.at(i) << " and next is " << vec.at(i + (step / 2)) << std::endl;
 		comparisonCount++;
 		if (vec.at(i) > vec.at(i + (step / 2))) {
 			// tmp = vec.at(i);
 			// vec.at(i) = vec.at(i + (step / 2));
 			// vec.at(i + (step / 2)) = tmp;
-			groupSwap(vec, i, step, level);
+			groupSwap(vec, elmntSize);
 		}
 		i += step;
 	}
-	std::cout << "end of level " << level << " sequence became: " << std::endl;
-	PmergeMe::printVec(vec);
-	std::cout << "comparisons done: " << comparisonCount << std::endl << std::endl;
+	std::cout << "end of rec level " << level << " sequence became: " << std::endl; PmergeMe::printVec(vec, level + 1);
+	std::cout << "and total comparisons became: " << comparisonCount << std::endl << "===============================" << std::endl;
 	mergeRaw(vec, level + 1);
+
+	std::vector<long>	main;
+	std::vector<long>	pend;
+	std::vector<long>	remainder;
+	step2(vec, main, pend, remainder, elmntSize);
+
+	// if pend is empty, don't call step3() and just return.
+	step3(vec);
+
 	// for (;i + 1 < vec.size(); i += 2) {
 	// 	if (vec.at(i) >= vec.at(i + 1)) {
 	// 		bigElmntVec.push_back(vec.at(i));

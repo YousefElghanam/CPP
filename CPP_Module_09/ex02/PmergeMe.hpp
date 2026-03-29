@@ -18,7 +18,7 @@ class PmergeMe {
 
 	public:
 		virtual ~PmergeMe(void) = 0;
-		static void	printVec(const std::vector<long>& vec);
+		static void	printVec(std::vector<long> vec, size_t level);
 		static void	printPairVec(const std::vector<Pair>& vec);
 		static void	merge(std::vector<Pair>& PairVec, int level);
 		static int	sort(size_t argc, const char** argv);
