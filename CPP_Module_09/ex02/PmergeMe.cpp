@@ -1,5 +1,12 @@
 #include "PmergeMe.hpp"
 
+#include <iostream>
+#include <exception>
+#include <stdexcept>
+#include <utility>
+#include <algorithm>
+#include <vector>
+
 #include <cmath>
 #include <cstddef>
 #include <climits>
@@ -8,15 +15,10 @@
 #include <cstdlib>
 #include <cstring>
 
-#include <iostream>
-#include <exception>
-#include <stdexcept>
-#include <utility>
-
-#include <algorithm>
-#include <vector>
+#include <sys/types.h>
 
 size_t	comparisonCount = 0;
+typedef std::pair<long, size_t> MainPair;
 
 PmergeMe::PmergeMe(void) {}
 
@@ -44,15 +46,15 @@ static bool		validPosNum(const char* num) {
 	return true;
 }
 
-static void		printElmnt(long num) {
-	std::cout << num << " ";
-}
+// static void		printElmnt(long num) {
+// 	std::cout << num << " ";
+// }
 
-static void		printPairElmnt(const std::pair<std::vector<long>, size_t>& pair) {
-	std::cout << "idx " << pair.second << ": ";
-	std::for_each(pair.first.begin(), pair.first.end(), printElmnt);
-	std::cout << std::endl;
-}
+// static void		printPairElmnt(const std::pair<std::vector<long>, size_t>& pair) {
+// 	std::cout << "idx " << pair.second << ": ";
+// 	std::for_each(pair.first.begin(), pair.first.end(), printElmnt);
+// 	std::cout << std::endl;
+// }
 
 static size_t	ye_pow(size_t x, size_t y) {
 	size_t	res = 1;
@@ -68,7 +70,7 @@ static size_t	ye_pow(size_t x, size_t y) {
 	return res;
 }
 
-void		PmergeMe::printVec(std::vector<long> vec, size_t level) {
+void		PmergeMe::printVec(const std::vector<long>& vec, size_t level) {
 	const size_t comma = ye_pow(2, level - 1);
 	for (size_t i = 0; i < vec.size(); i++) {
 		std::cout << vec.at(i);
@@ -83,71 +85,80 @@ void		PmergeMe::printVec(std::vector<long> vec, size_t level) {
 	std::cout << std::endl;
 }
 
-void		PmergeMe::printPairVec(const std::vector<Pair>& pairVec) {
-	std::for_each(pairVec.begin(), pairVec.end(), printPairElmnt);
-	std::cout << std::endl;
-}
-
-void		PmergeMe::merge(std::vector<Pair>& pairVec, int level) {
-	(void)pairVec; (void)level;
-	if (pairVec.size() == 1) {
-		return ;
-	}
-	std::vector<Pair>	newPairVec;
-	std::vector<long>	vec;
-	for (std::vector<Pair>::iterator it = pairVec.begin(); it < pairVec.end(); it++, it++) {
-		vec.clear();
-		if ((it + 1) == pairVec.end()) {
-			vec.push_back(it->first.at(0));
-			newPairVec.push_back(Pair(vec, it->second));
-			break ;
-		}
-		if (it->first.at(0) >= ((it + 1)->first.at(0))) {
-			for (std::vector<long>::iterator vecIt = it->first.begin(); vecIt != it->first.end(); vecIt++) {
-				vec.push_back(*vecIt);
-			}
-			for (std::vector<long>::iterator vecIt = (it + 1)->first.begin(); vecIt != (it + 1)->first.end(); vecIt++) {
-				vec.push_back(*vecIt);
-			}
-			newPairVec.push_back(Pair(vec, it->second));
+void		PmergeMe::printPairVec(const std::vector<MainPair>& vec, size_t level) {
+	const size_t comma = ye_pow(2, level - 1);
+	for (size_t i = 0; i < vec.size(); i++) {
+		std::cout << vec.at(i).first;
+		if ((i + 1) % comma == 0) {
+			std::cout << " | ";
 		}
 		else {
-			for (std::vector<long>::iterator vecIt = (it + 1)->first.begin(); vecIt != (it + 1)->first.end(); vecIt++) {
-				vec.push_back(*vecIt);
-			}
-			for (std::vector<long>::iterator vecIt = it->first.begin(); vecIt != it->first.end(); vecIt++) {
-				vec.push_back(*vecIt);
-			}
-			newPairVec.push_back(Pair(vec, (it + 1)->second));
+			std::cout << " ";
 		}
 	}
-	std::cout << "rec level " << level << std::endl;
-	PmergeMe::printPairVec(newPairVec);
-	PmergeMe::merge(newPairVec, level + 1);
-	// if (pairVec.size() == 2) {
-	// 	if (pairVec.at(0) > pairVec.at(1)) {
-	// 		std::cout << "swapping" << std::endl;
-	// 		const long tmp = pairVec.at(0);
-	// 		pairVec.at(0) = pairVec.at(1);
-	// 		pairVec.at(1) = tmp;
-	// 	}
-	// 	return ;
-	// }
-	// std::cout << "level " << level << ":" << std::endl;
-	// std::vector<long>	left(vec.begin(), vec.begin() + vec.size() / 2);
-	// std::vector<long>	right(vec.begin() + vec.size() / 2, vec.end());
-	// std::vector<long>	remainder;
-	// if (left.size() < right.size()) {
-	// 	remainder = std::vector<long>(vec.end() - 1, vec.end());
-	// 	right.pop_back();
-	// }
-	// std::cout << "left: "; printVec(left);
-	// std::cout << "right: "; printVec(right);
-	// std::cout << "remainder: "; printVec(remainder);
-	// std::cout << std::endl;
-	// merge(left, level + 1);
-	// merge(right, level + 1);
 }
+
+// void		PmergeMe::merge(std::vector<Pair>& pairVec, int level) {
+// 	(void)pairVec; (void)level;
+// 	if (pairVec.size() == 1) {
+// 		return ;
+// 	}
+// 	std::vector<Pair>	newPairVec;
+// 	std::vector<long>	vec;
+// 	for (std::vector<Pair>::iterator it = pairVec.begin(); it < pairVec.end(); it++, it++) {
+// 		vec.clear();
+// 		if ((it + 1) == pairVec.end()) {
+// 			vec.push_back(it->first.at(0));
+// 			newPairVec.push_back(Pair(vec, it->second));
+// 			break ;
+// 		}
+// 		if (it->first.at(0) >= ((it + 1)->first.at(0))) {
+// 			for (std::vector<long>::iterator vecIt = it->first.begin(); vecIt != it->first.end(); vecIt++) {
+// 				vec.push_back(*vecIt);
+// 			}
+// 			for (std::vector<long>::iterator vecIt = (it + 1)->first.begin(); vecIt != (it + 1)->first.end(); vecIt++) {
+// 				vec.push_back(*vecIt);
+// 			}
+// 			newPairVec.push_back(Pair(vec, it->second));
+// 		}
+// 		else {
+// 			for (std::vector<long>::iterator vecIt = (it + 1)->first.begin(); vecIt != (it + 1)->first.end(); vecIt++) {
+// 				vec.push_back(*vecIt);
+// 			}
+// 			for (std::vector<long>::iterator vecIt = it->first.begin(); vecIt != it->first.end(); vecIt++) {
+// 				vec.push_back(*vecIt);
+// 			}
+// 			newPairVec.push_back(Pair(vec, (it + 1)->second));
+// 		}
+// 	}
+// 	std::cout << "rec level " << level << std::endl;
+// 	PmergeMe::printPairVec(newPairVec);
+// 	PmergeMe::merge(newPairVec, level + 1);
+// 	// if (pairVec.size() == 2) {
+// 	// 	if (pairVec.at(0) > pairVec.at(1)) {
+// 	// 		std::cout << "swapping" << std::endl;
+// 	// 		const long tmp = pairVec.at(0);
+// 	// 		pairVec.at(0) = pairVec.at(1);
+// 	// 		pairVec.at(1) = tmp;
+// 	// 	}
+// 	// 	return ;
+// 	// }
+// 	// std::cout << "level " << level << ":" << std::endl;
+// 	// std::vector<long>	left(vec.begin(), vec.begin() + vec.size() / 2);
+// 	// std::vector<long>	right(vec.begin() + vec.size() / 2, vec.end());
+// 	// std::vector<long>	remainder;
+// 	// if (left.size() < right.size()) {
+// 	// 	remainder = std::vector<long>(vec.end() - 1, vec.end());
+// 	// 	right.pop_back();
+// 	// }
+// 	// std::cout << "left: "; printVec(left);
+// 	// std::cout << "right: "; printVec(right);
+// 	// std::cout << "remainder: "; printVec(remainder);
+// 	// std::cout << std::endl;
+// 	// merge(left, level + 1);
+// 	// merge(right, level + 1);
+// }
+
 static void	groupSwap(std::vector<long>& vec, size_t i, size_t elmntSize) {
 	for (size_t x = 0; x < elmntSize; x++) {
 		// std::cout << "swapping " << vec.at(i - x) << " with " << vec.at(i - x + elmntSize) << std::endl;;
@@ -156,17 +167,17 @@ static void	groupSwap(std::vector<long>& vec, size_t i, size_t elmntSize) {
 }
 
 static void	makeSubVecs(const std::vector<long>& vec,
-std::vector<long>& main,
+std::vector<MainPair >& main,
 std::vector<long>& pend,
 std::vector<long>& remainder,
 size_t elmntSize) {
 	(void)vec, (void)main, (void)pend, (void)remainder, (void)elmntSize;
-
-	// std::cout << std::endl << "calling makeSubVecs with elmntSize=" << elmntSize << std::endl;
 	bool	isB = true;
+	// std::cout << std::endl << "calling makeSubVecs with elmntSize=" << elmntSize << std::endl;
+
 	for (size_t i = 0; i < elmntSize && i < vec.size(); i++) { // This inserts b1 into main
 		// std::cout << "inserting b1, pushed " << i + 1 << " nums to main" << std::endl;
-		main.push_back(vec.at(i));
+		main.push_back(MainPair(vec.at(i), 0));
 	}
 	if (elmntSize * 2 >= vec.size()) {
 		for (size_t i = elmntSize; i < vec.size(); i++) {
@@ -176,7 +187,7 @@ size_t elmntSize) {
 	}
 	for (size_t i = elmntSize; i < elmntSize * 2 && i < vec.size(); i++) { // This inserts a1 into main
 		// std::cout << "inserting a1, pushed " << i + 1 << " nums to main" << std::endl;
-		main.push_back(vec.at(i));
+		main.push_back(MainPair(vec.at(i), 1));
 	}
 	for (size_t i = elmntSize * 2; i < vec.size(); i += elmntSize) { // This inserts remaining a's into main and remaining b's into pend
 		// std::cout << "at elmntSize=" << elmntSize << " pushing starting from i=" << i << std::endl;
@@ -195,7 +206,7 @@ size_t elmntSize) {
 		else {
 			for (size_t x = 0;  x < elmntSize && i + x < vec.size(); x++) {
 				// std::cout << "pushing " << vec.at(i + x) << " to main" << std::endl;
-				main.push_back(vec.at(i + x));
+				main.push_back(MainPair(vec.at(i + x), ((i / elmntSize) + 1) / 2));
 			}
 			isB = true;
 		}
@@ -232,56 +243,123 @@ static std::vector<size_t>	makeJacobSeq(size_t pendElmntsCount) {
 			subSeqSize = getJacobIndex(i) - getJacobIndex(i - 1);
 		}
 		for (size_t x = 0; x < subSeqSize; x++) {
-			vec.push_back(getJacobIndex(i) - x);
+			vec.push_back(getJacobIndex(i) - x + 2);
 		}
 	}
 	return vec;
 }
 
-static void	binaryInsert(std::vector<long>& main,
+static void	insert(std::vector<MainPair>& main,
+const std::vector<long>& pend,
+size_t start,
+size_t end,
+size_t idx,
+size_t elmntSize) {
+	long num = pend.at((idx * elmntSize) + elmntSize - 1);
+	size_t n_start = (start * elmntSize) + elmntSize - 1;
+	size_t n_end = (end * elmntSize) + elmntSize - 1;
+
+	std::cout << "inserting num " << num << " with start " << n_start << " and end " << n_end << std::endl;
+	if (start >= end) {
+		comparisonCount++;
+		if (num > main.at(n_start).first) { // TODO 1 comparison
+			for (size_t i = 0; i < elmntSize; i++) {
+				main.insert(main.begin() + static_cast<long>(n_start + 1), MainPair(static_cast<long>(pend.at((idx * elmntSize) + elmntSize - 1 - i)), 0));
+			}
+		}
+		else {
+			for (size_t i = 0; i < elmntSize; i++) {
+				main.insert(main.begin() + static_cast<long>(n_start + 1 - elmntSize), MainPair(static_cast<long>(pend.at((idx * elmntSize) + elmntSize - 1 - i)), 0));
+			}
+		}
+		return ;
+	}
+	const size_t mid = start + ((end - start) / 2);
+	// std::cout << "mid is: " << mid << std::endl;
+
+	// if (num == main.at(mid).first) { // TODO 2 comparisons
+	// 	for (size_t i = 0; i < elmntSize; i++) {
+	// 		main.insert(main.begin() + static_cast<long>(mid), MainPair(static_cast<long>(pend.at((idx * elmntSize) + elmntSize - 1 - i)), 0));
+	// 	}
+	// }
+	// else {
+	comparisonCount++;
+	if (num <= main.at(mid > 0 ? (mid * elmntSize) - 1: elmntSize - 1).first) { // TODO 3 comparisons
+		insert(main, pend, start, mid - 1, idx, elmntSize);
+	}
+	else {
+		insert(main, pend, mid + 1, end, idx, elmntSize);
+	}
+	// }
+}
+
+static void	binaryInsert(std::vector<MainPair>& main,
 const std::vector<long>& pend,
 size_t idx,
 size_t elmntSize) {
 	(void)main, (void)pend, (void)idx, (void)elmntSize;
 
-	const size_t	mainElmntsCount = main.size() / elmntSize;
+	// const size_t	mainElmntsCount = main.size() / elmntSize;
 
-	// TODO get binaryInsertion boundaries
+	size_t	end = 0;
+
+	while (end < main.size() && idx != main.at(end).second) {
+		end++;
+	}
+	end -= elmntSize;
+	end /= elmntSize;
+	std::cout << "========> end of binary search is end: " << end << " and idx - 2: " << idx - 2 << std::endl; 
+
+	insert(main, pend, 0, end, idx - 2, elmntSize);
 	// TODO binary insert all numbers of the element
 }
 
-static void	insertToMain(std::vector<long>& main,
+static void	insertToMain(std::vector<MainPair>& main,
 const std::vector<long>& pend,
 const std::vector<long>& remainder,
 size_t elmntSize) {
 	(void)main, (void)pend, (void)remainder, (void)elmntSize;
 
-	size_t			idx = 0;
-	const size_t	pendElmntsCount = pend.size() / elmntSize;
-
+	size_t				idx = 0;
+	const size_t		pendElmntsCount = pend.size() / elmntSize;
 	std::vector<size_t>	jacobSeq = makeJacobSeq(pendElmntsCount);
+	size_t				lastInsertIdx = 0;
 	// std::cout << "jacob seq is: ";
-	// for (size_t i = 0; i < jacobSeq.size(); i++){ 
+	// for (size_t i = 0; i < jacobSeq.size(); i++){
 	// 	std::cout << jacobSeq.at(i) << " ";
 	// }
 	// std::cout << std::endl;
 
 	for (size_t i = 0; i < pendElmntsCount; i++) {
 		idx = jacobSeq.at(i); // TODO could this still overflow ??
-		if (idx >= pendElmntsCount) {
-			for (size_t x = jacobSeq.size() - 1; jacobSeq.at(x) > jacobSeq.at(x - 1); x--) {
+		if (idx - 2 >= pendElmntsCount) {
+			idx = pendElmntsCount - 1;
+			for (idx = pendElmntsCount - 1; idx != lastInsertIdx; idx--) { // TODO check if this ever checks true!
 				binaryInsert(main, pend, idx, elmntSize);
+				std::cout << std::endl << "labels after special insertion: ";
+				for (size_t zz = 0; zz < main.size(); zz++) {
+					std::cout << main.at(zz).second << " ";
+				}
+				std::cout << std::endl;
 				// TODO update labels somehow for next insertion
 			}
 			break ;
 		}
-		binaryInsert();
+		lastInsertIdx = idx;
+		binaryInsert(main, pend, idx, elmntSize);
+		std::cout << std::endl << "labels after normal insertion: ";
+		for (size_t zz = 0; zz < main.size(); zz++) {
+			std::cout << main.at(zz).second << " ";
+		}
+		std::cout << std::endl;
+		// TODO update labels somehow for next insertion
 		// insertMultiSeq(main, pend, elmntSize, idx, i - static_cast<size_t>(i != 0));
 	}
 }
 
 static void	mergeRaw(std::vector<long>& vec, size_t level) {
 	// if (static_cast<size_t>(std::pow(2, level)) > vec.size()) {
+
 	if (ye_pow(2, level) > vec.size()) {
 		return ;
 	}
@@ -310,15 +388,20 @@ static void	mergeRaw(std::vector<long>& vec, size_t level) {
 	// std::cout << "and total comparisons became: " << comparisonCount << std::endl << "===============================" << std::endl;
 	mergeRaw(vec, level + 1);
 
-	std::vector<long>	main;
-	std::vector<long>	pend;
-	std::vector<long>	remainder;
+	std::vector<MainPair>	main;
+	std::vector<long>		pend;
+	std::vector<long>		remainder;
 	makeSubVecs(vec, main, pend, remainder, elmntSize);
 	// std::cout << std::endl;
 	// // std::cout << "end of rec level " << level << " ------ elmtSize is: " << elmntSize << std::endl;
 	if (pend.empty()) {
 		std::cout << "end of rec level " << level << " sequence became: " << std::endl << "parnt is: "; PmergeMe::printVec(vec, level);
-		std::cout << "main  is: "; PmergeMe::printVec(main, level);
+		std::cout << "main  is: "; PmergeMe::printPairVec(main, level);
+		std::cout << std::endl << "labels: ";
+		for (size_t zz = 0; zz < main.size(); zz++) {
+			std::cout << main.at(zz).second << " ";
+		}
+		std::cout << std::endl;
 		std::cout << "pend  is: "; PmergeMe::printVec(pend, level);
 		std::cout << "rmndr is: "; PmergeMe::printVec(remainder, level);
 		std::cout << std::endl;
@@ -326,11 +409,24 @@ static void	mergeRaw(std::vector<long>& vec, size_t level) {
 	}
 	// if pend is empty, don't call step3() and just return.
 	std::cout << "end of rec level " << level << " sequence became: " << std::endl << "parnt is: "; PmergeMe::printVec(vec, level);
-	std::cout << "main  is: "; PmergeMe::printVec(main, level);
+	std::cout << "main  is: "; PmergeMe::printPairVec(main, level);
+	std::cout << std::endl << "labels: ";
+	for (size_t zz = 0; zz < main.size(); zz++) {
+		std::cout << main.at(zz).second << " ";
+	}
+	std::cout << std::endl;
 	std::cout << "pend  is: "; PmergeMe::printVec(pend, level);
 	std::cout << "rmndr is: "; PmergeMe::printVec(remainder, level);
 	std::cout << std::endl;
 	insertToMain(main, pend, remainder, elmntSize);
+	std::cout << "rec lvl " << level << ", after insertToMain() main  is: " << std::endl; PmergeMe::printPairVec(main, level);
+	std::cout << std::endl;
+	// std::cout << std::endl << "rec lvl " << level << ", after insertToMain() parnt is: " << std::endl; PmergeMe::printVec(vec, level);
+	for (size_t idx = 0; idx < main.size(); idx++) {
+		vec.at(idx) = main.at(idx).first;
+	}
+	std::cout << "rec lvl " << level << ", after adjusting parnt is: " << std::endl; PmergeMe::printVec(vec, level);
+	std::cout << std::endl;
 }
 
 // static std::vector<long>	insertionSequence(int size) {
@@ -366,7 +462,8 @@ int			PmergeMe::sort(const size_t argc, const char** argv) {
 	}
 	// PmergeMe::merge(pairVec, 1);
 	mergeRaw(rawVec, 1);
-	// std::cout << "RES: " << std::endl;
-	// printPairVec(pairVec);
+	std::cout << "RES: " << std::endl;
+	printVec(rawVec, 1);
+	std::cout << "comparisons: " << comparisonCount << std::endl;
 	return 0;
 }
