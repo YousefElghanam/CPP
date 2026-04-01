@@ -284,8 +284,9 @@ size_t elmntSize) {
 	// }
 	// else {
 	comparisonCount++;
-	if (num <= main.at(mid > 0 ? (mid * elmntSize) - 1: elmntSize - 1).first) { // TODO 3 comparisons
-		insert(main, pend, start, mid - 1, idx, elmntSize);
+	std::cout << "(((((((((mid is " << mid << ")))))))))" << std::endl;
+	if (num <= main.at(mid > 0 ? (mid * elmntSize) - (elmntSize > 1): elmntSize - (elmntSize > 1)).first) { // TODO 3 comparisons
+		insert(main, pend, start, mid == 0 ? 0 : mid - 1, idx, elmntSize);
 	}
 	else {
 		insert(main, pend, mid + 1, end, idx, elmntSize);
@@ -297,10 +298,6 @@ static void	binaryInsert(std::vector<MainPair>& main,
 const std::vector<long>& pend,
 size_t idx,
 size_t elmntSize) {
-	(void)main, (void)pend, (void)idx, (void)elmntSize;
-
-	// const size_t	mainElmntsCount = main.size() / elmntSize;
-
 	size_t	end = 0;
 
 	while (end < main.size() && idx != main.at(end).second) {
@@ -311,7 +308,6 @@ size_t elmntSize) {
 	std::cout << "========> end of binary search is end: " << end << " and idx - 2: " << idx - 2 << std::endl; 
 
 	insert(main, pend, 0, end, idx - 2, elmntSize);
-	// TODO binary insert all numbers of the element
 }
 
 static void	insertToMain(std::vector<MainPair>& main,
@@ -323,7 +319,7 @@ size_t elmntSize) {
 	size_t				idx = 0;
 	const size_t		pendElmntsCount = pend.size() / elmntSize;
 	std::vector<size_t>	jacobSeq = makeJacobSeq(pendElmntsCount);
-	size_t				lastInsertIdx = 0;
+	size_t				lastInsertIdx = 3;
 	// std::cout << "jacob seq is: ";
 	// for (size_t i = 0; i < jacobSeq.size(); i++){
 	// 	std::cout << jacobSeq.at(i) << " ";
@@ -333,8 +329,8 @@ size_t elmntSize) {
 	for (size_t i = 0; i < pendElmntsCount; i++) {
 		idx = jacobSeq.at(i); // TODO could this still overflow ??
 		if (idx - 2 >= pendElmntsCount) {
-			idx = pendElmntsCount - 1;
-			for (idx = pendElmntsCount - 1; idx != lastInsertIdx; idx--) { // TODO check if this ever checks true!
+			// std::cout << ">>>>>>>>> IT FUCKIN CHECKED OMG!!!!" << std::endl;
+			for (idx = pendElmntsCount + 1; idx > lastInsertIdx; idx--) { // TODO check if this ever checks true!
 				binaryInsert(main, pend, idx, elmntSize);
 				std::cout << std::endl << "labels after special insertion: ";
 				for (size_t zz = 0; zz < main.size(); zz++) {
@@ -345,7 +341,7 @@ size_t elmntSize) {
 			}
 			break ;
 		}
-		lastInsertIdx = idx;
+		lastInsertIdx = std::max(idx, lastInsertIdx);
 		binaryInsert(main, pend, idx, elmntSize);
 		std::cout << std::endl << "labels after normal insertion: ";
 		for (size_t zz = 0; zz < main.size(); zz++) {
@@ -439,6 +435,16 @@ static void	mergeRaw(std::vector<long>& vec, size_t level) {
 // 	}
 // 	return vec;
 // }
+#include <cmath>
+
+static int	getOptimalComparisons(int count) {
+    int sum = 0;
+    for (int k = 1; k <= count; ++k) {
+        double value = (3.0 / 4.0) * k;
+        sum += static_cast<int>(ceil(log2(value)));
+    }
+    return sum;
+}
 
 int			PmergeMe::sort(const size_t argc, const char** argv) {
 	std::vector<Pair>	pairVec;
@@ -465,5 +471,6 @@ int			PmergeMe::sort(const size_t argc, const char** argv) {
 	std::cout << "RES: " << std::endl;
 	printVec(rawVec, 1);
 	std::cout << "comparisons: " << comparisonCount << std::endl;
+	std::cout << "optimal comparisons: " << getOptimalComparisons(static_cast<int>(rawVec.size())) << std::endl;
 	return 0;
 }
