@@ -9,12 +9,13 @@
 
 # include <sys/types.h>
 
-# define DEBUG 1
+# define DEBUG 0
+# define CHECK_RES 1
 
 class PmergeMe {
 	private:
 		typedef std::vector<long>		Vec;
-		typedef std::pair<long, size_t> MainPair;
+		typedef std::pair<long, long> MainPair;
 
 		PmergeMe(void);
 		PmergeMe(const PmergeMe& obj);
@@ -25,7 +26,7 @@ class PmergeMe {
 
 	public:
 		virtual ~PmergeMe(void) = 0;
-		static void	mergeRec(std::vector<long>& vec, size_t level);
+		static void	mergeRec(std::vector<long>& vec, std::vector<MainPair>& main, Vec& pend, Vec& remainder, size_t level, const std::vector<size_t>& jacobSeq);
 		static int	sort(size_t argc, const char** argv);
 };
 
