@@ -199,11 +199,11 @@ void	PmergeMe::insert(PairVec& main, const Vec& pend, size_t start,
 		std::cout << "checking if num: " << num << " is equal to or smaller than main.at(mid...): " << main.at(mid > 0 ? (mid * elmntSize + elmntSize) - (elmntSize > 1): elmntSize - (elmntSize > 1)).first << std::endl;
 	}
 	comparisonCount++;
-	if (num <= main.at(mid * elmntSize + elmntSize - 1).first) { // TODO 2 comparisons
-		insert(main, pend, start, mid == 0 ? 0 : mid - 1, idx, elmntSize);
+	if (num > main.at(mid * elmntSize + elmntSize - 1).first) {
+		insert(main, pend, mid + 1, end, idx, elmntSize);
 	}
 	else {
-		insert(main, pend, mid + 1, end, idx, elmntSize);
+		insert(main, pend, start, mid == 0 ? 0 : mid - 1, idx, elmntSize);
 	}
 }
 
@@ -342,12 +342,12 @@ void	PmergeMe::mergeRec(Vec& vec, PairVec& main, Vec& pend, Vec& remainder,
 }
 
 int		PmergeMe::sort(const size_t argc, const char** argv) {
-	Vec					vec;
-	Vec					checker;
-	PairVec				main;
-	Vec					pend;
-	Vec					remainder;
-	std::vector<size_t>	jacobSeq = makeJacobSeq(20);
+	Vec							vec;
+	Vec							checker;
+	PairVec						main;
+	Vec							pend;
+	Vec							remainder;
+	const std::vector<size_t>	jacobSeq = makeJacobSeq(20);
 
 	vec.reserve(argc - 1);
 	for (size_t i = 1; i < argc; i++) {
@@ -372,10 +372,12 @@ int		PmergeMe::sort(const size_t argc, const char** argv) {
 			if (vec.at(i - 1) != checker.at(i - 1)) {
 				std::cerr << "BAAAAAAAAAAD, SOMETHING MISSING OR EXTRA AT vec.at(" << i
 				<< ") NUM: " << vec.at(i) << std::endl;
+				return 1;
 			}
 			if (vec.at(i) < vec.at(i - 1)) {
 				std::cerr << "WARRRRRNINGGGGGGG, NOT SORTED AT INDEX (" << i - 1
 				<< ") and (" << i << ") NUMBER: " << vec.at(i) << std::endl;
+				return 1;
 			}
 		}
 	}
@@ -640,12 +642,12 @@ void	PmergeMe::mergeRec(Deq& vec, PairDeq& main, Deq& pend, Deq& remainder,
 }
 
 int		PmergeMe::sortButDeque(const size_t argc, const char** argv) {
-	Deq					vec;
-	Deq					checker;
-	PairDeq				main;
-	Deq					pend;
-	Deq					remainder;
-	std::vector<size_t>	jacobSeq = makeJacobSeq(20);
+	Deq							vec;
+	Deq							checker;
+	PairDeq						main;
+	Deq							pend;
+	Deq							remainder;
+	const std::vector<size_t>	jacobSeq = makeJacobSeq(20);
 
 	for (size_t i = 1; i < argc; i++) {
 		if (!validPosNum(argv[i])) {
@@ -669,10 +671,12 @@ int		PmergeMe::sortButDeque(const size_t argc, const char** argv) {
 			if (vec.at(i - 1) != checker.at(i - 1)) {
 				std::cerr << "BAAAAAAAAAAD, SOMETHING MISSING OR EXTRA AT vec.at(" << i
 				<< ") NUM: " << vec.at(i) << std::endl;
+				return 1;
 			}
 			if (vec.at(i) < vec.at(i - 1)) {
 				std::cerr << "WARRRRRNINGGGGGGG, NOT SORTED AT INDEX (" << i - 1
 				<< ") and (" << i << ") NUMBER: " << vec.at(i) << std::endl;
+				return 1;
 			}
 		}
 	}

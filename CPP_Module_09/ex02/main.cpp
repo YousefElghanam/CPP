@@ -5,8 +5,11 @@
 #include <ctime>
 #include <cstdlib>
 
+#include <time.h>
+#include <bits/time.h>
+
 static long getTime() {
-	struct timespec	ts;
+	struct timespec	ts = {};
 	clock_gettime(CLOCK_MONOTONIC, &ts);
 	return (ts.tv_sec * 1000000000) + ts.tv_nsec;
 }
@@ -15,10 +18,6 @@ int	main(int argc, char** argv) {
 	std::srand(std::time(0));
 	if (argc == 1) {
 		std::cout << "After a very long time, finally managed to sort 0 numbers successfully ^_^" << std::endl;
-		return 0;
-	}
-	if (argc == 2) {
-		std::cout << "After a very long time, finally managed to sort 1 numbers successfully ^_^" << std::endl;
 		return 0;
 	}
 	long	vectorProcessTime = 0;
