@@ -13,7 +13,7 @@
 #  define DEBUG 0
 # endif
 # ifndef CHECK_RES
-#  define CHECK_RES 1
+#  define CHECK_RES 0
 # endif
 
 class PmergeMe {

@@ -48,7 +48,7 @@ static void subtract(std::stack<long>& s, long num1, long num2) {
 
 static void multiply(std::stack<long>& s, long num1, long num2) {
 	const long	res = num1 * num2;
-	if (res / num1 != num2) {
+	if (num1 != 0 && res / num1 != num2) {
 		std::cerr << "Overflowed in multiplaction";
 		throw std::exception();
 	}

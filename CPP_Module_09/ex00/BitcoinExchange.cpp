@@ -83,11 +83,11 @@ static void	parseData(std::ifstream& data, std::map<t_date, double, f_less_date>
 		curDate.year = std::atoi(buf.c_str());
 		curDate.month = std::atoi(buf.substr(buf.find('-') + 1).c_str());
 		curDate.day = std::atoi(buf.substr(buf.rfind('-') + 1).c_str());
+		if (curDate.year == 0 || curDate.month == 0 || curDate.day == 0) {
+			throw BitcoinExchange::InvalidDataFileException();
+		}
 		std::getline(data, buf, '\n');
 		dataMap.insert(std::pair<t_date, double>(curDate, std::strtod(buf.c_str(), NULL)));
-	}
-	if (curDate.year == 0 || curDate.month == 0 || curDate.day == 0) {
-		throw BitcoinExchange::InvalidDataFileException();
 	}
 }
 
@@ -303,12 +303,14 @@ int	BitcoinExchange::exchange(std::ifstream& data, std::ifstream& input) {
 	}
 	catch (std::exception& e) {
 		std::cout << "ERROR: " << e.what() << std::endl;
+		return 1;
 	}
 	try {
 		parseInput(input, dataMap);
 	}
 	catch (std::exception& e) {
 		std::cout << "ERROR: " << e.what() << std::endl;
+		return 1;
 	}
 	return 0;
 }
